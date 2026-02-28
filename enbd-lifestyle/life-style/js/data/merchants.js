@@ -1,0 +1,159 @@
+// ══════════════════════════════════════════════
+// DEMO LIFESTYLE — Merchants Seed Data
+// ══════════════════════════════════════════════
+
+const MERCHANTS = [
+  // DINING
+  {
+    id: 'MER-001', name: 'Nobu Dubai', category: 'dining', cuisine: 'Japanese',
+    location: 'Atlantis The Royal, Palm Jumeirah', area: 'Palm Jumeirah',
+    rating: 4.8, priceRange: '$$$$', costForTwo: 800,
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80',
+    description: 'World-renowned Japanese-Peruvian fusion dining experience.',
+    openingHours: '12:00 PM — 11:30 PM', phone: '+971 4 426 2626',
+  },
+  {
+    id: 'MER-002', name: 'Zuma Restaurant', category: 'dining', cuisine: 'Japanese',
+    location: 'Gate Village, DIFC', area: 'DIFC',
+    rating: 4.7, priceRange: '$$$$', costForTwo: 700,
+    image: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=600&q=80',
+    description: 'Contemporary Japanese izakaya-style dining in the heart of DIFC.',
+    openingHours: '12:00 PM — 1:00 AM', phone: '+971 4 425 5660',
+  },
+  {
+    id: 'MER-003', name: 'Al Maya Getaways', category: 'dining', cuisine: 'Arabic',
+    location: 'Downtown Dubai', area: 'Downtown Dubai',
+    rating: 4.5, priceRange: '$$$', costForTwo: 300,
+    image: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=600&q=80',
+    description: 'Authentic Arabic cuisine with stunning Burj Khalifa views.',
+    openingHours: '11:00 AM — 12:00 AM', phone: '+971 4 888 3444',
+  },
+  {
+    id: 'MER-004', name: 'Pierchic', category: 'dining', cuisine: 'Seafood',
+    location: 'Al Qasr Hotel, Jumeirah', area: 'Jumeirah',
+    rating: 4.6, priceRange: '$$$$', costForTwo: 900,
+    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80',
+    description: 'Overwater fine dining restaurant with panoramic Arabian Gulf views.',
+    openingHours: '12:30 PM — 11:00 PM', phone: '+971 4 432 3232',
+  },
+  {
+    id: 'MER-005', name: 'La Petite Maison', category: 'dining', cuisine: 'French',
+    location: 'Gate Village, DIFC', area: 'DIFC',
+    rating: 4.7, priceRange: '$$$$', costForTwo: 600,
+    image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80',
+    description: 'Fine French Mediterranean cuisine in an elegant setting.',
+    openingHours: '12:00 PM — 11:30 PM', phone: '+971 4 439 0505',
+  },
+  // WELLNESS
+  {
+    id: 'MER-006', name: 'Talise Spa', category: 'wellness', cuisine: null,
+    location: 'Jumeirah Zabeel Saray', area: 'Palm Jumeirah',
+    rating: 4.9, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=600&q=80',
+    description: 'Award-winning spa offering holistic wellness treatments.',
+    openingHours: '9:00 AM — 10:00 PM', phone: '+971 4 453 0456',
+  },
+  {
+    id: 'MER-007', name: 'Fitness First Platinum', category: 'wellness', cuisine: null,
+    location: 'Marina Mall, Dubai Marina', area: 'Dubai Marina',
+    rating: 4.3, priceRange: '$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80',
+    description: 'Premium gym facility with personal training and group classes.',
+    openingHours: '5:00 AM — 11:00 PM', phone: '+971 4 399 8888',
+  },
+  // ENTERTAINMENT
+  {
+    id: 'MER-008', name: 'Dubai Opera', category: 'entertainment', cuisine: null,
+    location: 'Sheikh Mohammed bin Rashid Blvd', area: 'Downtown Dubai',
+    rating: 4.8, priceRange: '$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=600&q=80',
+    description: 'World-class performing arts venue in the heart of Downtown Dubai.',
+    openingHours: 'Varies by event', phone: '+971 4 440 8888',
+  },
+  {
+    id: 'MER-009', name: 'VOX Cinemas IMAX', category: 'entertainment', cuisine: null,
+    location: 'Mall of the Emirates', area: 'Al Barsha',
+    rating: 4.5, priceRange: '$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80',
+    description: 'Premium cinema experience with IMAX and Theatre by Rhodes.',
+    openingHours: '10:00 AM — 2:00 AM', phone: '+971 600 599 905',
+  },
+  // SHOPPING
+  {
+    id: 'MER-010', name: 'The Dubai Mall', category: 'shopping', cuisine: null,
+    location: 'Financial Center Rd', area: 'Downtown Dubai',
+    rating: 4.6, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
+    description: 'The world\'s largest shopping destination with 1,200+ retail outlets.',
+    openingHours: '10:00 AM — 12:00 AM', phone: '+971 800 38224 6255',
+  },
+  {
+    id: 'MER-011', name: 'Harvey Nichols', category: 'shopping', cuisine: null,
+    location: 'Mall of the Emirates', area: 'Al Barsha',
+    rating: 4.4, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80',
+    description: 'Luxury department store featuring designer fashion and beauty.',
+    openingHours: '10:00 AM — 10:00 PM', phone: '+971 4 409 8888',
+  },
+  // TRAVEL
+  {
+    id: 'MER-012', name: 'Emirates Holidays', category: 'travel', cuisine: null,
+    location: 'Online', area: 'Online',
+    rating: 4.5, priceRange: '$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80',
+    description: 'Curated holiday packages with premium airline partnerships.',
+    openingHours: '24/7 Online', phone: '+971 600 555 555',
+  },
+  {
+    id: 'MER-013', name: 'Atlantis The Royal', category: 'hotels', cuisine: null,
+    location: 'Crescent Road, Palm Jumeirah', area: 'Palm Jumeirah',
+    rating: 4.9, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80',
+    description: 'Ultra-luxury resort with world-class dining and entertainment.',
+    openingHours: '24/7', phone: '+971 4 426 2000',
+  },
+  // CONCIERGE
+  {
+    id: 'MER-014', name: 'ENBD Lifestyle Concierge', category: 'concierge', cuisine: null,
+    location: 'Dubai', area: 'Citywide',
+    rating: 4.7, priceRange: 'Complimentary', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80',
+    description: 'Dedicated concierge service for Demo premium cardholders.',
+    openingHours: '24/7', phone: '+971 4 316 0101',
+  },
+  {
+    id: 'MER-015', name: 'Wild Wadi Waterpark', category: 'entertainment', cuisine: null,
+    location: 'Jumeirah Road', area: 'Jumeirah',
+    rating: 4.4, priceRange: '$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600&q=80',
+    description: 'Thrilling water park with over 30 rides and attractions.',
+    openingHours: '10:00 AM — 6:00 PM', phone: '+971 4 348 4444',
+  },
+  // Travel merchants
+  {
+    id: 'MER-016', name: 'dnata Travel', category: 'travel', cuisine: null,
+    location: 'Online & Branches', area: 'Online',
+    rating: 4.6, priceRange: '$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&q=80',
+    description: 'Full-service travel agency with exclusive holiday packages and flight deals.',
+    openingHours: '9:00 AM — 9:00 PM', phone: '+971 4 316 6666',
+  },
+  {
+    id: 'MER-017', name: 'Jumeirah Hotels', category: 'hotels', cuisine: null,
+    location: 'Jumeirah Beach Road', area: 'Jumeirah',
+    rating: 4.8, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80',
+    description: 'Iconic luxury hotel group with world-renowned hospitality across Dubai.',
+    openingHours: '24/7', phone: '+971 4 366 8888',
+  },
+  {
+    id: 'MER-018', name: 'Arabian Adventures', category: 'travel', cuisine: null,
+    location: 'Downtown Dubai', area: 'Downtown Dubai',
+    rating: 4.5, priceRange: '$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1451337516015-6b6e9a44a8a3?w=600&q=80',
+    description: 'Desert safaris, city tours, and unforgettable UAE experiences.',
+    openingHours: '8:00 AM — 10:00 PM', phone: '+971 4 303 4888',
+  },
+];
+
+window.MERCHANTS = MERCHANTS;

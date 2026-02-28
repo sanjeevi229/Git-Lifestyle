@@ -1,0 +1,32 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Reset & Base
+   ══════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--charcoal);
+  overflow-x: hidden;
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { text-decoration: none; color: inherit; cursor: pointer; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, select, textarea { font-family: inherit; font-size: inherit; }
+img { max-width: 100%; display: block; }
+ul, ol { list-style: none; }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; }
+
+::selection { background: var(--gold); color: var(--charcoal); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--light); }
+::-webkit-scrollbar-thumb { background: var(--grey-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--grey); }

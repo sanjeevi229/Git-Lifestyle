@@ -1,0 +1,53 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Card Benefits Page
+   ══════════════════════════════════════════════ */
+
+.benefits-page__header { margin-bottom: var(--space-xl); padding-top: calc(68px + var(--space-md)); }
+.benefits-page__header h1 { margin-bottom: 8px; }
+.benefits-page__title { margin-bottom: 8px; }
+.benefits-page__subtitle { font-size: 15px; color: var(--grey); margin-bottom: var(--space-xl); }
+
+.benefits-table-wrapper { overflow-x: auto; margin-bottom: var(--space-2xl); }
+
+.benefits-table {
+  width: 100%; border-collapse: collapse; min-width: 800px;
+}
+.benefits-table th, .benefits-table td {
+  padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--light);
+  font-size: 13px; vertical-align: top;
+}
+.benefits-table th {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey);
+  background: var(--off-white); position: sticky; top: 0;
+}
+.benefits-table td { color: var(--charcoal); line-height: 1.5; }
+.benefits-table td.empty { color: var(--grey-light); font-style: italic; }
+
+.benefits-table th.active-tier,
+.benefits-table td.active-tier {
+  background: var(--accent-light); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent);
+}
+.benefits-table th.active-tier { border-top: 2px solid var(--accent); }
+
+.benefits-table__row-label { font-weight: 600; color: var(--charcoal); white-space: nowrap; min-width: 120px; }
+
+/* Tier header with color accent */
+.tier-header { text-align: center; padding: 16px 12px; }
+.tier-header--active { background: var(--accent-light); }
+.tier-header__label { display: block; font-size: 14px; font-weight: 800; margin-bottom: 4px; color: var(--charcoal); }
+.tier-header__badge { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 8px; border-radius: var(--radius-full); background: var(--accent); color: #fff; margin-top: 4px; }
+.tier-header__level { display: block; font-size: 10px; color: var(--grey-light); }
+
+.benefit-label { font-weight: 600; color: var(--charcoal); white-space: nowrap; min-width: 140px; }
+.benefit-label__icon { margin-right: 8px; }
+.benefit-label-header { font-weight: 700; min-width: 140px; }
+.benefit-na { color: var(--grey-light); font-style: italic; }
+
+.benefits-cta { text-align: center; padding: 40px 0; }
+
+/* Search Results */
+.search-results__header { margin-bottom: var(--space-xl); }
+.search-results__header h1 { margin-bottom: 4px; }
+.search-results__section { margin-bottom: var(--space-2xl); }
+.search-results__section-title { font-size: 20px; font-weight: 700; margin-bottom: var(--space-lg); }

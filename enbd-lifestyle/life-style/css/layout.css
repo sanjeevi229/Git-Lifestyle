@@ -1,0 +1,75 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Layout System
+   ══════════════════════════════════════════════ */
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.page {
+  padding-top: var(--nav-height);
+  min-height: 100vh;
+  background: var(--light);
+  overflow-x: hidden;
+}
+
+.page--with-sidebar {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: 100vh;
+  padding-top: var(--nav-height);
+}
+
+.page__content {
+  padding: var(--space-xl) var(--space-3xl);
+  min-height: calc(100vh - var(--nav-height));
+}
+
+.grid { display: grid; gap: var(--space-lg); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+
+.section { padding: var(--space-4xl) 0; }
+.section--light { background: var(--light); }
+.section--dark { background: var(--charcoal); color: var(--white); }
+.section__header { margin-bottom: var(--space-2xl); }
+.section__eyebrow {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+  margin-bottom: var(--space-sm);
+}
+.section__title {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 900px) {
+  .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+  .page--with-sidebar { grid-template-columns: 1fr; padding-top: 0; }
+  .page { padding-top: 0; }
+  .page__content { padding: var(--space-lg); }
+  .section { padding: var(--space-2xl) 0; }
+}
+
+@media (max-width: 600px) {
+  .grid-2 { grid-template-columns: 1fr; }
+}

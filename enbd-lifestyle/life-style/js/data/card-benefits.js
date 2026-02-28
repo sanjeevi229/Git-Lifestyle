@@ -1,0 +1,63 @@
+// ══════════════════════════════════════════════
+// DEMO LIFESTYLE — Card Benefits Data
+// ══════════════════════════════════════════════
+
+const CARD_BENEFITS = {
+  classic: {
+    dining: 'Up to 15% off at select restaurants',
+    entertainment: 'Buy 1 Get 1 on movie tickets',
+    wellness: '10% off at partner gyms',
+    travel: 'Standard travel insurance',
+    shopping: '5% cashback on online shopping',
+    concierge: null,
+    lounge: null,
+    golf: null,
+    points: '1 point per AED 5 spent',
+  },
+  gold: {
+    dining: 'Up to 25% off at 200+ restaurants',
+    entertainment: 'Buy 1 Get 1 on attractions & cinema',
+    wellness: '20% off at partner spas and gyms',
+    travel: 'Enhanced travel insurance',
+    shopping: '10% cashback on select retailers',
+    concierge: null,
+    lounge: '4 complimentary lounge visits/year',
+    golf: null,
+    points: '1 point per AED 3 spent',
+  },
+  platinum: {
+    dining: 'Up to 35% off at 500+ restaurants',
+    entertainment: 'VIP access to select events',
+    wellness: '30% off at premium spas',
+    travel: 'Comprehensive travel insurance + free cancellation',
+    shopping: '15% cashback on luxury brands',
+    concierge: 'Priority concierge (Mon-Sat)',
+    lounge: '8 complimentary lounge visits/year',
+    golf: '4 rounds per year at select courses',
+    points: '1 point per AED 2 spent',
+  },
+  infinite: {
+    dining: 'Up to 50% off at 800+ restaurants',
+    entertainment: 'VIP access + priority seating',
+    wellness: '40% off + complimentary wellness sessions',
+    travel: 'Premium travel insurance + meet & greet',
+    shopping: '20% cashback on luxury brands',
+    concierge: '24/7 dedicated concierge',
+    lounge: 'Unlimited airport lounge access',
+    golf: 'Unlimited golf at partner courses',
+    points: '1 point per AED 1 spent',
+  },
+  private: {
+    dining: 'Up to 50% off + complimentary tasting menus',
+    entertainment: 'Exclusive private events + backstage',
+    wellness: 'Complimentary spa memberships',
+    travel: 'Private jet booking + premium everything',
+    shopping: '25% cashback + personal shopper',
+    concierge: '24/7 dedicated private concierge',
+    lounge: 'Unlimited lounge + private terminals',
+    golf: 'Unlimited + priority tee times',
+    points: '2 points per AED 1 spent',
+  },
+};
+
+window.CARD_BENEFITS = CARD_BENEFITS;

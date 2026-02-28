@@ -1,0 +1,67 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Carousel Component
+   ══════════════════════════════════════════════ */
+
+.carousel-section { margin-bottom: var(--space-2xl); }
+
+.carousel-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  max-width: var(--container-max); margin: 0 auto;
+  margin-bottom: var(--space-lg); padding: 0 var(--container-pad);
+}
+.carousel-header__title { font-size: 24px; font-weight: 800; color: var(--charcoal); line-height: 1.2; }
+.carousel-header__subtitle { font-size: 14px; color: var(--grey); margin-top: 4px; }
+.carousel-header .btn { margin-top: 4px; }
+
+/* Wrapper clips the carousel so left & right padding are visually equal.
+   Padding pushes the visible area inward; overflow:hidden clips any
+   cards that extend past it. */
+.carousel-wrapper {
+  position: relative; overflow: hidden;
+  --carousel-pad: max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad)));
+  padding: 0 var(--carousel-pad);
+}
+
+.carousel-track {
+  display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 8px 0 16px;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track > * { scroll-snap-align: start; flex-shrink: 0; }
+
+.carousel-arrow {
+  position: absolute; top: 108px; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  color: var(--grey); font-size: 0;
+  display: none; place-items: center; cursor: pointer; z-index: 10;
+  transition: all 0.25s ease; opacity: 1;
+}
+.carousel-arrow svg { display: block; }
+.carousel-arrow.visible { display: grid; }
+.carousel-arrow:hover { background: rgba(255,255,255,0.85); color: var(--charcoal); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+.carousel-arrow--left { left: 16px; }
+.carousel-arrow--right { right: 16px; }
+
+/* Fixed-width cards inside carousels */
+.carousel-track .offer-card    { width: 280px; min-width: 280px; }
+.carousel-track .merchant-card { width: 280px; min-width: 280px; }
+.carousel-track .event-card    { width: 300px; min-width: 300px; }
+
+/* Last Chance inner track: use banner's own padding, not container-pad */
+.last-chance__track {
+  padding-left: 0;
+  padding-right: 0;
+  scroll-padding-left: 0;
+}
+
+@media (max-width: 900px) {
+  .carousel-header { max-width: none; padding: 0 var(--container-pad); }
+  .carousel-wrapper { --carousel-pad: var(--container-pad); }
+  .carousel-track { gap: 16px; }
+  .carousel-arrow { display: none; }
+}
