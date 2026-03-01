@@ -13,7 +13,7 @@ const Nav = {
     return `
       <nav class="topnav">
         <a class="topnav__logo" onclick="Router.navigate('/home')">
-          <img src="assets/logo.png" alt="Demo" />
+          <span></span>
         </a>
 
         <div class="topnav__center">
@@ -66,7 +66,7 @@ const Nav = {
       <!-- Mobile Menu (right-side off-canvas drawer) -->
       <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu__header">
-          <img src="assets/logo.png" alt="Demo" class="mobile-menu__logo" />
+          <span></span>
           <span class="mobile-menu__close" id="mobileMenuClose">${Icons.close(22)}</span>
         </div>
         <div class="mobile-menu__user">

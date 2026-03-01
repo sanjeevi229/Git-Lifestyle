@@ -24,7 +24,7 @@ const LoginPage = {
         <div class="login-page__bg"></div>
         <div class="login-card">
           <div class="login-card__header">
-            <img src="assets/logo.png" alt="Demo" class="login-card__logo" />
+            <span class="login-card__logo"></span>
             <h1 class="login-card__title">Lifestyle</h1>
             <p class="login-card__subtitle">Select your card profile to explore exclusive offers</p>
           </div>

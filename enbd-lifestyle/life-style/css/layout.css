@@ -65,7 +65,8 @@
 @media (max-width: 900px) {
   .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
   .page--with-sidebar { grid-template-columns: 1fr; padding-top: 0; }
-  .page { padding-top: 0; }
+  .page { padding-top: 0; background: var(--charcoal); }
+  .page__main { background: var(--light); }
   .page__content { padding: var(--space-lg); }
   .section { padding: var(--space-2xl) 0; }
 }

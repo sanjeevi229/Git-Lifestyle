@@ -101,7 +101,7 @@
 /* Floating mobile toolbar — hamburger (hidden on desktop) */
 .mobile-toolbar {
   display: none;
-  position: fixed; top: 16px; right: 16px; z-index: 150;
+  position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 150;
   flex-direction: row; align-items: center; gap: 10px;
 }
 .mobile-toolbar__search {
