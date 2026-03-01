@@ -83,6 +83,19 @@ const Carousel = {
     window.addEventListener('resize', () => {
       $$('.carousel-track').forEach(track => Carousel._updateArrows(track));
     });
+
+    // Mobile: reveal Book Now when carousel section scrolls into view
+    if (window.innerWidth <= 900 && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      $$('.carousel-section').forEach(section => observer.observe(section));
+    }
   },
 };
 

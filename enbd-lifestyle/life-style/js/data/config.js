@@ -30,7 +30,7 @@ const CONFIG = {
   bookingStatuses: ['pending', 'confirmed', 'completed', 'cancelled', 'expired'],
 
   sortOptions: [
-    { id: 'recommended', label: 'Recommended' },
+    { id: 'recommended', label: 'Recommended for You' },
     { id: 'discount-desc', label: 'Highest Discount' },
     { id: 'expiry-asc', label: 'Ending Soon' },
     { id: 'name-asc', label: 'A — Z' },
@@ -152,6 +152,17 @@ const CONFIG = {
   heroSlides: [
     {
       id: 1,
+      title: '{firstName}, Your Card Unlocks More',
+      subtitle: 'Exclusive experiences tailored to your Demo card.',
+      cta: 'View Benefits',
+      route: '/card-benefits',
+      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80',
+      video: 'assets/videos/life-style.mp4',
+      videoSD: 'assets/videos/life-style.mp4',
+      limitedTag: null,
+    },
+    {
+      id: 2,
       title: '{firstName}, Discover Dining Curated for You',
       subtitle: 'Savor world-class cuisine at the UAE\'s most sought-after restaurants.',
       cta: 'Explore Dining',
@@ -160,17 +171,6 @@ const CONFIG = {
       video: 'https://videos.pexels.com/video-files/3769033/3769033-hd_1920_1080_25fps.mp4',
       videoSD: 'https://videos.pexels.com/video-files/3769033/3769033-hd_1280_720_25fps.mp4',
       limitedTag: 'Limited Time',
-    },
-    {
-      id: 2,
-      title: '{firstName}, Your Card Unlocks More',
-      subtitle: 'Exclusive experiences tailored to your Demo card.',
-      cta: 'View Benefits',
-      route: '/card-benefits',
-      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80',
-      video: 'https://videos.pexels.com/video-files/5561389/5561389-hd_1920_1080_25fps.mp4',
-      videoSD: 'https://videos.pexels.com/video-files/5561389/5561389-sd_960_540_25fps.mp4',
-      limitedTag: null,
     },
     {
       id: 3,

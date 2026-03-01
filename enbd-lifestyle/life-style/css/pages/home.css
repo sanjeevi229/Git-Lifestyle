@@ -281,7 +281,7 @@
 /* ── FOOTER ── */
 .site-footer {
   background: var(--charcoal); color: rgba(255,255,255,0.7);
-  padding: 60px max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad))) 0;
+  padding: 40px max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad))) 20px;
   margin-top: var(--space-2xl);
 }
 .site-footer__inner {

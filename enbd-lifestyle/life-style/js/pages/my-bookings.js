@@ -16,7 +16,7 @@ const MyBookingsPage = {
     ];
 
     return `
-      <div class="page">
+      <div class="page page--no-dark">
         ${Nav.render()}
         <main class="page__main page__main--full">
           <div class="container">
@@ -83,6 +83,27 @@ const MyBookingsPage = {
         title = event ? event.title : 'Event';
         image = event ? event.image : '';
         detail = event ? `${event.venue} · ${event.area}` : '';
+      } else if (b.type === 'golf') {
+        const course = (window.GOLF_COURSES || []).find(c => c.id === b.offerId);
+        title = course ? course.name : 'Golf';
+        image = course ? course.image : '';
+        detail = course ? `${course.location}${b.teeTime ? ' · ' + b.teeTime : ''}` : '';
+      } else if (b.type === 'airport') {
+        const vehicle = (window.VEHICLE_TYPES || []).find(v => v.id === b.offerId);
+        const airport = (window.AIRPORT_LOCATIONS || []).find(a => a.id === b.airportId);
+        title = vehicle ? `Airport ${b.transferType === 'pickup' ? 'Pickup' : 'Drop-off'} — ${vehicle.name}` : 'Airport Transfer';
+        image = vehicle ? vehicle.image : '';
+        detail = airport ? `${airport.name}${b.bookingTime ? ' · ' + b.bookingTime : ''}` : '';
+      } else if (b.type === 'courier') {
+        const service = (window.COURIER_SERVICE_TYPES || []).find(s => s.id === b.offerId);
+        title = service ? `Courier — ${service.name}` : 'Courier Delivery';
+        image = service ? service.image : '';
+        detail = `${b.pickupLocationName || ''} → ${b.deliveryLocationName || ''}${b.bookingTime ? ' · ' + b.bookingTime : ''}`;
+      } else if (b.type === 'clubhouse') {
+        const clubCat = (window.CLUBHOUSE_CATEGORIES || []).find(c => c.id === b.offerId);
+        title = clubCat ? `Club — ${clubCat.name}` : 'Club House';
+        image = clubCat ? clubCat.image : '';
+        detail = `${b.venueName || ''}${b.bookingTime ? ' · ' + b.bookingTime : ''}`;
       } else {
         const offer = (Store.get('offers') || []).find(o => o.id === b.offerId);
         title = offer ? offer.title : 'Offer';
@@ -92,21 +113,21 @@ const MyBookingsPage = {
       }
 
       return `
-        <div class="booking-row" onclick="Router.navigate('/my-bookings/${b.id}')">
-          <div class="booking-row__image">
-            ${image ? `<img src="${image}" alt="${title}" loading="lazy" />` : '<div style="background:var(--light);width:100%;height:100%;display:grid;place-items:center">${Icons.clipboard(28)}</div>'}
+        <div class="booking-card" onclick="Router.navigate('/my-bookings/${b.id}')">
+          <div class="booking-card__img">
+            ${image ? `<img src="${image}" alt="${title}" loading="lazy" />` : ''}
           </div>
-          <div class="booking-row__content">
-            <div class="booking-row__title">${title}</div>
-            <div class="booking-row__detail">${detail}</div>
-            <div class="booking-row__meta">
-              ${Icons.calendar(14)} ${Format.date(b.bookingDate)} · ${b.partySize} ${b.type === 'event' ? 'ticket' : 'guest'}${b.partySize > 1 ? 's' : ''}
+          <div class="booking-card__body">
+            <div class="booking-card__top">
+              <div class="booking-card__title">${title}</div>
+              <span class="booking-card__status booking-card__status--${Format.bookingStatusVariant(b.status)}">${Format.bookingStatus(b.status)}</span>
             </div>
+            ${detail ? `<div class="booking-card__detail">${detail}</div>` : ''}
+            <div class="booking-card__meta">
+              ${Icons.calendar(13)} ${Format.date(b.bookingDate)} · ${b.type === 'courier' ? '1 delivery' : `${b.partySize} ${b.type === 'event' ? 'ticket' : b.type === 'golf' ? 'player' : b.type === 'airport' ? 'passenger' : 'guest'}${b.partySize > 1 ? 's' : ''}`}
+            </div>
+            <div class="booking-card__code">${b.confirmationCode}</div>
           </div>
-          <div class="booking-row__status">
-            <span class="badge badge--${Format.bookingStatusVariant(b.status)}">${Format.bookingStatus(b.status)}</span>
-          </div>
-          <div class="booking-row__code text-xs text-muted">${b.confirmationCode}</div>
         </div>
       `;
     }).join('');

@@ -61,7 +61,36 @@
 
 @media (max-width: 900px) {
   .carousel-header { max-width: none; padding: 0 var(--container-pad); }
-  .carousel-wrapper { --carousel-pad: var(--container-pad); }
-  .carousel-track { gap: 16px; }
-  .carousel-arrow { display: none; }
+  .carousel-wrapper { --carousel-pad: 0; padding: 0; }
+  .carousel-track {
+    gap: 16px;
+    padding-left: var(--container-pad);
+    scroll-padding-left: var(--container-pad);
+  }
+  .carousel-arrow, .carousel-arrow.visible { display: none; }
+
+  /* Book Now overlay — hidden by default, revealed on scroll into view */
+  .carousel-track .card-hover-zone__overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 45%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .carousel-track .card-hover-zone__cta {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  /* Animate in when section scrolls into view */
+  .carousel-section.in-view .carousel-track .card-hover-zone__overlay {
+    opacity: 1;
+  }
+  .carousel-section.in-view .carousel-track .card-hover-zone__cta {
+    animation: carouselCtaPopup 0.5s ease-out 0.2s both;
+  }
+}
+
+@keyframes carouselCtaPopup {
+  0%   { opacity: 0; transform: translateY(16px) scale(0.9); }
+  60%  { opacity: 1; transform: translateY(-4px) scale(1.03); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }

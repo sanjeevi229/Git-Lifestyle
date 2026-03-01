@@ -4,7 +4,7 @@
     {
       "name": "lifestyle-dev",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8090"],
+      "runtimeArgs": ["-m", "http.server", "8090", "-d", "/Users/sanjeevnaidu/Claud Projects/Git-Lifestyle/enbd-lifestyle"],
       "port": 8090
     }
   ]

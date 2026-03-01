@@ -109,6 +109,202 @@ const Store = {
     AuditLog.log('BOOKING_CANCELLED', `Booking ${bookingId} cancelled by ${user.name}.`);
   },
 
+  // ── Golf Booking Actions ──
+  createGolfBooking(data) {
+    const user = this.get('auth.currentUser');
+    const bookings = this.get('bookings') || [];
+    const now = new Date().toISOString();
+    const booking = {
+      id: Format.bookingId(),
+      userId: user.id,
+      offerId: data.courseId,
+      type: 'golf',
+      status: 'confirmed',
+      bookingDate: data.bookingDate,
+      teeTime: data.teeTime,
+      partySize: data.players || 1,
+      golfCartIncluded: data.cartIncluded || false,
+      specialRequests: data.specialRequests || '',
+      createdAt: now,
+      confirmationCode: Format.confirmationCode(),
+      statusHistory: [
+        { status: 'pending', at: now, note: 'Golf booking submitted' },
+        { status: 'confirmed', at: now, note: 'Auto-confirmed' },
+      ],
+    };
+    bookings.unshift(booking);
+    this.set('bookings', bookings);
+    AuditLog.log('GOLF_BOOKING_CREATED', `Golf booking ${booking.id} at ${data.courseId} by ${user.name}.`);
+    return booking;
+  },
+
+  getGolfQuota() {
+    const user = this.get('auth.currentUser');
+    if (!user) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    const tier = user.cardTier;
+    const benefit = CARD_BENEFITS[tier]?.golf;
+    if (!benefit) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    let allowed = 999;
+    if (benefit.includes('4 rounds')) allowed = 4;
+    else if (benefit.toLowerCase().includes('unlimited')) allowed = 999;
+    const used = (this.get('bookings') || [])
+      .filter(b => b.userId === user.id && b.type === 'golf' && b.status === 'confirmed').length;
+    return { allowed, used, remaining: Math.max(0, allowed - used), benefit };
+  },
+
+  // ── Airport Booking Actions ──
+  createAirportBooking(data) {
+    const user = this.get('auth.currentUser');
+    const bookings = this.get('bookings') || [];
+    const now = new Date().toISOString();
+    const booking = {
+      id: Format.bookingId(),
+      userId: user.id,
+      offerId: data.vehicleId,
+      type: 'airport',
+      status: 'confirmed',
+      transferType: data.transferType,
+      airportId: data.airportId,
+      terminal: data.terminal,
+      locationId: data.locationId,
+      locationName: data.locationName,
+      bookingDate: data.bookingDate,
+      bookingTime: data.bookingTime,
+      flightNumber: data.flightNumber || '',
+      partySize: data.passengers || 1,
+      bags: data.bags || 1,
+      babySeats: data.babySeats || 0,
+      specialRequests: data.specialRequests || '',
+      createdAt: now,
+      confirmationCode: Format.confirmationCode(),
+      statusHistory: [
+        { status: 'pending', at: now, note: 'Airport transfer submitted' },
+        { status: 'confirmed', at: now, note: 'Auto-confirmed' },
+      ],
+    };
+    bookings.unshift(booking);
+    this.set('bookings', bookings);
+    AuditLog.log('AIRPORT_BOOKING_CREATED', `Airport transfer ${booking.id} (${data.transferType}) by ${user.name}.`);
+    return booking;
+  },
+
+  getAirportQuota() {
+    const user = this.get('auth.currentUser');
+    if (!user) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    const tier = user.cardTier;
+    const benefit = CARD_BENEFITS[tier]?.airport;
+    if (!benefit) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    let allowed = 999;
+    if (benefit.includes('2 complimentary')) allowed = 2;
+    else if (benefit.includes('4 complimentary')) allowed = 4;
+    else if (benefit.toLowerCase().includes('unlimited')) allowed = 999;
+    const used = (this.get('bookings') || [])
+      .filter(b => b.userId === user.id && b.type === 'airport' && b.status === 'confirmed').length;
+    return { allowed, used, remaining: Math.max(0, allowed - used), benefit };
+  },
+
+  // ── Courier Booking Actions ──
+  createCourierBooking(data) {
+    const user = this.get('auth.currentUser');
+    const bookings = this.get('bookings') || [];
+    const now = new Date().toISOString();
+    const booking = {
+      id: Format.bookingId(),
+      userId: user.id,
+      offerId: data.serviceId,
+      type: 'courier',
+      status: 'confirmed',
+      packageType: data.packageType,
+      estimatedWeight: data.estimatedWeight,
+      pickupLocationId: data.pickupLocationId,
+      pickupLocationName: data.pickupLocationName,
+      deliveryLocationId: data.deliveryLocationId,
+      deliveryLocationName: data.deliveryLocationName,
+      bookingDate: data.bookingDate,
+      bookingTime: data.bookingTime,
+      recipientName: data.recipientName,
+      recipientPhone: data.recipientPhone,
+      specialHandling: data.specialHandling || '',
+      specialRequests: data.specialRequests || '',
+      partySize: 1,
+      createdAt: now,
+      confirmationCode: Format.confirmationCode(),
+      statusHistory: [
+        { status: 'pending', at: now, note: 'Courier booking submitted' },
+        { status: 'confirmed', at: now, note: 'Auto-confirmed' },
+      ],
+    };
+    bookings.unshift(booking);
+    this.set('bookings', bookings);
+    AuditLog.log('COURIER_BOOKING_CREATED', `Courier booking ${booking.id} (${data.serviceId}) by ${user.name}.`);
+    return booking;
+  },
+
+  getCourierQuota() {
+    const user = this.get('auth.currentUser');
+    if (!user) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    const tier = user.cardTier;
+    const benefit = CARD_BENEFITS[tier]?.courier;
+    if (!benefit) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    let allowed = 999;
+    if (benefit.includes('2 complimentary')) allowed = 2;
+    else if (benefit.includes('6 complimentary')) allowed = 6;
+    else if (benefit.toLowerCase().includes('unlimited')) allowed = 999;
+    const used = (this.get('bookings') || [])
+      .filter(b => b.userId === user.id && b.type === 'courier' && b.status === 'confirmed').length;
+    return { allowed, used, remaining: Math.max(0, allowed - used), benefit };
+  },
+
+  // ── Clubhouse Booking Actions ──
+  createClubhouseBooking(data) {
+    const user = this.get('auth.currentUser');
+    const bookings = this.get('bookings') || [];
+    const now = new Date().toISOString();
+    const booking = {
+      id: Format.bookingId(),
+      userId: user.id,
+      offerId: data.categoryId,
+      type: 'clubhouse',
+      status: 'confirmed',
+      categoryName: data.categoryName,
+      venueId: data.venueId,
+      venueName: data.venueName,
+      venueArea: data.venueArea,
+      bookingDate: data.bookingDate,
+      bookingTime: data.bookingTime,
+      partySize: data.partySize || 1,
+      guestName: data.guestName || '',
+      guestPhone: data.guestPhone || '',
+      preferences: data.preferences || '',
+      specialRequests: data.specialRequests || '',
+      createdAt: now,
+      confirmationCode: Format.confirmationCode(),
+      statusHistory: [
+        { status: 'pending', at: now, note: 'Club registration submitted' },
+        { status: 'confirmed', at: now, note: 'Auto-confirmed' },
+      ],
+    };
+    bookings.unshift(booking);
+    this.set('bookings', bookings);
+    AuditLog.log('CLUBHOUSE_BOOKING_CREATED', `Club booking ${booking.id} (${data.categoryId}) by ${user.name}.`);
+    return booking;
+  },
+
+  getClubhouseQuota() {
+    const user = this.get('auth.currentUser');
+    if (!user) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    const tier = user.cardTier;
+    const benefit = CARD_BENEFITS[tier]?.club;
+    if (!benefit) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    let allowed = 999;
+    if (benefit.includes('2 complimentary')) allowed = 2;
+    else if (benefit.includes('6 complimentary')) allowed = 6;
+    else if (benefit.toLowerCase().includes('unlimited')) allowed = 999;
+    const used = (this.get('bookings') || [])
+      .filter(b => b.userId === user.id && b.type === 'clubhouse' && b.status === 'confirmed').length;
+    return { allowed, used, remaining: Math.max(0, allowed - used), benefit };
+  },
+
   getUserBookings() {
     const user = this.get('auth.currentUser');
     if (!user) return [];

@@ -38,8 +38,18 @@ function delegate(parent, event, selector, handler) {
   });
 }
 
+function cardShare(title, route) {
+  const url = window.location.origin + window.location.pathname + '#' + route;
+  if (navigator.share) {
+    navigator.share({ title, url }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(url).catch(() => {});
+  }
+}
+
 window.$ = $;
 window.$$ = $$;
 window.el = el;
 window.render = render;
 window.delegate = delegate;
+window.cardShare = cardShare;

@@ -113,7 +113,7 @@
 
   /* Compact progress indicator on mobile */
   .booking-step .steps { gap: 0; margin-bottom: var(--space-lg); }
-  .booking-step .step__circle { width: 28px; height: 28px; font-size: 12px; }
+  .booking-step .step__circle { width: 28px; height: 28px; min-width: 28px; min-height: 28px; font-size: 12px; }
   .booking-step .step__label { font-size: 10px; letter-spacing: 0.02em; }
   .booking-step .step__line { width: 40px; margin: 0 8px; }
 
@@ -122,6 +122,9 @@
 
   /* Reassurance tighter on mobile */
   .booking-reassurance { font-size: 11px; text-align: center; }
+
+  /* Reduce button padding so flex pair doesn't overflow */
+  .booking-form .btn--lg { padding: 16px 20px; font-size: 14px; }
 
   /* Sticky CTA */
   .booking-sticky-cta {

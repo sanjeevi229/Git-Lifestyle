@@ -12,6 +12,9 @@ const CARD_BENEFITS = {
     concierge: null,
     lounge: null,
     golf: null,
+    airport: null,
+    courier: null,
+    club: null,
     points: '1 point per AED 5 spent',
   },
   gold: {
@@ -23,6 +26,9 @@ const CARD_BENEFITS = {
     concierge: null,
     lounge: '4 complimentary lounge visits/year',
     golf: null,
+    airport: null,
+    courier: null,
+    club: null,
     points: '1 point per AED 3 spent',
   },
   platinum: {
@@ -34,6 +40,9 @@ const CARD_BENEFITS = {
     concierge: 'Priority concierge (Mon-Sat)',
     lounge: '8 complimentary lounge visits/year',
     golf: '4 rounds per year at select courses',
+    airport: '2 complimentary transfers per year',
+    courier: '2 complimentary deliveries per month',
+    club: '2 complimentary visits per month',
     points: '1 point per AED 2 spent',
   },
   infinite: {
@@ -45,6 +54,9 @@ const CARD_BENEFITS = {
     concierge: '24/7 dedicated concierge',
     lounge: 'Unlimited airport lounge access',
     golf: 'Unlimited golf at partner courses',
+    airport: '4 complimentary transfers per year',
+    courier: '6 complimentary deliveries per month',
+    club: '6 complimentary visits per month',
     points: '1 point per AED 1 spent',
   },
   private: {
@@ -56,6 +68,9 @@ const CARD_BENEFITS = {
     concierge: '24/7 dedicated private concierge',
     lounge: 'Unlimited lounge + private terminals',
     golf: 'Unlimited + priority tee times',
+    airport: 'Unlimited airport transfers',
+    courier: 'Unlimited courier service',
+    club: 'Unlimited club access',
     points: '2 points per AED 1 spent',
   },
 };

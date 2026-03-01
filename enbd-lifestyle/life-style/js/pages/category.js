@@ -140,6 +140,15 @@ const CategoryPage = {
       this._refreshGrid();
     });
 
+    // Curated collection card click — filter by collection
+    delegate('#app', 'click', '.curated-card', (e, el) => {
+      const collectionId = el.dataset.collection;
+      if (!collectionId) return;
+      // Scroll to offers grid
+      const grid = $('#offersGrid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
     // "Show all" on curated collections — scroll to offers grid
     delegate('#app', 'click', '.curated-show-all', () => {
       const grid = $('#offersGrid');
@@ -170,9 +179,35 @@ const CategoryPage = {
         if (e.key === 'Enter') this._doSearch();
       });
     }
+
+    // Mobile tap-to-reveal overlay on card images
+    this._setupTapOverlay();
   },
 
-  unmount() {},
+  _setupTapOverlay() {
+    if ('ontouchstart' in window) {
+      this._onTapOutside = (e) => {
+        if (!e.target.closest('.card-hover-zone')) {
+          $$('.card-hover-zone.is-tapped').forEach(z => z.classList.remove('is-tapped'));
+        }
+      };
+      document.addEventListener('touchstart', this._onTapOutside, { passive: true });
+
+      $$('.card-hover-zone').forEach(zone => {
+        zone.addEventListener('touchstart', () => {
+          $$('.card-hover-zone.is-tapped').forEach(z => { if (z !== zone) z.classList.remove('is-tapped'); });
+          zone.classList.add('is-tapped');
+        }, { passive: true });
+      });
+    }
+  },
+
+  unmount() {
+    if (this._onTapOutside) {
+      document.removeEventListener('touchstart', this._onTapOutside);
+      this._onTapOutside = null;
+    }
+  },
 
   _doSearch() {
     const input = $('#catSearchInput');
@@ -186,7 +221,11 @@ const CategoryPage = {
 
     // Apply all strict filters
     let filtered = [...allCategoryOffers];
-    if (this._filterType !== 'all') {
+    if (this._filterType === 'expiring-soon') {
+      const soon = new Date();
+      soon.setDate(soon.getDate() + 14);
+      filtered = filtered.filter(o => new Date(o.validUntil) <= soon);
+    } else if (this._filterType !== 'all') {
       filtered = filtered.filter(o => o.offerType === this._filterType);
     }
     if (this._subcategory) {
@@ -208,7 +247,10 @@ const CategoryPage = {
 
       // Pool of supplementary offers from the same category (not already shown)
       let extras = allCategoryOffers.filter(o => !shownIds.has(o.id));
-      if (this._filterType !== 'all') {
+      if (this._filterType === 'expiring-soon') {
+        const soon2 = new Date(); soon2.setDate(soon2.getDate() + 14);
+        extras = extras.filter(o => new Date(o.validUntil) <= soon2);
+      } else if (this._filterType !== 'all') {
         extras = extras.filter(o => o.offerType === this._filterType);
       }
 
@@ -253,7 +295,9 @@ const CategoryPage = {
             <img src="${o.image}" alt="${o.title}" loading="lazy" />
             <span class="discount-badge ${Format.discountBadgeClass(o)}">${Format.discountLabel(o)}</span>
             ${o.isPremium ? '<span class="offer-card__premium-tag">Premium</span>' : ''}
+            <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
+              ${merchant && merchant.area ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${merchant.area}</span>` : ''}
               <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
             </div>
           </div>
@@ -365,6 +409,7 @@ const CategoryPage = {
           <img src="${e.image}" alt="${e.title}" loading="lazy" />
           ${Format.eventDateBadge(e.date)}
           ${e.originalPrice > e.price ? `<span class="discount-badge discount-badge--red">${Math.round((1 - e.price / e.originalPrice) * 100)}% OFF</span>` : ''}
+          <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${e.title.replace(/'/g, "\\'")}','/offer/event-${e.id}')" aria-label="Share">${Icons.share(15)}</button>
           <div class="card-hover-zone__overlay">
             <span class="card-hover-zone__location">${Icons.mapPin(14)} ${e.venue}</span>
             <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
@@ -402,6 +447,7 @@ const CategoryPage = {
       <div class="cat-location-section">
         <div class="cat-location-header">By location</div>
         <div class="cat-location-pills">
+          <button class="cat-location-pill cat-location-pill--near ${this._location === 'near-me' ? 'active' : ''}" data-location="near-me">${Icons.mapPin(14)} Near Me</button>
           ${locations.map(loc => `
             <button class="cat-location-pill ${this._location === loc ? 'active' : ''}" data-location="${loc}">${loc}</button>
           `).join('')}
@@ -457,6 +503,7 @@ const CategoryPage = {
       <div class="cat-location-section">
         <div class="cat-location-header">By location</div>
         <div class="cat-location-pills">
+          <button class="cat-location-pill cat-location-pill--near ${this._location === 'near-me' ? 'active' : ''}" data-location="near-me">${Icons.mapPin(14)} Near Me</button>
           ${locations.map(loc => `
             <button class="cat-location-pill ${this._location === loc ? 'active' : ''}" data-location="${loc}">${loc}</button>
           `).join('')}
@@ -476,7 +523,7 @@ const CategoryPage = {
           </button>
         </div>
 
-        <!-- Advanced filters (sort + type) — toggled by Filters btn -->
+        <!-- Advanced filters (sort + type + expiring) — toggled by Filters btn -->
         <div class="cat-advanced-panel" id="catAdvancedPanel">
           <div class="cat-advanced-row">
             <label>Sort by</label>
@@ -488,6 +535,7 @@ const CategoryPage = {
             <label>Offer type</label>
             <select id="filterType" class="form-select">
               <option value="all">All Types</option>
+              <option value="expiring-soon" ${this._filterType === 'expiring-soon' ? 'selected' : ''}>Expiring Soon</option>
               ${CONFIG.offerTypes.map(t => `<option value="${t}" ${t === this._filterType ? 'selected' : ''}>${t.charAt(0).toUpperCase() + t.slice(1)}</option>`).join('')}
             </select>
           </div>
@@ -511,7 +559,7 @@ const CategoryPage = {
         </div>
         <div class="curated-grid">
           ${collections.map(c => `
-            <div class="curated-card" style="background-image:url('${c.image}')">
+            <div class="curated-card" data-collection="${c.id}" style="background-image:url('${c.image}')">
               <div class="curated-card__overlay"></div>
               <div class="curated-card__content">
                 <span class="curated-card__count">${c.dealCount} Deals</span>

@@ -17,6 +17,15 @@
   Router.register('/my-bookings/:id',   BookingDetailPage);
   Router.register('/card-benefits',     CardBenefitsPage);
   Router.register('/search',            SearchResultsPage);
+  Router.register('/golf',              GolfPage);
+  Router.register('/golf/book/:courseId', GolfBookingPage);
+  Router.register('/golf/:courseId',    GolfDetailPage);
+  Router.register('/airport',           AirportPage);
+  Router.register('/airport/book',      AirportBookingPage);
+  Router.register('/courier',           CourierPage);
+  Router.register('/courier/book',      CourierBookingPage);
+  Router.register('/club',              ClubPage);
+  Router.register('/club/register',     ClubRegistrationPage);
 
   Router.init();
 })();

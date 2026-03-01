@@ -40,9 +40,9 @@ const BookingPage = {
             <div class="breadcrumb">
               <span class="breadcrumb__item" onclick="Router.navigate('/home')">Home</span>
               <span class="breadcrumb__sep">›</span>
-              <span class="breadcrumb__item" onclick="history.back()">Back</span>
+              <span class="breadcrumb__item" onclick="Router.navigate('/category/${this._event ? 'events' : this._offer.category}')">${this._event ? 'Events' : Format.categoryLabel(this._offer.category)}</span>
               <span class="breadcrumb__sep">›</span>
-              <span class="breadcrumb__current">Book: ${title}</span>
+              <span class="breadcrumb__current">${this._event ? title : (this._merchant ? this._merchant.name : title)}</span>
             </div>
 
             <div class="booking-layout">
@@ -418,7 +418,6 @@ const BookingPage = {
       `;
     }
 
-    Toast.show('Booking Confirmed', `Confirmation: ${booking.confirmationCode}`, 'success');
   },
 
   _notFound() {

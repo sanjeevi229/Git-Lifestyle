@@ -1,0 +1,113 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Club House Styles
+   ══════════════════════════════════════════════ */
+
+/* ── Page Header ── */
+.club-page__header { margin-bottom: var(--space-xl); }
+.club-page__subtitle { color: var(--grey); font-size: 15px; margin-top: 4px; }
+
+/* ── Eligibility Banner ── */
+.club-eligibility {
+  display: flex; align-items: flex-start; gap: var(--space-md);
+  padding: var(--space-lg); border-radius: var(--radius-lg);
+  margin-bottom: var(--space-xl); border: 1px solid transparent;
+}
+.club-eligibility--active {
+  background: var(--success-light); border-color: var(--success);
+}
+.club-eligibility--locked {
+  background: var(--off-white); border-color: var(--grey-border);
+}
+.club-eligibility__icon { flex-shrink: 0; margin-top: 2px; }
+.club-eligibility--active .club-eligibility__icon { color: var(--success); }
+.club-eligibility--locked .club-eligibility__icon { color: var(--grey); }
+.club-eligibility__content { flex: 1; }
+.club-eligibility__title { font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+.club-eligibility__text { font-size: 14px; color: var(--grey); line-height: 1.4; }
+.club-eligibility__quota {
+  display: inline-block; margin-top: 8px; padding: 4px 12px;
+  border-radius: var(--radius-full); font-size: 13px; font-weight: 600;
+  background: rgba(255,255,255,.6); color: var(--success);
+}
+.club-eligibility--locked .club-eligibility__quota { display: none; }
+.club-eligibility__card {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600; color: var(--charcoal);
+  white-space: nowrap;
+}
+
+/* ── Section Header ── */
+.club-section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+.club-section-header__title { font-size: 20px; font-weight: 700; }
+.club-section-header__count { font-size: 14px; color: var(--grey); }
+
+/* ── Category Grid ── */
+.club-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+/* ── Category Card ── */
+.club-card {
+  background: #fff; border-radius: var(--radius-lg);
+  border: 1px solid var(--grey-border);
+  overflow: hidden; cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+  display: flex; flex-direction: column;
+}
+.club-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.club-card--locked { opacity: .7; cursor: default; }
+.club-card--locked:hover { transform: none; box-shadow: none; }
+
+.club-card__image { position: relative; overflow: hidden; }
+.club-card__image img { width: 100%; height: 180px; object-fit: cover; display: block; }
+
+.club-card__lock {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(2px);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 6px; color: #fff;
+  font-size: 13px; font-weight: 600;
+}
+
+.club-card__body { padding: var(--space-md); flex: 1; }
+.club-card__name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+.club-card__desc { font-size: 13px; color: var(--grey); margin-bottom: 8px; }
+.club-card__meta {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--grey); margin-bottom: 8px;
+}
+.club-card__features { display: flex; flex-wrap: wrap; gap: 4px; }
+.club-card__feature {
+  font-size: 11px; padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: var(--off-white); color: var(--grey);
+}
+
+.club-card__footer {
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border-top: 1px solid var(--grey-border);
+}
+.club-card__price { display: flex; align-items: center; gap: 8px; }
+.club-card__price-label { font-weight: 700; font-size: 15px; color: var(--success); }
+.club-card__price-original {
+  font-size: 13px; color: var(--grey);
+  text-decoration: line-through;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .club-grid { grid-template-columns: 1fr; }
+  .club-eligibility { flex-direction: column; }
+}
+
+@media (max-width: 600px) {
+  .club-card__image img { height: 140px; }
+  .club-card__name { font-size: 15px; }
+  .club-eligibility__title { font-size: 15px; }
+}

@@ -74,7 +74,7 @@ const CardBenefitsPage = {
             <div class="benefits-cta" style="text-align:center;padding:40px 0">
               <h3>Want to upgrade your card?</h3>
               <p class="text-muted" style="margin-top:8px">Contact your relationship manager or visit any Demo branch</p>
-              <button class="btn btn--primary btn--lg" style="margin-top:16px" onclick="Toast.show('Contact Us', 'Call 600 54 0000 to upgrade your card.', 'info')">Upgrade Your Card</button>
+              <button class="btn btn--primary btn--lg" style="margin-top:16px" onclick="">Upgrade Your Card</button>
             </div>
           </div>
         </main>

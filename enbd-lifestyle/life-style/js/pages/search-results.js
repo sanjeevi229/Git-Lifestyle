@@ -15,6 +15,7 @@ const SearchResultsPage = {
           <div class="offer-card__image card-hover-zone">
             <img src="${o.image}" alt="${o.title}" loading="lazy" />
             <span class="discount-badge ${Format.discountBadgeClass(o)}">${Format.discountLabel(o)}</span>
+            <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
             </div>
@@ -36,6 +37,7 @@ const SearchResultsPage = {
         <div class="offer-card__image card-hover-zone">
           <img src="${e.image}" alt="${e.title}" loading="lazy" />
           ${Format.eventDateBadge(e.date)}
+          <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${e.title.replace(/'/g, "\\'")}','/offer/event-${e.id}')" aria-label="Share">${Icons.share(15)}</button>
           <div class="card-hover-zone__overlay">
             <span class="card-hover-zone__location">${Icons.mapPin(14)} ${e.venue}</span>
             <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
@@ -59,6 +61,7 @@ const SearchResultsPage = {
         <div class="merchant-card" onclick="${bestOffer ? `Router.navigate('/offer/${bestOffer.id}')` : `Router.navigate('/category/${m.category}')`}">
           <div class="merchant-card__image card-hover-zone">
             <img src="${m.image}" alt="${m.name}" loading="lazy" />
+            <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${m.name.replace(/'/g, "\\'")}','${bestOffer ? `/offer/${bestOffer.id}` : `/category/${m.category}`}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               <span class="card-hover-zone__rating">${Icons.star(14)} ${Number(m.rating).toFixed(1)}</span>
               <span class="card-hover-zone__location">${Icons.mapPin(14)} ${m.area}</span>

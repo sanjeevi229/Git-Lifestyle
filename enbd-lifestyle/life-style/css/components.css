@@ -53,7 +53,7 @@
 .btn--accent:hover { background: var(--accent-dark); transform: translateY(-1px); }
 .btn--sm { padding: 8px 16px; font-size: 12px; }
 .btn--lg { padding: 18px 36px; font-size: 15px; }
-.btn--block { width: 100%; }
+.btn--block, .btn--full { width: 100%; }
 .btn:disabled, .btn--disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 .btn--icon { padding: 10px; border-radius: var(--radius-sm); }
 
@@ -190,15 +190,24 @@
 .data-table tbody tr:hover { background: var(--off-white); }
 
 /* ── TABS ── */
-.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: var(--space-lg); }
+.tabs {
+  display: flex; gap: 8px; margin-bottom: var(--space-lg);
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.tabs::-webkit-scrollbar { display: none; }
 .tab {
   font-family: var(--font-ui); padding: 10px 24px; border: 1.5px solid var(--grey-border);
   border-radius: var(--radius-full); font-size: 13px; font-weight: 600;
   letter-spacing: 0.05em; text-transform: uppercase; color: var(--grey);
   cursor: pointer; background: none; transition: all var(--ease);
+  white-space: nowrap; flex-shrink: 0;
+  outline: none !important; box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
 }
+.tab:focus, .tab:focus-visible, .tab:active { outline: none !important; box-shadow: none !important; }
 .tab:hover { background: var(--charcoal); border-color: var(--charcoal); color: var(--white); }
-.tab.active { background: var(--gold); border-color: var(--gold); color: var(--white); }
+.tab.active, .tab.tab--active { background: var(--charcoal); border-color: var(--charcoal); color: var(--white); }
 
 /* ── SEARCH ── */
 .search-box { position: relative; width: 100%; max-width: 480px; }
@@ -216,13 +225,14 @@
 .empty-state__text { color: var(--grey); margin-bottom: var(--space-lg); }
 
 /* ── BREADCRUMB ── */
-.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--grey); padding-top: var(--space-xl); margin-bottom: var(--space-lg); }
-.breadcrumb a { color: var(--grey); transition: color var(--ease); }
+.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--grey); padding-top: var(--space-xl); margin-bottom: var(--space-lg); flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.breadcrumb::-webkit-scrollbar { display: none; }
+.breadcrumb a { color: var(--grey); transition: color var(--ease); white-space: nowrap; }
 .breadcrumb a:hover { color: var(--charcoal); }
-.breadcrumb__item { cursor: pointer; color: var(--grey); transition: color var(--ease); }
+.breadcrumb__item { cursor: pointer; color: var(--grey); transition: color var(--ease); white-space: nowrap; flex-shrink: 0; }
 .breadcrumb__item:hover { color: var(--charcoal); }
-.breadcrumb__current { color: var(--charcoal); font-weight: 500; }
-.breadcrumb__sep { color: var(--grey-light); }
+.breadcrumb__current { color: var(--charcoal); font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+.breadcrumb__sep { color: var(--grey-light); flex-shrink: 0; }
 
 /* ── TIMELINE ── */
 .timeline { position: relative; padding-left: 32px; }
@@ -254,7 +264,7 @@
 /* ── PROGRESS STEPS ── */
 .steps { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: var(--space-xl); }
 .step { display: flex; align-items: center; gap: 10px; }
-.step__circle { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 700; border: 2px solid var(--grey-border); color: var(--grey); transition: all var(--ease); }
+.step__circle { width: 36px; height: 36px; min-width: 36px; min-height: 36px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 700; border: 2px solid var(--grey-border); color: var(--grey); transition: all var(--ease); }
 .step.active .step__circle { background: var(--accent); border-color: var(--accent); color: var(--white); }
 .step.completed .step__circle { background: var(--success); border-color: var(--success); color: var(--white); }
 .step__label { font-family: var(--font-ui); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--grey); }
@@ -481,6 +491,21 @@
   background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
 }
 
+/* ── SHARE BUTTON (shared across all deal cards) ── */
+.card-share-btn {
+  position: absolute; top: 10px; right: 10px; z-index: 6;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  border: none; cursor: pointer;
+  display: grid; place-items: center;
+  color: var(--charcoal);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  transition: all 0.2s ease;
+  padding: 0;
+}
+.card-share-btn:hover { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.18); }
+.card-share-btn .icon { width: 15px; height: 15px; }
+
 /* Ensure existing badges stay above overlay */
 .card-hover-zone .discount-badge,
 .card-hover-zone .event-date-badge,
@@ -522,3 +547,39 @@
 .benefit-card__icon { font-size: 48px; margin-bottom: 12px; display: block; }
 .benefit-card__label { font-size: 14px; font-weight: 600; color: var(--charcoal); }
 .benefit-card__desc { font-size: 12px; color: var(--grey); margin-top: 4px; }
+
+/* ── MOBILE BREADCRUMB ── */
+@media (max-width: 900px) {
+  .breadcrumb {
+    font-size: 12px;
+    gap: 5px;
+    padding-top: var(--space-lg);
+    margin-bottom: var(--space-md);
+    margin-right: 52px; /* clear hamburger menu */
+    overflow: hidden;
+  }
+  .breadcrumb__item {
+    flex-shrink: 1;
+    min-width: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .breadcrumb__item:first-child { flex-shrink: 0; }
+  .breadcrumb__current { flex-shrink: 0; }
+  .breadcrumb__sep { flex-shrink: 0; }
+}
+
+/* ── MOBILE TABS ── */
+@media (max-width: 900px) {
+  .tabs { gap: 4px; overflow: hidden !important; }
+  .tab {
+    padding: 8px 4px !important;
+    font-size: 10px !important;
+    letter-spacing: 0 !important;
+    flex: 1 1 0% !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+    text-align: center;
+  }
+  .tab__count { display: none; }
+}

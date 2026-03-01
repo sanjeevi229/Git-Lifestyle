@@ -36,7 +36,7 @@ const Nav = {
 
         <div class="topnav__right">
           <div class="topnav__bookings" onclick="Router.navigate('/my-bookings')" title="My Bookings">
-            <span style="display:flex">${Icons.clipboard(18)}</span>
+            <span style="display:flex">${Icons.bell(18)}</span>
             ${bookingCount > 0 ? `<span class="topnav__bookings-count">${bookingCount}</span>` : ''}
           </div>
 
@@ -74,6 +74,10 @@ const Nav = {
           <div class="mobile-menu__user-info">
             <span class="mobile-menu__user-name">${user.name}</span>
             <span class="mobile-menu__user-tier" style="color:${tierConfig.color}">${tierConfig.label} Card</span>
+          </div>
+          <div class="mobile-menu__bell" onclick="event.stopPropagation();Nav._closeMobile();Router.navigate('/my-bookings');" title="My Bookings">
+            ${Icons.bell(20)}
+            ${bookingCount > 0 ? `<span class="mobile-menu__bell-count">${bookingCount}</span>` : ''}
           </div>
         </div>
         <div class="mobile-menu__grid">

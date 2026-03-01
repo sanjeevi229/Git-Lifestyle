@@ -43,7 +43,6 @@ const LoginPage = {
     delegate('#app', 'click', '.login-persona', (e, el) => {
       const userId = el.dataset.userId;
       if (Auth.login(userId)) {
-        Toast.show('Welcome!', 'Signed in successfully.', 'success');
         Router.navigate('/home');
       }
     });

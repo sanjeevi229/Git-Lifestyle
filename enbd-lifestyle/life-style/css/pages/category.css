@@ -116,7 +116,8 @@
 }
 .cat-advanced-panel.open { display: flex; }
 .cat-advanced-row { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; }
-.cat-advanced-row label { font-size: 13px; font-weight: 600; color: var(--grey); white-space: nowrap; }
+.cat-advanced-row label { font-size: 13px; font-weight: 600; color: var(--grey); white-space: nowrap; width: 75px; flex-shrink: 0; }
+.cat-advanced-row .form-select { flex: 1; }
 
 /* Subcategory grid */
 .cat-subcat-grid {
@@ -131,7 +132,7 @@
   cursor: pointer; transition: all var(--ease);
   text-align: center; user-select: none;
 }
-.cat-subcat-card:hover { background: var(--white); border-color: rgba(7,36,71,0.2); transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+.cat-subcat-card:hover { background: var(--white); border-color: rgba(7,36,71,0.2); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
 .cat-subcat-card.active {
   background: var(--white); border-color: var(--charcoal);
   box-shadow: 0 0 0 1px var(--charcoal);
@@ -163,6 +164,8 @@
 .cat-location-pill.active {
   background: var(--charcoal); border-color: var(--charcoal); color: var(--white);
 }
+.cat-location-pill--near { display: inline-flex; align-items: center; gap: 5px; }
+.cat-location-pill--near .icon { width: 14px; height: 14px; }
 
 /* ── Section Header (title + description above filters) ── */
 .cat-section-header { padding-top: var(--space-xl); margin-bottom: var(--space-md); }

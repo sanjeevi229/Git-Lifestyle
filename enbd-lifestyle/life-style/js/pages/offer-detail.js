@@ -23,8 +23,17 @@ const OfferDetailPage = {
     const merchant = Store.getMerchant(offer.merchantId);
     const saved = (Store.get('savedOffers') || []).includes(offer.id);
     const savedClass = saved ? ' is-saved' : '';
-    const tierLabel = Format.tierLabel(offer.minTier);
-    const isExclusive = offer.minTier !== 'classic';
+    const discountLabel = Format.discountLabel(offer);
+
+    // Eligible card tiers
+    const allTiers = ['classic', 'gold', 'platinum', 'infinite', 'private'];
+    const minIdx = allTiers.indexOf(offer.minTier);
+    const eligibleTiers = allTiers.slice(minIdx >= 0 ? minIdx : 0).map(t => Format.tierLabel(t));
+
+    // Similar offers (same category, different merchant)
+    const similarOffers = (Store.get('offers') || [])
+      .filter(o => o.category === offer.category && o.id !== offer.id)
+      .slice(0, 8);
 
     return `
       <div class="page">
@@ -32,143 +41,176 @@ const OfferDetailPage = {
         <main class="page__main page__main--full page__main--od">
 
           <!-- Hero Carousel -->
-          ${this._renderHeroCarousel(offer, merchant, tierLabel, isExclusive)}
+          ${this._renderHeroCarousel(offer)}
 
-          <!-- Experience Highlight Strip -->
-          ${this._renderExperienceStrip(offer, merchant)}
+          <!-- Detail Content -->
+          <div class="od-content">
 
-          <div class="container">
+            <!-- Breadcrumb -->
             <div class="breadcrumb">
               <span class="breadcrumb__item" onclick="Router.navigate('/home')">Home</span>
               <span class="breadcrumb__sep">›</span>
               <span class="breadcrumb__item" onclick="Router.navigate('/category/${offer.category}')">${Format.categoryLabel(offer.category)}</span>
               <span class="breadcrumb__sep">›</span>
-              <span class="breadcrumb__current">${offer.title}</span>
+              <span class="breadcrumb__current">${merchant ? merchant.name : offer.title}</span>
             </div>
 
-            <div class="od-body">
-              <!-- Left column: About Merchant -->
-              ${merchant ? `
-                <div class="od-about">
-                  <div class="od-about__banner">
-                    <img src="${merchant.image}" alt="${merchant.name}" />
-                  </div>
-                  <div class="od-about__body">
-                    <div class="od-about__top">
-                      <div>
-                        <h3 class="od-about__title">${merchant.name}</h3>
-                        <div class="od-about__tags">
-                          ${merchant.cuisine ? `<span class="od-about__tag">${merchant.cuisine}</span>` : ''}
-                          <span class="od-about__tag">${merchant.area}</span>
-                        </div>
-                      </div>
-                      <div class="od-about__rating">
-                        ${Icons.star(12)}
-                        <span class="od-about__rating-num">${Number(merchant.rating).toFixed(1)}</span>
-                      </div>
-                    </div>
-                    <p class="od-about__desc">${merchant.description}</p>
-                    <div class="od-about__meta">
-                      <div class="od-about__meta-item">${Icons.mapPin(14)} <span>${merchant.location}</span></div>
-                      <div class="od-about__meta-item">${Icons.clock(14)} <span>${merchant.openingHours}</span></div>
-                      <div class="od-about__meta-item">${Icons.phone(14)} <span>${merchant.phone}</span></div>
-                    </div>
-                    <div class="od-about__actions">
-                      <button class="od-about__action-btn" id="merchantCallBtn">
-                        ${Icons.phone(14)}
-                        <span>Call</span>
-                      </button>
-                      <button class="od-about__action-btn" id="merchantDirectionsBtn">
-                        ${Icons.mapPin(14)}
-                        <span>Directions</span>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="od-about__map" onclick="window.open('https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(merchant.location + ', Dubai, UAE')}', '_blank')">
-                    <div class="od-about__map-frame">
-                      ${Icons.mapPin(18)}
-                      <span class="od-about__map-area">${merchant.location}</span>
-                    </div>
-                    <div class="od-about__map-link">
-                      <span>Open in Google Maps</span>
-                    </div>
-                  </div>
+            <!-- Header: name + discount -->
+            <div class="od-detail__header">
+              <h1 class="od-detail__name">${merchant ? merchant.name : offer.title}</h1>
+              <span class="od-detail__discount">${discountLabel}</span>
+            </div>
+
+            <!-- Info grid -->
+            <div class="od-detail__info">
+              ${merchant && merchant.cuisine ? `
+                <div class="od-detail__info-item">
+                  ${Icons.utensils(16)}
+                  <span>${merchant.cuisine}</span>
                 </div>
               ` : ''}
+              ${merchant && merchant.costForTwo ? `
+                <div class="od-detail__info-item">
+                  ${Icons.creditCard(16)}
+                  <span>Cost for two AED ${merchant.costForTwo}</span>
+                </div>
+              ` : ''}
+              ${merchant ? `
+                <div class="od-detail__info-item">
+                  ${Icons.mapPin(16)}
+                  <span>${merchant.area}</span>
+                </div>
+              ` : ''}
+              <div class="od-detail__info-item">
+                ${Icons.calendar(16)}
+                <span>Until ${Format.date(offer.validUntil)}</span>
+              </div>
+            </div>
 
-              <!-- Right column: Offer details -->
-              <div class="od-main">
-                <div class="od-panel">
-                  <!-- Unified info row -->
-                  <div class="od-panel__info-row">
-                    <span class="od-panel__info-item">${Icons.tag(14)} ${Format.discountLabel(offer)}</span>
-                    <span class="od-panel__info-sep"></span>
-                    <span class="od-panel__info-item">${Icons.calendar(14)} Valid until ${Format.date(offer.validUntil)}</span>
-                    ${isExclusive ? `
-                      <span class="od-panel__info-sep"></span>
-                      <span class="od-panel__info-item">${Icons.creditCard(14)} ${tierLabel}+</span>
-                    ` : ''}
+            <!-- Highlights -->
+            <div class="od-section">
+              <h3 class="od-section__title">Highlights</h3>
+              <ul class="od-section__list">
+                <li>${discountLabel} exclusive offer for Demo cardholders</li>
+                ${merchant && merchant.cuisine ? `<li>${merchant.cuisine} dining experience at ${merchant.area}</li>` : ''}
+                ${merchant && merchant.rating >= 4.5 ? `<li>Highly rated (${Number(merchant.rating).toFixed(1)}/5) by diners</li>` : ''}
+                ${offer.minTier !== 'classic' ? `<li>Available for ${Format.tierLabel(offer.minTier)} cardholders and above</li>` : ''}
+              </ul>
+            </div>
+
+            <!-- About Merchant -->
+            ${merchant ? `
+              <div class="od-section">
+                <h3 class="od-section__title">About ${merchant.name}</h3>
+                <p class="od-section__text">${merchant.description}</p>
+              </div>
+            ` : ''}
+
+            <!-- About the deal -->
+            <div class="od-section">
+              <h3 class="od-section__title">About the deal</h3>
+              <p class="od-section__text">${offer.description}</p>
+            </div>
+
+            <!-- Terms and Conditions -->
+            ${offer.terms && offer.terms.length ? `
+              <div class="od-section">
+                <h3 class="od-section__title">Terms and Conditions</h3>
+                <ul class="od-section__list od-section__list--plain">
+                  ${offer.terms.map(t => `<li>${t}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+
+            <!-- Eligible cards -->
+            <div class="od-section">
+              <h3 class="od-section__title">Eligible cards</h3>
+              <ul class="od-section__list od-section__list--plain">
+                ${eligibleTiers.map(t => `<li>${t} Card</li>`).join('')}
+              </ul>
+            </div>
+
+            <!-- Contact details -->
+            ${merchant ? `
+              <div class="od-section">
+                <h3 class="od-section__title">Contact details</h3>
+                <div class="od-contact">
+                  <div class="od-contact__item">
+                    <div class="od-contact__icon">${Icons.phone(20)}</div>
+                    <div class="od-contact__body">
+                      <span class="od-contact__label">Mobile</span>
+                      <span class="od-contact__value">${merchant.phone}</span>
+                    </div>
                   </div>
-
-                  <!-- Title -->
-                  <h1 class="od-panel__title">${offer.title}</h1>
-
-                  <!-- Rating (subtle) -->
-                  ${merchant ? `
-                    <div class="od-panel__rating">
-                      ${Icons.star(14)} <span>${Number(merchant.rating).toFixed(1)}</span>
-                      <span class="od-panel__rating-sep">&middot;</span>
-                      <span class="od-panel__rating-label">${merchant.name}</span>
+                  <div class="od-contact__item">
+                    <div class="od-contact__icon">${Icons.globe(20)}</div>
+                    <div class="od-contact__body">
+                      <span class="od-contact__label">Website</span>
+                      <span class="od-contact__value">www.demo-lifestyle.ae</span>
                     </div>
-                  ` : ''}
-
-                  <!-- Description -->
-                  <p class="od-panel__desc">${offer.description}</p>
-
-                  <!-- Why you'll love it -->
-                  ${merchant ? `
-                    <div class="od-highlights-mini">
-                      <h4 class="od-highlights-mini__title">Why you'll love it</h4>
-                      <ul class="od-highlights-mini__list">
-                        <li>${Format.discountLabel(offer)} exclusive offer for Demo cardholders</li>
-                        ${merchant.cuisine ? `<li>${merchant.cuisine} dining experience at ${merchant.area}</li>` : ''}
-                        ${merchant.rating >= 4.5 ? `<li>Highly rated (${Number(merchant.rating).toFixed(1)}/5) by diners</li>` : ''}
-                      </ul>
-                    </div>
-                  ` : ''}
-
-                  <!-- Desktop CTA -->
-                  <div class="od-cta-group">
-                    <div class="od-cta-desktop" id="od-cta-desktop">
-                      <button class="btn btn--primary btn--lg btn--full od-cta-book" onclick="Router.navigate('/booking/${offer.id}')">
-                        Reserve Now
-                      </button>
-                      <button class="btn btn--ghost btn--lg od-cta-save${savedClass}" onclick="OfferDetailPage._toggleSave('${offer.id}')">
-                        ${Icons.heart(18)} Save
-                      </button>
-                    </div>
-                    ${isExclusive ? `<p class="od-cta-note">Available for ${tierLabel} Cardholders and above</p>` : ''}
-                    <p class="od-cta-reward">${Icons.gift(14)} Earn reward points on this booking</p>
                   </div>
-
-                  <!-- Terms (collapsible — minimal) -->
-                  <div class="od-terms" id="od-terms-block">
-                    <button class="od-terms__toggle" id="od-terms-toggle" aria-expanded="false">
-                      <span class="od-terms__title">Terms & Conditions</span>
-                      <span class="od-terms__chevron">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-                      </span>
-                    </button>
-                    <div class="od-terms__body" id="od-terms-body">
-                      <ul class="od-terms__list">
-                        ${(offer.terms || []).map(t => `<li>${t}</li>`).join('')}
-                      </ul>
+                  <div class="od-contact__item">
+                    <div class="od-contact__icon">
+                      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="od-contact__body">
+                      <span class="od-contact__label">Email</span>
+                      <span class="od-contact__value">support@demo-lifestyle.ae</span>
+                    </div>
+                  </div>
+                  <div class="od-contact__item">
+                    <div class="od-contact__icon">${Icons.clock(20)}</div>
+                    <div class="od-contact__body">
+                      <span class="od-contact__label">Timing</span>
+                      <span class="od-contact__value">${merchant.openingHours}</span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ` : ''}
+
+
           </div>
+
+          <!-- Similar places (full-width, outside od-content) -->
+          ${similarOffers.length ? `
+            <section class="od-similar">
+              <div class="carousel-header">
+                <div>
+                  <h3 class="carousel-header__title">Similar places for you</h3>
+                  <p class="carousel-header__subtitle">Steal these deals</p>
+                </div>
+              </div>
+              <div class="carousel-wrapper">
+                <button class="carousel-arrow carousel-arrow--left" data-carousel="od-similar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <div class="carousel-track od-similar__track" id="od-similar-track">
+                  ${similarOffers.map(o => {
+                    const m = Store.getMerchant(o.merchantId);
+                    return `
+                      <div class="od-similar__card" onclick="Router.navigate('/offer/${o.id}')">
+                        <div class="od-similar__img card-hover-zone">
+                          <img src="${m ? m.image : (o.image || (o.images && o.images[0]))}" alt="${m ? m.name : o.title}" />
+                          ${m && m.rating ? `<span class="od-similar__rating">★ ${Number(m.rating).toFixed(1)}</span>` : ''}
+                          <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${(m ? m.name : o.title).replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
+                          <div class="card-hover-zone__overlay">
+                            ${m && m.area ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${m.area}</span>` : ''}
+                            <button class="card-hover-zone__cta" onclick="event.stopPropagation();Router.navigate('/booking/${o.id}')">Book Now</button>
+                          </div>
+                        </div>
+                        <div class="od-similar__body">
+                          <h4 class="od-similar__name">${m ? m.name : o.title}</h4>
+                          <p class="od-similar__meta">${m ? `${m.cuisine || ''} · ${m.area}` : ''}</p>
+                          ${m && m.priceRange ? `<p class="od-similar__price">${m.priceRange}</p>` : ''}
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+                <button class="carousel-arrow carousel-arrow--right" data-carousel="od-similar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+              </div>
+            </section>
+          ` : ''}
+
         </main>
 
         <!-- Sticky Mobile CTA -->
@@ -261,50 +303,32 @@ const OfferDetailPage = {
   mount() {
     Nav.mount();
 
+    // Similar places carousel arrows
+    Carousel.mountAll();
+
     // Hero carousel
     this._mountHeroCarousel();
 
-    // Terms toggle
-    const termsToggle = $('#od-terms-toggle');
-    const termsBlock = $('#od-terms-block');
-    if (termsToggle && termsBlock) {
-      termsToggle.addEventListener('click', () => {
-        termsBlock.classList.toggle('od-terms--expanded');
-        const expanded = termsBlock.classList.contains('od-terms--expanded');
-        termsToggle.setAttribute('aria-expanded', expanded);
-      });
-    }
+    // Mobile tap-to-reveal overlay for similar places cards
+    this._setupTapOverlay();
 
-    // Merchant action buttons
-    const callBtn = $('#merchantCallBtn');
-    if (callBtn) {
-      callBtn.addEventListener('click', () => {
-        Toast.show('Calling Restaurant', 'Opening your phone dialler now.', 'info');
-      });
-    }
-    const dirBtn = $('#merchantDirectionsBtn');
-    if (dirBtn) {
-      dirBtn.addEventListener('click', () => {
-        Toast.show('Opening Maps', 'Directions will open in your maps app.', 'info');
-      });
-    }
-
-    // Sticky CTA — on mobile it's always visible via CSS media query.
-    // On desktop, IntersectionObserver shows it when the desktop CTA scrolls out.
-    const desktopCta = $('#od-cta-desktop');
+    // Sticky CTA — on mobile always visible via CSS. On desktop, show when scrolling past content.
     const stickyCta = $('#od-sticky-cta');
-    if (desktopCta && stickyCta && window.innerWidth > 900) {
-      this._stickyObserver = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            stickyCta.classList.remove('od-sticky-cta--visible');
-          } else {
-            stickyCta.classList.add('od-sticky-cta--visible');
-          }
-        },
-        { threshold: 0 }
-      );
-      this._stickyObserver.observe(desktopCta);
+    if (stickyCta && window.innerWidth > 900) {
+      const content = $('.od-content');
+      if (content) {
+        this._stickyObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              stickyCta.classList.remove('od-sticky-cta--visible');
+            } else {
+              stickyCta.classList.add('od-sticky-cta--visible');
+            }
+          },
+          { threshold: 0 }
+        );
+        this._stickyObserver.observe(content);
+      }
     }
   },
 
@@ -317,9 +341,13 @@ const OfferDetailPage = {
       clearInterval(this._heroAutoplay);
       this._heroAutoplay = null;
     }
+    if (this._onTapOutside) {
+      document.removeEventListener('touchstart', this._onTapOutside);
+      this._onTapOutside = null;
+    }
   },
 
-  _renderHeroCarousel(offer, merchant, tierLabel, isExclusive) {
+  _renderHeroCarousel(offer) {
     const images = offer.images && offer.images.length >= 2
       ? offer.images
       : [offer.image];
@@ -334,25 +362,15 @@ const OfferDetailPage = {
             </div>
           `).join('')}
         </div>
+        <!-- Share button -->
+        <button class="od-hero__share" onclick="cardShare('${offer.title.replace(/'/g, "\\'")}','/offer/${offer.id}')" aria-label="Share">
+          ${Icons.share(18)}
+        </button>
         ${hasMultiple ? `
-          <button class="od-hero__arrow od-hero__arrow--prev" id="od-hero-prev" aria-label="Previous image">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button class="od-hero__arrow od-hero__arrow--next" id="od-hero-next" aria-label="Next image">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
           <div class="od-hero__dots" id="od-hero-dots">
             ${images.map((_, i) => `<span class="od-hero__dot${i === 0 ? ' od-hero__dot--active' : ''}" data-index="${i}"></span>`).join('')}
           </div>
         ` : ''}
-        <div class="od-hero__overlay"></div>
-        <span class="od-hero__badge">${isExclusive ? `Exclusive ${tierLabel} Privilege` : 'Demo Exclusive'}</span>
-        <div class="od-hero__gradient"></div>
-        <div class="od-hero__context">
-          ${merchant ? `<span class="od-hero__merchant">${merchant.name} · ${merchant.area}</span>` : ''}
-          <span class="od-hero__title">${offer.title}</span>
-        </div>
-        ${hasMultiple ? `<span class="od-hero__counter" id="od-hero-counter">1 / ${images.length}</span>` : ''}
       </div>
     `;
   },
@@ -373,21 +391,15 @@ const OfferDetailPage = {
     track.appendChild(firstClone);
     track.insertBefore(lastClone, realSlides[0]);
 
-    // Track layout: [lastClone] [slide0] [slide1] ... [slideN] [firstClone]
-    // trackIndex 0 = lastClone, 1 = slide0, ..., totalReal = slideN, totalReal+1 = firstClone
     const dots = $$('#od-hero-dots .od-hero__dot');
-    const counter = $('#od-hero-counter');
-    const prevBtn = $('#od-hero-prev');
-    const nextBtn = $('#od-hero-next');
-    let currentIndex = 0;    // real index (0-based)
-    let trackIndex = 1;      // position in track (1 = first real slide)
+    let currentIndex = 0;
+    let trackIndex = 1;
     let isTransitioning = false;
 
     const setPosition = (idx, animate) => {
       if (!animate) track.style.transition = 'none';
       track.style.transform = `translateX(-${idx * 100}%)`;
       if (!animate) {
-        // Force reflow to apply instant position before re-enabling transition
         track.offsetHeight;
         track.style.transition = '';
       }
@@ -397,10 +409,8 @@ const OfferDetailPage = {
       dots.forEach((dot, i) => {
         dot.classList.toggle('od-hero__dot--active', i === currentIndex);
       });
-      if (counter) counter.textContent = `${currentIndex + 1} / ${totalReal}`;
     };
 
-    // Start at real slide 0 (trackIndex 1) — no animation
     setPosition(1, false);
 
     const goToSlide = (realIndex) => {
@@ -430,24 +440,17 @@ const OfferDetailPage = {
       setPosition(trackIndex, true);
     };
 
-    // After transition ends, silently jump if on a clone
     track.addEventListener('transitionend', (e) => {
       if (e.target !== track || e.propertyName !== 'transform') return;
       isTransitioning = false;
       if (trackIndex === 0) {
-        // On lastClone → jump to real last slide
         trackIndex = totalReal;
         setPosition(trackIndex, false);
       } else if (trackIndex === totalReal + 1) {
-        // On firstClone → jump to real first slide
         trackIndex = 1;
         setPosition(trackIndex, false);
       }
     });
-
-    // Arrow buttons
-    if (prevBtn) prevBtn.addEventListener('click', () => { goPrev(); resetAutoplay(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { goNext(); resetAutoplay(); });
 
     // Dot click
     dots.forEach(dot => {
@@ -482,7 +485,6 @@ const OfferDetailPage = {
         if (touchDeltaX < 0) { goNext(); } else { goPrev(); }
         resetAutoplay();
       } else {
-        // Snap back
         setPosition(trackIndex, true);
       }
     }, { passive: true });
@@ -497,7 +499,6 @@ const OfferDetailPage = {
     };
     startAutoplay();
 
-    // Pause on hover (desktop)
     const hero = track.closest('.od-hero');
     if (hero) {
       hero.addEventListener('mouseenter', () => clearInterval(this._heroAutoplay));
@@ -505,27 +506,21 @@ const OfferDetailPage = {
     }
   },
 
-  _renderExperienceStrip(offer, merchant) {
-    const chips = [];
-    if (merchant) {
-      if (merchant.cuisine) chips.push({ emoji: '🍽️', text: `${merchant.cuisine} Cuisine` });
-      if (merchant.rating >= 4.5) chips.push({ emoji: '⭐', text: `Top Rated (${Number(merchant.rating).toFixed(1)})` });
-      if (merchant.area) chips.push({ emoji: '📍', text: merchant.area });
-      const priceLabel = { '$': 'Budget Friendly', '$$': 'Casual Dining', '$$$': 'Upscale Dining', '$$$$': 'Fine Dining' };
-      if (merchant.priceRange) chips.push({ emoji: '✨', text: priceLabel[merchant.priceRange] || 'Dining' });
+  _setupTapOverlay() {
+    if ('ontouchstart' in window) {
+      this._onTapOutside = (e) => {
+        if (!e.target.closest('.card-hover-zone')) {
+          $$('.card-hover-zone.is-tapped').forEach(z => z.classList.remove('is-tapped'));
+        }
+      };
+      document.addEventListener('touchstart', this._onTapOutside, { passive: true });
+      $$('.od-similar .card-hover-zone').forEach(zone => {
+        zone.addEventListener('touchstart', () => {
+          $$('.card-hover-zone.is-tapped').forEach(z => { if (z !== zone) z.classList.remove('is-tapped'); });
+          zone.classList.add('is-tapped');
+        }, { passive: true });
+      });
     }
-    chips.push({ emoji: '🏷️', text: Format.discountLabel(offer) });
-    if (offer.minTier !== 'classic') chips.push({ emoji: '💳', text: `${Format.tierLabel(offer.minTier)}+ Card` });
-
-    if (chips.length === 0) return '';
-
-    return `
-      <div class="od-strip">
-        <div class="od-strip__inner">
-          ${chips.map(c => `<span class="od-strip__chip">${c.emoji} ${c.text}</span>`).join('')}
-        </div>
-      </div>
-    `;
   },
 
   _toggleSave(offerId) {
@@ -533,14 +528,11 @@ const OfferDetailPage = {
     const idx = saved.indexOf(offerId);
     if (idx > -1) {
       saved.splice(idx, 1);
-      Toast.show('Offer removed from saved', 'info');
     } else {
       saved.push(offerId);
-      Toast.show('Offer saved!', 'success');
     }
     Store.set('savedOffers', saved);
-    // Update visual state on all save buttons
-    $$('.od-cta-save, .od-sticky-cta__save').forEach(btn => {
+    $$('.od-sticky-cta__save').forEach(btn => {
       btn.classList.toggle('is-saved', saved.includes(offerId));
     });
   },
