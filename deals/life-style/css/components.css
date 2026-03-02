@@ -491,6 +491,14 @@
   background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 40%, transparent 100%);
 }
 
+/* Mobile: reveal overlay when card scrolls into view */
+@media (max-width: 900px) {
+  .card-hover-zone.in-view .card-hover-zone__overlay { opacity: 1; }
+  .card-hover-zone.in-view .card-hover-zone__location { transform: translateY(0); opacity: 1; }
+  .card-hover-zone.in-view .card-hover-zone__rating { transform: translateY(0); opacity: 1; }
+  .card-hover-zone.in-view .card-hover-zone__cta { transform: translateY(0); opacity: 1; }
+}
+
 /* ── SHARE BUTTON (shared across all deal cards) ── */
 .card-share-btn {
   position: absolute; top: 10px; right: 10px; z-index: 6;

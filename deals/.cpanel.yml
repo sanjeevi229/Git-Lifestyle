@@ -1,5 +1,4 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/janasenaandhra/public_html/
-    - /bin/cp -R life-style/* $DEPLOYPATH
+    - /bin/cp -R life-style/* /home/janasenaandhra/public_html/

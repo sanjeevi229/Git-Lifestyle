@@ -359,21 +359,14 @@ const HomePage = {
       window.addEventListener('scroll', this._onScroll, { passive: true });
     }
 
-    // Mobile tap-to-reveal overlay on card images
-    if ('ontouchstart' in window) {
-      this._onTapOutside = (e) => {
-        if (!e.target.closest('.card-hover-zone')) {
-          $$('.card-hover-zone.is-tapped').forEach(z => z.classList.remove('is-tapped'));
-        }
-      };
-      document.addEventListener('touchstart', this._onTapOutside, { passive: true });
-
-      $$('.card-hover-zone').forEach(zone => {
-        zone.addEventListener('touchstart', () => {
-          $$('.card-hover-zone.is-tapped').forEach(z => { if (z !== zone) z.classList.remove('is-tapped'); });
-          zone.classList.add('is-tapped');
-        }, { passive: true });
-      });
+    // Mobile: reveal overlay when card scrolls into view
+    if (window.innerWidth <= 900 && 'IntersectionObserver' in window) {
+      this._cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          entry.target.classList.toggle('in-view', entry.isIntersecting);
+        });
+      }, { threshold: 0.3 });
+      $$('.card-hover-zone').forEach(zone => this._cardObserver.observe(zone));
     }
   },
 
@@ -396,10 +389,10 @@ const HomePage = {
       if (bg) bg.removeEventListener('scroll', this._onBenefitsScroll);
       this._onBenefitsScroll = null;
     }
-    // Clean up mobile tap handler
-    if (this._onTapOutside) {
-      document.removeEventListener('touchstart', this._onTapOutside);
-      this._onTapOutside = null;
+    // Clean up mobile scroll observer
+    if (this._cardObserver) {
+      this._cardObserver.disconnect();
+      this._cardObserver = null;
     }
 
     // Pause and release all hero videos

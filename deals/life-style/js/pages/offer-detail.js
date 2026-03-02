@@ -341,9 +341,9 @@ const OfferDetailPage = {
       clearInterval(this._heroAutoplay);
       this._heroAutoplay = null;
     }
-    if (this._onTapOutside) {
-      document.removeEventListener('touchstart', this._onTapOutside);
-      this._onTapOutside = null;
+    if (this._cardObserver) {
+      this._cardObserver.disconnect();
+      this._cardObserver = null;
     }
   },
 
@@ -507,19 +507,13 @@ const OfferDetailPage = {
   },
 
   _setupTapOverlay() {
-    if ('ontouchstart' in window) {
-      this._onTapOutside = (e) => {
-        if (!e.target.closest('.card-hover-zone')) {
-          $$('.card-hover-zone.is-tapped').forEach(z => z.classList.remove('is-tapped'));
-        }
-      };
-      document.addEventListener('touchstart', this._onTapOutside, { passive: true });
-      $$('.od-similar .card-hover-zone').forEach(zone => {
-        zone.addEventListener('touchstart', () => {
-          $$('.card-hover-zone.is-tapped').forEach(z => { if (z !== zone) z.classList.remove('is-tapped'); });
-          zone.classList.add('is-tapped');
-        }, { passive: true });
-      });
+    if (window.innerWidth <= 900 && 'IntersectionObserver' in window) {
+      this._cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          entry.target.classList.toggle('in-view', entry.isIntersecting);
+        });
+      }, { threshold: 0.3 });
+      $$('.od-similar .card-hover-zone').forEach(zone => this._cardObserver.observe(zone));
     }
   },
 
