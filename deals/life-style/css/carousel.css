@@ -44,8 +44,8 @@
 .carousel-arrow svg { display: block; }
 .carousel-arrow.visible { display: grid; }
 .carousel-arrow:hover { background: rgba(255,255,255,0.85); color: var(--charcoal); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
-.carousel-arrow--left { left: 16px; }
-.carousel-arrow--right { right: 16px; }
+.carousel-arrow--left { left: calc(var(--carousel-pad) - 52px); }
+.carousel-arrow--right { right: calc(var(--carousel-pad) - 52px); }
 
 /* Fixed-width cards inside carousels */
 .carousel-track .offer-card    { width: 280px; min-width: 280px; }
