@@ -29,7 +29,7 @@ const HomePage = {
               preload="${i === 0 ? 'auto' : 'none'}"
               aria-hidden="true"></video>
           ` : ''}
-          <img class="hero__fallback-img" src="${s.image}" alt="" aria-hidden="true" style="${videoSrc ? 'display:none' : 'display:block'}" />
+          ${!videoSrc ? `<img class="hero__bg-img" src="${s.image}" alt="" aria-hidden="true" />` : ''}
           <div class="hero__overlay"></div>
           <div class="hero__content">
             ${s.limitedTag ? `<span class="hero__limited-tag">${s.limitedTag}</span>` : ''}
@@ -324,17 +324,11 @@ const HomePage = {
     // Play first slide video
     this._playActiveVideo();
 
-    // Video fallback handling
+    // Video error handling
     $$('.hero__video').forEach(video => {
       video.addEventListener('error', () => {
         video.style.display = 'none';
-        const fallback = video.parentElement.querySelector('.hero__fallback-img');
-        if (fallback) fallback.style.display = 'block';
       });
-      video.addEventListener('canplay', () => {
-        const fallback = video.parentElement.querySelector('.hero__fallback-img');
-        if (fallback) fallback.style.display = 'none';
-      }, { once: true });
     });
 
     // Parallax scroll effect (desktop only)
@@ -438,10 +432,7 @@ const HomePage = {
         }
         video.currentTime = 0;
         video.play().catch(() => {
-          // Autoplay blocked — show fallback image
-          video.style.display = 'none';
-          const fallback = video.parentElement.querySelector('.hero__fallback-img');
-          if (fallback) fallback.style.display = 'block';
+          // Autoplay blocked — video poster will show
         });
       } else {
         video.pause();
