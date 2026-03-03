@@ -114,6 +114,14 @@ const CONFIG = {
       { id: 'Camping',      label: 'Camping',     icon: 'tent' },
       { id: 'Visa',         label: 'Visa',        icon: 'passport' },
     ],
+    flights: [
+      { id: 'Economy',       label: 'Economy',       icon: 'plane' },
+      { id: 'Business',      label: 'Business',      icon: 'briefcase' },
+      { id: 'First Class',   label: 'First Class',   icon: 'crown' },
+      { id: 'Domestic',      label: 'Domestic',       icon: 'home' },
+      { id: 'International', label: 'International',  icon: 'globe' },
+      { id: 'Weekend',       label: 'Weekend Deals',  icon: 'calendar' },
+    ],
     events: [
       { id: 'concert',  label: 'Concerts',      icon: 'music' },
       { id: 'comedy',   label: 'Comedy',         icon: 'mic' },
@@ -131,6 +139,7 @@ const CONFIG = {
     wellness:      ['Palm Jumeirah', 'Dubai Marina', 'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'Bur Dubai'],
     entertainment: ['Downtown Dubai', 'Al Barsha', 'Jumeirah', 'Dubai Marina', 'Deira', 'Palm Jumeirah'],
     shopping:      ['Downtown Dubai', 'Al Barsha', 'Bur Dubai', 'Deira', 'Dubai Marina', 'Jumeirah'],
+    flights:       ['Online', 'Dubai', 'Abu Dhabi', 'Sharjah', 'DXB Terminal 1', 'DXB Terminal 3'],
     travel:        ['Online', 'Palm Jumeirah', 'Dubai Marina', 'Downtown Dubai', 'DIFC', 'Jumeirah'],
     events:        ['Downtown Dubai', 'Jumeirah', 'Palm Jumeirah', 'City Walk', 'Al Quoz', 'Al Barsha', 'Yas Island', 'Al Garhoud'],
     default:       ['Downtown Dubai', 'Jumeirah', 'Al Barsha', 'Bur Dubai', 'Deira', 'DIFC', 'Palm Jumeirah', 'Dubai Marina'],

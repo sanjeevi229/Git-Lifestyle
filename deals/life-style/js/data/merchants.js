@@ -177,6 +177,48 @@ const MERCHANTS = [
     description: 'Thai-inspired luxury beach resort on the Palm with award-winning spa.',
     openingHours: '24/7', phone: '+971 4 567 8888',
   },
+
+  // ── Flight Merchants ──
+  {
+    id: 'MER-024', name: 'Emirates Airlines', category: 'flights', cuisine: null,
+    location: 'Online & Airport', area: 'Online',
+    rating: 4.9, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&q=80',
+    description: 'Award-winning international airline headquartered in Dubai with global routes.',
+    openingHours: '24/7', phone: '+971 600 555 555',
+  },
+  {
+    id: 'MER-025', name: 'Etihad Airways', category: 'flights', cuisine: null,
+    location: 'Online & Airport', area: 'Online',
+    rating: 4.8, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=600&q=80',
+    description: 'National airline of the UAE offering luxury travel from Abu Dhabi.',
+    openingHours: '24/7', phone: '+971 600 508 080',
+  },
+  {
+    id: 'MER-026', name: 'flydubai', category: 'flights', cuisine: null,
+    location: 'Online & Airport', area: 'Online',
+    rating: 4.5, priceRange: '$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1529074963764-98f45c47344b?w=600&q=80',
+    description: 'Dubai-based value carrier with over 100 destinations worldwide.',
+    openingHours: '24/7', phone: '+971 600 544 445',
+  },
+  {
+    id: 'MER-027', name: 'Air Arabia', category: 'flights', cuisine: null,
+    location: 'Online & Airport', area: 'Online',
+    rating: 4.4, priceRange: '$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=600&q=80',
+    description: 'Leading low-cost carrier in the Middle East based in Sharjah.',
+    openingHours: '24/7', phone: '+971 6 558 0000',
+  },
+  {
+    id: 'MER-028', name: 'Qatar Airways', category: 'flights', cuisine: null,
+    location: 'Online & Airport', area: 'Online',
+    rating: 4.9, priceRange: '$$$$', costForTwo: null,
+    image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=600&q=80',
+    description: 'World-class airline connecting Dubai to 150+ global destinations.',
+    openingHours: '24/7', phone: '+971 4 229 2229',
+  },
 ];
 
 window.MERCHANTS = MERCHANTS;
