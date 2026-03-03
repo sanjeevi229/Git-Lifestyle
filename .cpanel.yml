@@ -1,4 +1,6 @@
 ---
 deployment:
   tasks:
-    - /bin/cp -R deals/life-style/* /home/janasenaandhra/public_html/
+    - export DEPLOY_GIT_DIR=/home/janasenaandhra/repositories/public_html
+    - cd $DEPLOY_GIT_DIR && git fetch origin && git reset --hard origin/main
+    - /bin/cp -R $DEPLOY_GIT_DIR/deals/life-style/* /home/janasenaandhra/public_html/
