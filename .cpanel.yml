@@ -1,0 +1,4 @@
+---
+deployment:
+  tasks:
+    - /bin/cp -R deals/life-style/* /home/janasenaandhra/public_html/
