@@ -41,7 +41,7 @@ const GOLF_COURSES = [
     gallery: [
       'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80',
       'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
-      'https://images.unsplash.com/photo-1600005082646-00d8c5c23e3c?w=800&q=80',
+      'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
     ],
     location: 'Deira, Dubai',
     area: 'Deira',
@@ -70,7 +70,7 @@ const GOLF_COURSES = [
     image: 'https://images.unsplash.com/photo-1592919505780-303950717480?w=800&q=80',
     gallery: [
       'https://images.unsplash.com/photo-1592919505780-303950717480?w=800&q=80',
-      'https://images.unsplash.com/photo-1600005082646-00d8c5c23e3c?w=800&q=80',
+      'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
       'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80',
     ],
     location: 'Jumeirah Village, Dubai',
@@ -97,9 +97,9 @@ const GOLF_COURSES = [
     id: 'GC-004',
     name: 'Al Hamra Golf Club',
     subtitle: 'Links Course',
-    image: 'https://images.unsplash.com/photo-1600005082646-00d8c5c23e3c?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
     gallery: [
-      'https://images.unsplash.com/photo-1600005082646-00d8c5c23e3c?w=800&q=80',
+      'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
       'https://images.unsplash.com/photo-1592919505780-303950717480?w=800&q=80',
       'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
     ],
@@ -157,10 +157,10 @@ const GOLF_COURSES = [
     id: 'GC-006',
     name: 'Yas Links Abu Dhabi',
     subtitle: 'Links Course',
-    image: 'https://images.unsplash.com/photo-1632932897267-4c3d17804a9b?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?w=800&q=80',
     gallery: [
-      'https://images.unsplash.com/photo-1632932897267-4c3d17804a9b?w=800&q=80',
-      'https://images.unsplash.com/photo-1600005082646-00d8c5c23e3c?w=800&q=80',
+      'https://images.unsplash.com/photo-1622396481328-9b1b78cdd9fd?w=800&q=80',
+      'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
       'https://images.unsplash.com/photo-1592919505780-303950717480?w=800&q=80',
     ],
     location: 'Yas Island, Abu Dhabi',
@@ -221,7 +221,7 @@ const GOLF_COURSES = [
     gallery: [
       'https://images.unsplash.com/photo-1596727362302-b8d891c42ab8?w=800&q=80',
       'https://images.unsplash.com/photo-1592919505780-303950717480?w=800&q=80',
-      'https://images.unsplash.com/photo-1600005082646-00d8c5c23e3c?w=800&q=80',
+      'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=800&q=80',
     ],
     location: 'DAMAC Hills, Dubai',
     area: 'DAMAC Hills',

@@ -165,7 +165,7 @@ const GolfDetailPage = {
               </div>
               ${isAccessible ? `
                 <button class="btn btn--primary btn--lg btn--full" style="margin-top:20px" onclick="Router.navigate('/golf/book/${course.id}')">
-                  Book a Tee Time
+                  Book Now
                 </button>
               ` : `
                 <div class="golf-detail__locked-msg">
@@ -218,7 +218,7 @@ const GolfDetailPage = {
         ${isAccessible ? `
           <div class="golf-sticky-cta" id="golf-sticky-cta">
             <button class="btn btn--primary btn--lg golf-sticky-cta__btn" onclick="Router.navigate('/golf/book/${course.id}')">
-              Book Tee Time
+              Book Now
             </button>
           </div>
         ` : ''}

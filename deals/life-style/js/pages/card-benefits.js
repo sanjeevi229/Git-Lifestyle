@@ -12,7 +12,6 @@ const CardBenefitsPage = {
       { key: 'wellness', label: 'Wellness', icon: Icons.heart(16) },
       { key: 'travel', label: 'Travel', icon: Icons.plane(16) },
       { key: 'shopping', label: 'Shopping', icon: Icons.shoppingBag(16) },
-      { key: 'concierge', label: 'Concierge', icon: Icons.bell(16) },
       { key: 'lounge', label: 'Airport Lounge', icon: Icons.sofa(16) },
       { key: 'golf', label: 'Golf', icon: Icons.golf(16) },
       { key: 'points', label: 'Reward Points', icon: Icons.gem(16) },

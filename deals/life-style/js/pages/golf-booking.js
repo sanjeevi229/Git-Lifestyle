@@ -33,7 +33,7 @@ const GolfBookingPage = {
               <span class="breadcrumb__sep">›</span>
               <span class="breadcrumb__item" onclick="Router.navigate('/golf/${course.id}')">${course.name}</span>
               <span class="breadcrumb__sep">›</span>
-              <span class="breadcrumb__current">Book Tee Time</span>
+              <span class="breadcrumb__current">Book Now</span>
             </div>
 
             <div class="booking-layout">

@@ -20,14 +20,14 @@ const Nav = {
           <span class="topnav__link ${this._isActive('/home')}" onclick="Router.navigate('/home')">Home</span>
           <span class="topnav__link ${this._isActive('/category/dining')}" onclick="Router.navigate('/category/dining')">Dining</span>
           <span class="topnav__link ${this._isActive('/category/entertainment')}" onclick="Router.navigate('/category/entertainment')">Entertainment</span>
-          <span class="topnav__link ${this._isActive('/category/travel') || this._isActive('/category/hotels') || this._isActive('/category/flights')}" onclick="Router.navigate('/category/travel')">Travel</span>
+          <span class="topnav__link ${this._isActive('/category/travel') || this._isActive('/category/flights')}" onclick="Router.navigate('/category/travel')">Travel</span>
+          <span class="topnav__link ${this._isActive('/category/hotels')}" onclick="Router.navigate('/category/hotels')">Book Hotels</span>
           <span class="topnav__link ${this._isActive('/category/shopping')}" onclick="Router.navigate('/category/shopping')">Shopping</span>
           <div class="topnav__more">
             <span class="topnav__link topnav__more-trigger" id="moreMenuTrigger">More ▾</span>
             <div class="topnav__more-dropdown" id="moreDropdown">
               <span class="topnav__dropdown-item" onclick="Router.navigate('/category/wellness')">${Icons.heart(16)} Live Well</span>
               <span class="topnav__dropdown-item" onclick="Router.navigate('/category/events')">${Icons.ticket(16)} Events</span>
-              <span class="topnav__dropdown-item" onclick="Router.navigate('/category/concierge')">${Icons.bell(16)} Concierge</span>
               <span class="topnav__dropdown-item" onclick="Router.navigate('/category/promotions')">${Icons.tag(16)} Promotions</span>
               <span class="topnav__dropdown-item" onclick="Router.navigate('/card-benefits')">${Icons.creditCard(16)} Card Benefits</span>
             </div>
@@ -100,6 +100,10 @@ const Nav = {
           <div class="mobile-menu__item" onclick="Router.navigate('/category/travel'); Nav._closeMobile();">
             <span class="mobile-menu__item-icon">${Icons.plane(24)}</span>
             <span class="mobile-menu__item-label">Travel</span>
+          </div>
+          <div class="mobile-menu__item" onclick="Router.navigate('/category/hotels'); Nav._closeMobile();">
+            <span class="mobile-menu__item-icon">${Icons.home(24)}</span>
+            <span class="mobile-menu__item-label">Book Hotels</span>
           </div>
           <div class="mobile-menu__item" onclick="Router.navigate('/category/shopping'); Nav._closeMobile();">
             <span class="mobile-menu__item-icon">${Icons.shoppingBag(24)}</span>
@@ -218,20 +222,33 @@ const Nav = {
       }, { passive: true });
     }
 
-    // Sticky search — works on any page with .hero-search or .cat-hero__search
+    // Sticky search — shows on scroll past hero/cat search, or immediately on pages without one
     if (this._onStickyScroll) {
       window.removeEventListener('scroll', this._onStickyScroll);
     }
-    this._onStickyScroll = () => {
-      const trigger = $('.hero-search') || $('.cat-hero__search');
-      const stickyEl = $('#stickySearch');
-      if (!trigger || !stickyEl) return;
-      if (trigger.getBoundingClientRect().bottom < 0) {
-        stickyEl.classList.add('sticky-search--visible');
-      } else {
-        stickyEl.classList.remove('sticky-search--visible');
-      }
-    };
+    const heroTrigger = $('.hero-search') || $('.cat-hero__search');
+    const stickyEl = $('#stickySearch');
+    if (!heroTrigger && stickyEl) {
+      // No hero search on this page — show sticky search after a small scroll
+      this._onStickyScroll = () => {
+        if (window.scrollY > 80) {
+          stickyEl.classList.add('sticky-search--visible');
+        } else {
+          stickyEl.classList.remove('sticky-search--visible');
+        }
+      };
+    } else {
+      this._onStickyScroll = () => {
+        const t = $('.hero-search') || $('.cat-hero__search');
+        const s = $('#stickySearch');
+        if (!t || !s) return;
+        if (t.getBoundingClientRect().bottom < 0) {
+          s.classList.add('sticky-search--visible');
+        } else {
+          s.classList.remove('sticky-search--visible');
+        }
+      };
+    }
     window.addEventListener('scroll', this._onStickyScroll, { passive: true });
 
     const stickyInput = $('#stickySearchInput');
