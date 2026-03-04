@@ -1101,13 +1101,46 @@ const FlightBookingPage = {
     this._searchParams = { from, to, departureDate: depart, returnDate: ret || null, passengers: pax, cabin };
     if (this._directOnly) this._filterStops = 'direct';
 
-    this._flightResults = this._generateFlightResults();
-    this._step = 2;
+    // Get airport names for the loading screen
+    const fromCity = FLIGHT_AIRPORTS.find(a => a.code === from)?.city || from;
+    const toCity   = FLIGHT_AIRPORTS.find(a => a.code === to)?.city || to;
+
+    // Show loading animation
     const form = $('#flightBookingForm');
-    if (form) form.innerHTML = this._renderStep2();
+    if (form) {
+      form.innerHTML = `
+        <div class="fb-loading">
+          <div class="fb-loading__clouds">
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+          </div>
+          <div class="fb-loading__plane">✈️</div>
+          <div class="fb-loading__text">Searching flights<span class="fb-loading__dots"></span></div>
+          <div class="fb-loading__sub">Finding the best deals for you</div>
+          <div class="fb-loading__progress"><div class="fb-loading__progress-bar"></div></div>
+          <div class="fb-loading__route">${from} → ${to} · ${fromCity} to ${toCity}</div>
+        </div>
+      `;
+    }
     window.scrollTo(0, 0);
-    this._updateStickyCta();
-    this._setupStickyObserver();
+
+    // Hide sticky CTA during loading
+    const stickyCta = $('#booking-sticky-cta');
+    if (stickyCta) stickyCta.classList.remove('booking-sticky-cta--visible');
+
+    // After 5 seconds, generate results and show Step 2
+    setTimeout(() => {
+      this._flightResults = this._generateFlightResults();
+      this._step = 2;
+      const f = $('#flightBookingForm');
+      if (f) f.innerHTML = this._renderStep2();
+      window.scrollTo(0, 0);
+      this._updateStickyCta();
+      this._setupStickyObserver();
+    }, 5000);
   },
 
   // ── Step 3 → 4 transition ──

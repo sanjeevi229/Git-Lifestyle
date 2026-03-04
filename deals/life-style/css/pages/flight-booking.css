@@ -362,6 +362,113 @@
 }
 
 /* ══════════════════════════════════════════════
+   Loading Animation — Plane on Clouds
+   ══════════════════════════════════════════════ */
+
+.fb-loading {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 420px; padding: 40px 20px;
+  background: linear-gradient(180deg, #e8f0fe 0%, #f0f6ff 40%, #ffffff 100%);
+  border-radius: var(--radius-lg); border: 1px solid var(--grey-border);
+  overflow: hidden; position: relative;
+}
+
+/* ── Sky gradient overlay ── */
+.fb-loading::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, #c9ddf7 0%, transparent 100%);
+  opacity: 0.5;
+}
+
+/* ── Plane ── */
+.fb-loading__plane {
+  font-size: 48px; position: relative; z-index: 2;
+  animation: fb-plane-fly 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+}
+
+@keyframes fb-plane-fly {
+  0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+  25%      { transform: translate(12px, -10px) rotate(-4deg); }
+  50%      { transform: translate(0, -6px) rotate(-1deg); }
+  75%      { transform: translate(-12px, -10px) rotate(-3deg); }
+}
+
+/* ── Clouds ── */
+.fb-loading__clouds {
+  position: absolute; inset: 0; z-index: 1;
+  overflow: hidden; pointer-events: none;
+}
+
+.fb-loading__cloud {
+  position: absolute; font-size: 42px;
+  opacity: 0; animation: fb-cloud-drift linear infinite;
+}
+.fb-loading__cloud:nth-child(1) { top: 18%; animation-duration: 6s; animation-delay: 0s;   font-size: 38px; }
+.fb-loading__cloud:nth-child(2) { top: 42%; animation-duration: 5s; animation-delay: 1.5s; font-size: 50px; }
+.fb-loading__cloud:nth-child(3) { top: 65%; animation-duration: 7s; animation-delay: 0.8s; font-size: 34px; }
+.fb-loading__cloud:nth-child(4) { top: 28%; animation-duration: 5.5s; animation-delay: 2.5s; font-size: 44px; }
+.fb-loading__cloud:nth-child(5) { top: 55%; animation-duration: 6.5s; animation-delay: 3.5s; font-size: 36px; }
+
+@keyframes fb-cloud-drift {
+  0%   { left: 110%; opacity: 0; }
+  10%  { opacity: 0.35; }
+  90%  { opacity: 0.35; }
+  100% { left: -20%; opacity: 0; }
+}
+
+/* ── Text + dots ── */
+.fb-loading__text {
+  margin-top: 28px; font-size: 18px; font-weight: 700;
+  color: var(--charcoal); position: relative; z-index: 2;
+}
+.fb-loading__sub {
+  margin-top: 6px; font-size: 13px; color: var(--grey);
+  position: relative; z-index: 2;
+}
+.fb-loading__dots::after {
+  content: ''; animation: fb-dots 1.5s steps(4, end) infinite;
+}
+@keyframes fb-dots {
+  0%  { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+}
+
+/* ── Progress bar ── */
+.fb-loading__progress {
+  width: 220px; height: 4px; margin-top: 24px;
+  background: var(--grey-border); border-radius: 2px;
+  overflow: hidden; position: relative; z-index: 2;
+}
+.fb-loading__progress-bar {
+  height: 100%; width: 0;
+  background: var(--accent); border-radius: 2px;
+  animation: fb-progress-fill 5s ease-out forwards;
+}
+@keyframes fb-progress-fill {
+  0%   { width: 0; }
+  20%  { width: 30%; }
+  50%  { width: 55%; }
+  80%  { width: 82%; }
+  100% { width: 100%; }
+}
+
+/* ── Route badge ── */
+.fb-loading__route {
+  margin-top: 20px; padding: 8px 20px;
+  background: var(--white); border-radius: var(--radius-full);
+  border: 1px solid var(--grey-border);
+  font-size: 14px; font-weight: 700; color: var(--charcoal);
+  position: relative; z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* ══════════════════════════════════════════════
    Responsive
    ══════════════════════════════════════════════ */
 
