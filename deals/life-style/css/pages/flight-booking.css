@@ -372,6 +372,8 @@
   background: linear-gradient(180deg, #e8f0fe 0%, #f0f6ff 40%, #ffffff 100%);
   border-radius: var(--radius-lg); border: 1px solid var(--grey-border);
   overflow: hidden; position: relative;
+  /* Fill available viewport on mobile */
+  min-height: max(420px, calc(100vh - 200px));
 }
 
 /* ── Sky gradient overlay ── */
