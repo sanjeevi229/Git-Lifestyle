@@ -517,9 +517,13 @@
   .fb-itinerary__time { font-size: 18px; }
   .fb-itinerary__col { min-width: 70px; }
 
-  /* Passenger forms */
-  .fb-form-row { flex-direction: column; gap: 0; }
+  /* Passenger forms — keep side-by-side, tighter gap */
+  .fb-form-row { gap: 8px; }
+  .fb-form-row .form-group { margin-bottom: 10px; }
   .fb-passenger-card { padding: 16px; }
+  .fb-passenger-card .form-label { font-size: 11px; margin-bottom: 4px; }
+  .fb-passenger-card .form-input,
+  .fb-passenger-card .form-select { font-size: 16px; padding: 10px 12px; -webkit-appearance: none; }
   .fb-itinerary-card { padding: 16px; }
 
   /* Fare rules */
@@ -542,4 +546,17 @@
   .fb-quick-filters { gap: 6px; }
   .fb-flight-card__route { gap: 8px; }
   .fb-flight-card__endpoint { min-width: 44px; }
+
+  /* Tighter passenger form on small screens */
+  .fb-form-row { gap: 6px; }
+  .fb-form-row .form-group { margin-bottom: 8px; }
+}
+
+/* ── iOS Safari date input fix ── */
+input[type="date"].fb-pax-field,
+input[type="date"]#fbDepart,
+input[type="date"]#fbReturn {
+  -webkit-appearance: none;
+  min-height: 44px;
+  line-height: 1.2;
 }
