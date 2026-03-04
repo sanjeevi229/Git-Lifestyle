@@ -589,6 +589,21 @@ const FlightBookingPage = {
   _renderPassengerForm(index, total, user) {
     const isPrimary = index === 0;
     const pax = this._passengers[index] || {};
+
+    // Demo defaults for smooth prototype flow
+    const demoNames = [
+      { first: user.name.split(' ')[0] || 'Layla', last: user.name.split(' ').slice(1).join(' ') || 'Al Rashid' },
+      { first: 'Omar', last: 'Hassan' },
+      { first: 'Sara', last: 'Ahmed' },
+      { first: 'Khalid', last: 'Ibrahim' },
+    ];
+    const demo = demoNames[index] || demoNames[0];
+    const demoDob = '1990-05-15';
+    const demoPassport = `AB${1234567 + index}`;
+    const demoPassportExpiry = '2028-12-15';
+    const demoEmail = isPrimary ? (user.email || 'layla@demo.ae') : '';
+    const demoPhone = isPrimary ? '50 123 4567' : '';
+
     return `
       <div class="hb-card fb-passenger-card">
         <h2 class="hb-card__title">Passenger ${index + 1} ${total > 1 ? `of ${total}` : ''} ${isPrimary ? '<span class="text-muted">(Primary)</span>' : ''}</h2>
@@ -602,18 +617,18 @@ const FlightBookingPage = {
         <div class="fb-form-row">
           <div class="form-group" style="flex:1">
             <label class="form-label">First Name <span class="hb-required">*</span></label>
-            <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="firstName" placeholder="First name" value="${isPrimary ? (user.name.split(' ')[0] || '') : ''}" />
+            <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="firstName" placeholder="First name" value="${pax.firstName || demo.first}" />
           </div>
           <div class="form-group" style="flex:1">
             <label class="form-label">Last Name <span class="hb-required">*</span></label>
-            <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="lastName" placeholder="Last name" value="${isPrimary ? (user.name.split(' ').slice(1).join(' ') || '') : ''}" />
+            <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="lastName" placeholder="Last name" value="${pax.lastName || demo.last}" />
           </div>
         </div>
 
         <div class="fb-form-row">
           <div class="form-group" style="flex:1">
             <label class="form-label">Date of Birth <span class="hb-required">*</span></label>
-            <input type="date" class="form-input fb-pax-field" data-pax="${index}" data-field="dob" max="${new Date().toISOString().split('T')[0]}" />
+            <input type="date" class="form-input fb-pax-field" data-pax="${index}" data-field="dob" max="${new Date().toISOString().split('T')[0]}" value="${pax.dob || demoDob}" />
           </div>
           <div class="form-group" style="flex:1">
             <label class="form-label">Nationality <span class="hb-required">*</span></label>
@@ -636,11 +651,11 @@ const FlightBookingPage = {
         <div class="fb-form-row">
           <div class="form-group" style="flex:1">
             <label class="form-label">Passport Number <span class="hb-required">*</span></label>
-            <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="passport" placeholder="e.g. AB1234567" />
+            <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="passport" placeholder="e.g. AB1234567" value="${pax.passport || demoPassport}" />
           </div>
           <div class="form-group" style="flex:1">
             <label class="form-label">Passport Expiry <span class="hb-required">*</span></label>
-            <input type="date" class="form-input fb-pax-field" data-pax="${index}" data-field="passportExpiry" min="${new Date().toISOString().split('T')[0]}" />
+            <input type="date" class="form-input fb-pax-field" data-pax="${index}" data-field="passportExpiry" min="${new Date().toISOString().split('T')[0]}" value="${pax.passportExpiry || demoPassportExpiry}" />
           </div>
         </div>
 
@@ -648,7 +663,7 @@ const FlightBookingPage = {
           <div class="fb-form-row">
             <div class="form-group" style="flex:1">
               <label class="form-label">Email <span class="hb-required">*</span></label>
-              <input type="email" class="form-input fb-pax-field" data-pax="${index}" data-field="email" placeholder="Enter email" />
+              <input type="email" class="form-input fb-pax-field" data-pax="${index}" data-field="email" placeholder="Enter email" value="${pax.email || demoEmail}" />
             </div>
             <div class="form-group" style="flex:1">
               <label class="form-label">Phone <span class="hb-required">*</span></label>
@@ -657,7 +672,7 @@ const FlightBookingPage = {
                   <span class="hb-phone-input__flag">🇦🇪</span>
                   <span class="hb-phone-input__code">+971</span>
                 </div>
-                <input type="tel" class="form-input hb-phone-input__field fb-pax-field" data-pax="${index}" data-field="phone" placeholder="50 123 4567" />
+                <input type="tel" class="form-input hb-phone-input__field fb-pax-field" data-pax="${index}" data-field="phone" placeholder="50 123 4567" value="${pax.phone || demoPhone}" />
               </div>
             </div>
           </div>
