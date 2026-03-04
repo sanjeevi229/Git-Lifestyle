@@ -104,9 +104,9 @@
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
-  .booking-layout { grid-template-columns: 1fr; gap: var(--space-md); }
-  .booking-summary { position: static; box-shadow: none; }
-  .booking-form { padding: var(--space-md); box-shadow: none; }
+  .booking-layout { grid-template-columns: 1fr; gap: var(--space-md); overflow: hidden; }
+  .booking-summary { position: static; box-shadow: none; overflow: hidden; }
+  .booking-form { padding: var(--space-md); box-shadow: none; overflow: hidden; }
   .booking-confirm-details { padding: 16px; }
   .booking-confirm-row { gap: 12px; }
   .booking-confirm-row span:last-child { text-align: right; word-break: break-word; min-width: 0; }
@@ -123,8 +123,35 @@
   /* Reassurance tighter on mobile */
   .booking-reassurance { font-size: 11px; text-align: center; }
 
+  /* iOS Safari — prevent form input overflow & auto-zoom */
+  .booking-form .form-input,
+  .booking-form .form-select,
+  .booking-form .form-textarea {
+    font-size: 16px;
+    -webkit-appearance: none;
+    appearance: none;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 12px 14px;
+  }
+  .booking-form .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%236B6B6B'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+  .booking-form input[type="date"] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 44px;
+    line-height: 1.2;
+  }
+  .booking-form .form-group { margin-bottom: 16px; }
+
   /* Reduce button padding so flex pair doesn't overflow */
-  .booking-form .btn--lg { padding: 16px 20px; font-size: 14px; }
+  .booking-form .btn--lg { padding: 16px 20px; font-size: 14px; max-width: 100%; }
+  .booking-form .flex.gap-md { flex-wrap: nowrap; }
+  .booking-form .flex.gap-md .btn { min-width: 0; }
 
   /* Sticky CTA */
   .booking-sticky-cta {
