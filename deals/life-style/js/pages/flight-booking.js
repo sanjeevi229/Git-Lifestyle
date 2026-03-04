@@ -837,11 +837,14 @@ const FlightBookingPage = {
     errEl.textContent = message;
     const parent = field.closest('.hb-phone-input') || field;
     parent.parentNode.insertBefore(errEl, parent.nextSibling);
-    field.addEventListener('input', function handler() {
+    const clearError = () => {
       field.classList.remove('form-input--error');
       if (errEl.parentNode) errEl.remove();
-      field.removeEventListener('input', handler);
-    });
+      field.removeEventListener('input', clearError);
+      field.removeEventListener('change', clearError);
+    };
+    field.addEventListener('input', clearError);
+    field.addEventListener('change', clearError);
   },
 
   _collectPassengers() {
@@ -1078,23 +1081,46 @@ const FlightBookingPage = {
 
   // ── Search action ──
   _doSearch() {
-    const from = $('#fbFrom')?.value;
-    const to = $('#fbTo')?.value;
-    const depart = $('#fbDepart')?.value;
+    // Clear previous inline errors
+    $$('.fb-search-card .hb-field-error').forEach(el => el.remove());
+    $$('.fb-search-card .form-input--error').forEach(el => el.classList.remove('form-input--error'));
+
+    const fromEl = $('#fbFrom');
+    const toEl = $('#fbTo');
+    const departEl = $('#fbDepart');
+    const from = fromEl?.value;
+    const to = toEl?.value;
+    const depart = departEl?.value;
     const ret = $('#fbReturn')?.value;
     const pax = $('#fbPassengers')?.value || '1';
     const cabin = $('#fbCabin')?.value || 'economy';
 
-    if (!from || !to) {
-      if (window.Toast) Toast.show('Please select departure and destination airports', 'error');
-      return;
+    let hasError = false;
+    let firstError = null;
+
+    if (!from) {
+      this._showFieldError(fromEl, 'Please select a departure airport');
+      if (!firstError) firstError = fromEl;
+      hasError = true;
     }
-    if (from === to) {
-      if (window.Toast) Toast.show('Departure and destination cannot be the same', 'error');
-      return;
+    if (!to) {
+      this._showFieldError(toEl, 'Please select a destination airport');
+      if (!firstError) firstError = toEl;
+      hasError = true;
+    }
+    if (from && to && from === to) {
+      this._showFieldError(toEl, 'Destination cannot be the same as departure');
+      if (!firstError) firstError = toEl;
+      hasError = true;
     }
     if (!depart) {
-      if (window.Toast) Toast.show('Please select a departure date', 'error');
+      this._showFieldError(departEl, 'Please select a departure date');
+      if (!firstError) firstError = departEl;
+      hasError = true;
+    }
+
+    if (hasError) {
+      if (firstError) { firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); firstError.focus(); }
       return;
     }
 
