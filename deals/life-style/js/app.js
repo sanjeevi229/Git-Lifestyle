@@ -12,7 +12,10 @@
   Router.register('/home',              HomePage);
   Router.register('/category/:id',      CategoryPage);
   Router.register('/offer/:id',         OfferDetailPage);
-  Router.register('/booking/:offerId',  BookingPage);
+  Router.register('/book-dining/:offerId',  BookingPage);
+  Router.register('/book-entertainment/:offerId', EntertainmentBookingPage);
+  Router.register('/book-hotel/:offerId',         HotelBookingPage);
+  Router.register('/book-flight/:offerId',       FlightBookingPage);
   Router.register('/my-bookings',       MyBookingsPage);
   Router.register('/my-bookings/:id',   BookingDetailPage);
   Router.register('/card-benefits',     CardBenefitsPage);

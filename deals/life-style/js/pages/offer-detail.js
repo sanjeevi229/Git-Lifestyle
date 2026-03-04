@@ -87,6 +87,16 @@ const OfferDetailPage = {
               </div>
             </div>
 
+            <!-- Desktop CTA -->
+            <div class="od-cta-desktop">
+              <button class="btn btn--primary btn--lg od-cta-desktop__book" onclick="Router.navigate('${this._bookingRoute(offer.category, offer.id)}')">
+                ${offer.category === 'dining' ? 'Reserve Now' : 'Book Now'}
+              </button>
+              <button class="btn btn--ghost od-cta-desktop__save${savedClass}" onclick="OfferDetailPage._toggleSave('${offer.id}')">
+                ${Icons.heart(18)}
+              </button>
+            </div>
+
             <!-- Highlights -->
             <div class="od-section">
               <h3 class="od-section__title">Highlights</h3>
@@ -194,7 +204,7 @@ const OfferDetailPage = {
                           <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${(m ? m.name : o.title).replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
                           <div class="card-hover-zone__overlay">
                             ${m && m.area ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${m.area}</span>` : ''}
-                            <button class="card-hover-zone__cta" onclick="event.stopPropagation();Router.navigate('/booking/${o.id}')">Book Now</button>
+                            <button class="card-hover-zone__cta" onclick="event.stopPropagation();Router.navigate('${this._bookingRoute(o.category, o.id)}')">Book Now</button>
                           </div>
                         </div>
                         <div class="od-similar__body">
@@ -215,8 +225,8 @@ const OfferDetailPage = {
 
         <!-- Sticky Mobile CTA -->
         <div class="od-sticky-cta" id="od-sticky-cta">
-          <button class="btn btn--primary btn--lg od-sticky-cta__book" onclick="Router.navigate('/booking/${offer.id}')">
-            Reserve Now
+          <button class="btn btn--primary btn--lg od-sticky-cta__book" onclick="Router.navigate('${this._bookingRoute(offer.category, offer.id)}')">
+            ${offer.category === 'dining' ? 'Reserve Now' : 'Book Now'}
           </button>
           <button class="btn btn--ghost od-sticky-cta__save${savedClass}" onclick="OfferDetailPage._toggleSave('${offer.id}')">
             ${Icons.heart(18)}
@@ -283,7 +293,7 @@ const OfferDetailPage = {
                   <div class="od-event-pricing__per">per person</div>
                 </div>
 
-                <button class="btn btn--primary btn--lg btn--full" ${soldOut ? 'disabled' : ''} onclick="Router.navigate('/booking/event-${event.id}')">
+                <button class="btn btn--primary btn--lg btn--full" ${soldOut ? 'disabled' : ''} onclick="Router.navigate('/book-dining/event-${event.id}')">
                   ${soldOut ? 'Sold Out' : 'Book Tickets'}
                 </button>
 
@@ -517,6 +527,17 @@ const OfferDetailPage = {
     }
   },
 
+  _bookingRoute(category, offerId) {
+    const routeMap = {
+      dining: '/book-dining/',
+      entertainment: '/book-entertainment/',
+      travel: '/book-flight/',
+      hotels: '/book-hotel/',
+      flights: '/book-flight/',
+    };
+    return (routeMap[category] || '/book-dining/') + offerId;
+  },
+
   _toggleSave(offerId) {
     const saved = Store.get('savedOffers') || [];
     const idx = saved.indexOf(offerId);
@@ -526,7 +547,7 @@ const OfferDetailPage = {
       saved.push(offerId);
     }
     Store.set('savedOffers', saved);
-    $$('.od-sticky-cta__save').forEach(btn => {
+    $$('.od-sticky-cta__save, .od-cta-desktop__save').forEach(btn => {
       btn.classList.toggle('is-saved', saved.includes(offerId));
     });
   },

@@ -68,7 +68,7 @@ const HomePage = {
             <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               ${merchant && merchant.location ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${merchant.location}</span>` : ''}
-              <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
+              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); Router.navigate('/offer/${o.id}')">Book Now</button>
             </div>
           </div>
           <div class="offer-card__content">
@@ -104,7 +104,7 @@ const HomePage = {
             <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${e.title.replace(/'/g, "\\'")}','/offer/event-${e.id}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               <span class="card-hover-zone__location">${Icons.mapPin(14)} ${e.venue}</span>
-              <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
+              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); Router.navigate('/offer/event-${e.id}')">Book Now</button>
             </div>
           </div>
           <div class="event-card__content">
@@ -131,7 +131,7 @@ const HomePage = {
             <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               ${merchant && merchant.location ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${merchant.location}</span>` : ''}
-              <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Grab Deal</button>
+              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); Router.navigate('/offer/${o.id}')">Grab Deal</button>
             </div>
           </div>` : ''}
           <div class="last-chance__card-body">
@@ -159,7 +159,7 @@ const HomePage = {
             <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${m.name.replace(/'/g, "\\'")}','${bestOffer ? `/offer/${bestOffer.id}` : `/category/dining`}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               <span class="card-hover-zone__location">${Icons.mapPin(14)} ${m.area}</span>
-              <button class="card-hover-zone__cta" onclick="event.stopPropagation()">Book Now</button>
+              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); ${bestOffer ? `Router.navigate('/offer/${bestOffer.id}')` : `Router.navigate('/category/dining')`}">Book Now</button>
             </div>
           </div>
           <div class="merchant-card__content">

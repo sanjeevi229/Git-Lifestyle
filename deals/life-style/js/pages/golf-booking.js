@@ -161,7 +161,7 @@ const GolfBookingPage = {
         ${this._renderReminder()}
         ${this._renderProgress()}
 
-        <h2 class="booking-form__title page-title">Select Date & Tee Time</h2>
+        <h2 class="booking-form__title page-title">Select Date</h2>
 
         <div class="form-group">
           <label class="form-label">Select Date</label>

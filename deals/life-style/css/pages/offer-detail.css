@@ -97,6 +97,22 @@
   width: 16px; height: 16px; color: var(--grey-light); flex-shrink: 0;
 }
 
+/* ── Desktop CTA ── */
+.od-cta-desktop {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--grey-border);
+}
+.od-cta-desktop__book {
+  flex: 1; max-width: 320px;
+}
+.od-cta-desktop__save {
+  flex-shrink: 0; width: 48px; height: 48px; padding: 0;
+  display: grid; place-items: center; border-radius: 12px;
+}
+.od-cta-desktop__save.is-saved { border-color: var(--danger); color: var(--danger); }
+.od-cta-desktop__save.is-saved .icon { fill: var(--danger); stroke: var(--danger); }
+
 /* ── Generic section ── */
 .od-section {
   margin-bottom: 28px;
@@ -261,6 +277,8 @@
   .od-section__list li { font-size: 13px; line-height: 1.6; }
 
   .od-contact__item { padding: 12px 0; }
+
+  .od-cta-desktop { display: none; }
 
   .od-similar { margin-bottom: 0; padding-bottom: 90px; }
   .od-similar__card { flex: 0 0 260px; }

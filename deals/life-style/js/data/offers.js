@@ -155,7 +155,7 @@ const OFFERS = [
     tags: ['yoga', 'bogo', 'fitness'],
   },
 
-  // === ENTERTAINMENT (5 offers) ===
+  // === ENTERTAINMENT (10 offers) ===
   {
     id: 'OFR-014', title: 'Buy 1 Get 1 IMAX Tickets', merchantId: 'MER-009',
     category: 'entertainment', offerType: 'bogo', discountValue: null, discountUnit: null,
@@ -205,6 +205,56 @@ const OFFERS = [
     isActive: true, isFeatured: false, isPremium: false,
     image: 'https://images.unsplash.com/photo-1585699324551-f6c309eedeca?w=600&q=80',
     tags: ['comedy', 'shows', 'discount'],
+  },
+  {
+    id: 'OFR-070', title: '40% off Gaming Arena Pass', merchantId: 'MER-009',
+    category: 'entertainment', offerType: 'discount', discountValue: 40, discountUnit: 'percent',
+    description: 'Get 40% off an all-day gaming arena pass including VR experiences, racing simulators, and arcade games at Hub Zero.',
+    terms: ['Valid Sunday to Wednesday', 'One pass per card per visit', 'Includes all gaming zones', 'Not valid on public holidays'],
+    minTier: 'classic', validFrom: '2026-01-01', validUntil: '2026-09-30',
+    isActive: true, isFeatured: true, isPremium: false,
+    image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=600&q=80',
+    tags: ['gaming', 'vr', 'arcade', 'discount'],
+  },
+  {
+    id: 'OFR-071', title: 'Buy 1 Get 1 Concert Tickets', merchantId: 'MER-008',
+    category: 'entertainment', offerType: 'bogo', discountValue: null, discountUnit: null,
+    description: 'Buy one ticket and get one free for select live music concerts and festivals at Coca-Cola Arena.',
+    terms: ['Subject to event availability', 'Must book 48 hours in advance', 'Standard category only', 'Valid for select events'],
+    minTier: 'gold', validFrom: '2026-02-01', validUntil: '2026-08-31',
+    isActive: true, isFeatured: true, isPremium: false,
+    image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80',
+    tags: ['music', 'concert', 'festival', 'bogo'],
+  },
+  {
+    id: 'OFR-072', title: 'Complimentary Art Gallery Tour', merchantId: 'MER-008',
+    category: 'entertainment', offerType: 'complimentary', discountValue: null, discountUnit: null,
+    description: 'Enjoy a complimentary guided tour of the Alserkal Avenue galleries including refreshments and exclusive artist meet-and-greet.',
+    terms: ['Advance booking required', 'Available Saturdays and Sundays only', 'Group size 2-6 persons', 'Includes complimentary refreshments'],
+    minTier: 'platinum', validFrom: '2026-01-15', validUntil: '2026-12-31',
+    isActive: true, isFeatured: false, isPremium: true,
+    image: 'https://images.unsplash.com/photo-1531243269054-5ebf6f34081e?w=600&q=80',
+    tags: ['art', 'gallery', 'culture', 'exclusive'],
+  },
+  {
+    id: 'OFR-073', title: '25% off Sports Event Tickets', merchantId: 'MER-015',
+    category: 'entertainment', offerType: 'discount', discountValue: 25, discountUnit: 'percent',
+    description: 'Get 25% off premium tickets to major sporting events including cricket, football, tennis, and Formula 1 at Dubai venues.',
+    terms: ['Valid for select events only', 'Up to 4 tickets per card', 'Premium seating categories', 'Booking via ENBD portal only'],
+    minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-11-30',
+    isActive: true, isFeatured: true, isPremium: false,
+    image: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=600&q=80',
+    tags: ['sports', 'cricket', 'football', 'f1', 'discount'],
+  },
+  {
+    id: 'OFR-074', title: 'Kayak & Paddleboard Adventure — BOGO', merchantId: 'MER-015',
+    category: 'entertainment', offerType: 'bogo', discountValue: null, discountUnit: null,
+    description: 'Buy one kayak or paddleboard session and get one free at Dubai Marina or Palm Jumeirah. Perfect for outdoor adventure seekers.',
+    terms: ['Valid weekdays only', 'Session duration 90 minutes', 'Safety briefing included', 'Must be 12 years or older'],
+    minTier: 'classic', validFrom: '2026-04-01', validUntil: '2026-10-31',
+    isActive: true, isFeatured: false, isPremium: false,
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80',
+    tags: ['outdoor', 'adventure', 'kayak', 'water-sports', 'bogo'],
   },
 
   // === TRAVEL (4 offers) ===
@@ -489,7 +539,7 @@ const OFFERS = [
     terms: ['Valid at DXB Terminal 3 lounge', 'One lounge visit per booking', 'Must present boarding pass and card'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: false,
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1540339832862-474599807836?w=600&q=80',
     tags: ['flights', 'lounge', 'emirates', 'complimentary'],
   },
   {
@@ -569,7 +619,7 @@ const OFFERS = [
     terms: ['Coverage up to AED 500,000', 'Includes medical and trip cancellation', 'Platinum and above only'],
     minTier: 'platinum', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: true,
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80',
     tags: ['flights', 'insurance', 'emirates', 'complimentary'],
   },
 ];
