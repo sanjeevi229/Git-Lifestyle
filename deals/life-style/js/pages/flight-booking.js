@@ -650,7 +650,7 @@ const FlightBookingPage = {
 
         <div class="fb-form-row">
           <div class="form-group" style="flex:1">
-            <label class="form-label">Passport Number <span class="hb-required">*</span></label>
+            <label class="form-label">Passport No. <span class="hb-required">*</span></label>
             <input type="text" class="form-input fb-pax-field" data-pax="${index}" data-field="passport" placeholder="e.g. AB1234567" value="${pax.passport || demoPassport}" />
           </div>
           <div class="form-group" style="flex:1">
