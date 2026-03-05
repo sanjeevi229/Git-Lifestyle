@@ -296,7 +296,7 @@ const HomePage = {
                   </div>
                   <div class="lc-banner__tag">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    ${expiringOffers.length} deal${expiringOffers.length !== 1 ? 's' : ''}
+                    ${expiringOffers.length} Deal${expiringOffers.length !== 1 ? 's' : ''} Ending Soon
                   </div>
                 </div>
                 <div class="lc-track" id="lc-track">
