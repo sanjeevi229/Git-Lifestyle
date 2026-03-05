@@ -2,7 +2,7 @@
    DEMO LIFESTYLE — Carousel Component
    ══════════════════════════════════════════════ */
 
-.carousel-section { margin-bottom: var(--space-2xl); }
+.carousel-section { margin-bottom: var(--space-xl); }
 
 .carousel-header {
   display: flex; align-items: flex-start; justify-content: space-between;

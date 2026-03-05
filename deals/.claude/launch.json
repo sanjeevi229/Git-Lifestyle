@@ -4,8 +4,14 @@
     {
       "name": "deals-dev",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8090", "-d", "/tmp/deals-serve"],
+      "runtimeArgs": ["-m", "http.server", "8090", "-d", "/Users/sanjeevnaidu/Claud Projects/Git-Lifestyle/deals"],
       "port": 8090
+    },
+    {
+      "name": "scam-dev",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8091", "-d", "/Users/sanjeevnaidu/Claud Projects/scam-detector"],
+      "port": 8091
     }
   ]
 }

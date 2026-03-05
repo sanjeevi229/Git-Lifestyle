@@ -183,7 +183,7 @@ const MERCHANTS = [
     id: 'MER-024', name: 'Emirates Airlines', category: 'flights', cuisine: null,
     location: 'Online & Airport', area: 'Online',
     rating: 4.9, priceRange: '$$$$', costForTwo: null,
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=600&q=80',
     description: 'Award-winning international airline headquartered in Dubai with global routes.',
     openingHours: '24/7', phone: '+971 600 555 555',
   },

@@ -51,7 +51,7 @@ const HomePage = {
     // Category grid
     const categories = CONFIG.categories.map(c => `
       <div class="category-tile" onclick="Router.navigate('/category/${c.id}')" style="--tile-color:${c.color}">
-        <div class="category-tile__icon">${c.icon}</div>
+        <div class="category-tile__icon">${c.iconImg ? `<img src="${c.iconImg}" alt="${c.label}" />` : c.icon}</div>
         <div class="category-tile__label">${c.label}</div>
       </div>
     `).join('');
@@ -83,10 +83,32 @@ const HomePage = {
       `;
     }).join('');
 
+    // Unravel hotel deals — curated luxury destinations
+    const unravelDeals = [
+      { title: 'Safari Adventure', location: 'Serengeti, Tanzania', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=900&fit=crop', offerId: 'OFR-033' },
+      { title: 'Alpine Escape – Four Seasons', location: 'Swiss Alps, Switzerland', image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&h=900&fit=crop', offerId: 'OFR-040' },
+      { title: 'Desert Luxury – Burj Al Arab', location: 'Dubai, UAE', image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&h=900&fit=crop', offerId: 'OFR-041' },
+      { title: 'Tropical Retreat – Anantara', location: 'Maldives', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&h=900&fit=crop', offerId: 'OFR-043' },
+      { title: 'Beachfront Bliss – Address Resort', location: 'JBR, Dubai', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=900&fit=crop', offerId: 'OFR-042' },
+      { title: 'Coastal Serenity – The Palm', location: 'Palm Jumeirah, Dubai', image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=900&fit=crop', offerId: 'OFR-022' },
+      { title: 'Riviera Romance', location: 'Amalfi Coast, Italy', image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&h=900&fit=crop', offerId: 'OFR-044' },
+      { title: 'Spicy Seafood – The Atlantis Paradise Island', location: 'Bora Bora, French Polynesia', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=900&fit=crop', offerId: 'OFR-020' },
+    ];
+    const unravelCards = unravelDeals.map(d => `
+      <div class="unravel-card" onclick="Router.navigate('/offer/${d.offerId}')">
+        <img class="unravel-card__img" src="${d.image}" alt="${d.title}" loading="lazy" />
+        <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${d.title.replace(/'/g, "\\'")}','/offer/${d.offerId}')" aria-label="Share">${Icons.share(15)}</button>
+        <div class="unravel-card__info">
+          <div class="unravel-card__title">${d.title}</div>
+          <div class="unravel-card__location">${d.location}</div>
+        </div>
+      </div>
+    `).join('');
+
     // Card Benefits icons
     const benefitIcons = CONFIG.cardBenefitIcons.map(b => `
       <div class="benefit-icon-card" onclick="Router.navigate('${b.id === 'golf' ? '/golf' : b.id === 'airport' ? '/airport' : b.id === 'courier' ? '/courier' : b.id === 'club' ? '/club' : '/card-benefits'}')">
-        <div class="benefit-icon-card__icon">${b.icon}</div>
+        <div class="benefit-icon-card__icon">${b.iconImg ? `<img src="${b.iconImg}" alt="${b.label}" />` : b.icon}</div>
         <div class="benefit-icon-card__label">${b.label}</div>
       </div>
     `).join('');
@@ -120,25 +142,19 @@ const HomePage = {
       `;
     }).join('');
 
-    // Last Chance deals — cards with image + text for the dark banner
-    const expiringOffers = Store.getExpiringOffers(14);
-    const lastChanceCards = expiringOffers.map(o => {
+    // Last Chance deals — swipeable individual cards inside banner
+    const expiringOffers = Store.getExpiringOffers(60);
+    const lastChanceSlides = expiringOffers.map(o => {
       const merchant = Store.getMerchant(o.merchantId);
       return `
-        <div class="last-chance__card" onclick="Router.navigate('/offer/${o.id}')">
-          ${o.image ? `<div class="card-hover-zone card-hover-zone--dark" style="position:relative;height:140px;overflow:hidden">
-            <div class="last-chance__card-img" style="background-image:url('${o.image}')"></div>
-            <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
-            <div class="card-hover-zone__overlay">
-              ${merchant && merchant.location ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${merchant.location}</span>` : ''}
-              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); Router.navigate('/offer/${o.id}')">Grab Deal</button>
-            </div>
-          </div>` : ''}
-          <div class="last-chance__card-body">
-            <span class="discount-badge ${Format.discountBadgeClass(o)}" style="margin-bottom:8px;display:inline-flex">${Format.discountLabel(o)}</span>
-            <div class="last-chance__card-title">${o.title}</div>
-            <div class="last-chance__card-merchant">${merchant ? merchant.name : 'Demo'}</div>
-            <div class="last-chance__card-expiry">${Format.daysUntil(o.validUntil)}</div>
+        <div class="lc-slide" onclick="event.stopPropagation(); Router.navigate('/offer/${o.id}')">
+          <div class="lc-slide__img">
+            <img src="${o.image}" alt="${o.title}" loading="lazy" />
+          </div>
+          <span class="lc-slide__badge">${Format.discountLabel(o)}</span>
+          <div class="lc-slide__info">
+            <div class="lc-slide__title">${o.title}</div>
+            <div class="lc-slide__merchant">${merchant ? merchant.name : ''}</div>
           </div>
         </div>
       `;
@@ -199,8 +215,46 @@ const HomePage = {
             </div>
           </div>
 
+          <!-- Unravel Hotel Deals — hero-style carousel with beach background -->
+          <section class="unravel-section">
+            <div class="unravel-section__bg"></div>
+            <div class="unravel-section__content">
+              <div class="unravel-header">
+                <div>
+                  <h2 class="unravel-header__title">Deals for you by Unravel</h2>
+                  <p class="unravel-header__subtitle">Indulge in romantic dinners and sweet treats.</p>
+                </div>
+                <button class="btn btn--ghost btn--sm" onclick="Router.navigate('/category/hotels')">Show all</button>
+              </div>
+              <div class="unravel-track-wrap">
+                <div class="unravel-track" id="unravel-track">
+                  ${unravelCards}
+                </div>
+              </div>
+              <div class="unravel-dots" id="unravel-dots"></div>
+            </div>
+          </section>
+
           <!-- Premium Rewards carousel — outside container, manages its own padding -->
-          ${featuredOffers.length ? Carousel.render('premium-rewards', 'Premium Rewards', premiumCards, { subtitle: 'Exclusive offers for you' }) : ''}
+          ${featuredOffers.length ? `
+            <div class="pr-bg-wrap">
+              ${Carousel.render('premium-rewards', 'Premium Rewards', premiumCards, { subtitle: 'Exclusive offers for you' })}
+              <div class="pr-deco" aria-hidden="true">
+                <!-- Purple gift box — top-right -->
+                <svg class="pr-gift pr-gift--1" viewBox="0 0 64 64"><rect x="10" y="30" width="44" height="28" rx="4" fill="#CB8BD9"/><rect x="10" y="30" width="44" height="28" rx="4" fill="url(#gB1)" opacity=".3"/><rect x="6" y="24" width="52" height="10" rx="4" fill="#D9A3E5"/><rect x="28" y="24" width="8" height="34" rx="1" fill="#fff" opacity=".65"/><path d="M32 24c-6-12-18-9-14-3s14 3 14 3z" fill="#A864B8" opacity=".85"/><path d="M32 24c6-12 18-9 14-3s-14 3-14 3z" fill="#A864B8" opacity=".85"/><ellipse cx="32" cy="22" rx="5" ry="3" fill="#D9A3E5"/><defs><linearGradient id="gB1" x1="10" y1="30" x2="54" y2="58"><stop stop-color="#fff" stop-opacity=".25"/><stop offset="1" stop-color="#000" stop-opacity=".1"/></linearGradient></defs></svg>
+                <!-- Light blue gift box — bottom-right -->
+                <svg class="pr-gift pr-gift--3" viewBox="0 0 64 64"><rect x="12" y="30" width="40" height="26" rx="4" fill="#5B8CFF"/><rect x="12" y="30" width="40" height="26" rx="4" fill="url(#gLB1)" opacity=".35"/><rect x="8" y="24" width="48" height="10" rx="4" fill="#7BA6FF"/><rect x="29" y="24" width="6" height="32" rx="1" fill="#FFFFFF" opacity=".7"/><path d="M32 24c-5-11-16-8-13-3s13 3 13 3z" fill="#FFFFFF" opacity=".8"/><path d="M32 24c5-11 16-8 13-3s-13 3-13 3z" fill="#FFFFFF" opacity=".8"/><ellipse cx="32" cy="22" rx="4.5" ry="2.5" fill="#fff" opacity=".9"/><defs><linearGradient id="gLB1" x1="12" y1="30" x2="52" y2="56"><stop stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity=".1"/></linearGradient></defs></svg>
+                <!-- Small navy gift — mid-right -->
+                <svg class="pr-gift pr-gift--5" viewBox="0 0 64 64"><rect x="14" y="32" width="36" height="24" rx="4" fill="#0A3260"/><rect x="14" y="32" width="36" height="24" rx="4" fill="url(#gDN1)" opacity=".3"/><rect x="10" y="26" width="44" height="9" rx="4" fill="#0E3D7A"/><rect x="29" y="26" width="6" height="30" rx="1" fill="#C0D0E8" opacity=".7"/><path d="M32 26c-5-10-14-8-11-3s11 3 11 3z" fill="#C0D0E8" opacity=".8"/><path d="M32 26c5-10 14-8 11-3s-11 3-11 3z" fill="#C0D0E8" opacity=".8"/><defs><linearGradient id="gDN1" x1="14" y1="32" x2="50" y2="56"><stop stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#000" stop-opacity=".1"/></linearGradient></defs></svg>
+                <!-- Sparkle stars — right side only -->
+                <span class="pr-star pr-star--2">✦</span>
+                <span class="pr-star pr-star--4">✦</span>
+                <span class="pr-star pr-star--6">✦</span>
+                <span class="pr-star pr-star--7">✧</span>
+                <span class="pr-star pr-star--8">✧</span>
+              </div>
+            </div>
+          ` : ''}
 
           <!-- Card Benefits inside container -->
           <div class="container">
@@ -221,26 +275,44 @@ const HomePage = {
             </div>
           </div>
 
-          <!-- Upcoming Events carousel — outside container -->
-          ${events.length ? Carousel.render('upcoming-events', 'Upcoming Events', eventCards, { subtitle: 'Don\'t miss out', showViewAll: true, viewAllRoute: '/category/events' }) : ''}
+          <!-- Upcoming Events carousel — with background -->
+          ${events.length ? `
+            <div class="events-bg-wrap">
+              <div class="events-bg-wrap__img"></div>
+              ${Carousel.render('upcoming-events', 'Upcoming Events', eventCards, { subtitle: 'Don\'t miss out', showViewAll: true, viewAllRoute: '/category/events' })}
+            </div>
+          ` : ''}
 
-          <!-- Last Chance Deals — outside container, manages own margin -->
+          <!-- Last Chance Deals — banner with swipeable cards -->
           ${expiringOffers.length ? `
-            <div class="last-chance">
-              <div class="last-chance__header">
-                <div>
-                  <h2 class="last-chance__title">${Icons.timer(20)} Last Chance Deals</h2>
-                  <p class="last-chance__subtitle">Grab these before they're gone</p>
+            <div class="container">
+              <div class="lc-banner">
+                <div class="lc-banner__bg"></div>
+                <div class="lc-banner__overlay"></div>
+                <div class="lc-banner__header">
+                  <div class="lc-banner__text">
+                    <h2 class="lc-banner__title">Last chance</h2>
+                    <p class="lc-banner__subtitle">Steal these deals</p>
+                  </div>
+                  <div class="lc-banner__tag">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    ${expiringOffers.length} deal${expiringOffers.length !== 1 ? 's' : ''}
+                  </div>
                 </div>
-              </div>
-              <div class="last-chance__grid">
-                ${lastChanceCards}
+                <div class="lc-track" id="lc-track">
+                  ${lastChanceSlides}
+                </div>
               </div>
             </div>
           ` : ''}
 
-          <!-- Restaurants Near You carousel — outside container -->
-          ${diningMerchants.length ? Carousel.render('restaurants', 'Restaurants Near You', restaurantCards, { subtitle: 'Top dining spots with exclusive offers', showViewAll: true, viewAllRoute: '/category/dining' }) : ''}
+          <!-- Restaurants Near You carousel — with dining background -->
+          ${diningMerchants.length ? `
+            <div class="rest-bg-wrap">
+              <div class="rest-bg-wrap__img"></div>
+              ${Carousel.render('restaurants', 'Restaurants Near You', restaurantCards, { subtitle: 'Top dining spots with exclusive offers', showViewAll: true, viewAllRoute: '/category/dining' })}
+            </div>
+          ` : ''}
 
           <!-- Footer -->
           <footer class="site-footer">
@@ -298,7 +370,12 @@ const HomePage = {
   mount() {
     Nav.mount();
     Carousel.mountAll();
+    this._mountUnravelDots();
     this._startHeroAutoplay();
+
+    // Reset Last Chance track scroll (prevent snap from jumping past padding)
+    const lcTrack = $('#lc-track');
+    if (lcTrack) lcTrack.scrollLeft = 0;
 
     // Hero dots
     delegate('#app', 'click', '.hero__dot', (e, el) => {
@@ -394,6 +471,40 @@ const HomePage = {
       v.pause();
       v.removeAttribute('src');
       v.load();
+    });
+  },
+
+  _mountUnravelDots() {
+    const track = $('#unravel-track');
+    const dotsWrap = $('#unravel-dots');
+    if (!track || !dotsWrap) return;
+
+    const cards = track.querySelectorAll('.unravel-card');
+    const total = cards.length;
+    if (total === 0) return;
+
+    // Build dots
+    dotsWrap.innerHTML = Array.from({ length: total }, (_, i) =>
+      `<span class="unravel-dot ${i === 0 ? 'active' : ''}" data-idx="${i}"></span>`
+    ).join('');
+
+    // Update active dot on scroll
+    const updateDots = () => {
+      const cardW = cards[0].offsetWidth + 16; // gap 16
+      const idx = Math.round(track.scrollLeft / cardW);
+      dotsWrap.querySelectorAll('.unravel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    };
+    track.addEventListener('scroll', updateDots, { passive: true });
+
+    // Click dot → scroll to card
+    dotsWrap.addEventListener('click', (e) => {
+      const dot = e.target.closest('.unravel-dot');
+      if (!dot) return;
+      const idx = Number(dot.dataset.idx);
+      const cardW = cards[0].offsetWidth + 16;
+      track.scrollTo({ left: idx * cardW, behavior: 'smooth' });
     });
   },
 

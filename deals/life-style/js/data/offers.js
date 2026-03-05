@@ -589,7 +589,7 @@ const OFFERS = [
     terms: ['Maximum 2 children per booking', 'Valid on select routes', 'Travel by Dec 2026'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: true, isPremium: false,
-    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=600&q=80',
     tags: ['flights', 'family', 'kids', 'emirates'],
   },
   {
