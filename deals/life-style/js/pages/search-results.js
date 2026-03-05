@@ -22,7 +22,7 @@ const SearchResultsPage = {
           </div>
           <div class="offer-card__content">
             <div class="offer-card__title">${o.title}</div>
-            <div class="offer-card__merchant">${merchant ? merchant.name : 'Demo'}</div>
+            <div class="offer-card__merchant">${merchant ? merchant.name : 'Visa Infinite'}</div>
             <div class="offer-card__footer">
               <span class="badge badge--info">${Format.categoryLabel(o.category)}</span>
               <span class="text-xs text-muted">${Format.daysUntil(o.validUntil)}</span>

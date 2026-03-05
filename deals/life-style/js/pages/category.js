@@ -296,7 +296,7 @@ const CategoryPage = {
           </div>
           <div class="offer-card__content">
             <div class="offer-card__title">${o.title}</div>
-            <div class="offer-card__merchant">${merchant ? merchant.name : 'Demo'}</div>
+            <div class="offer-card__merchant">${merchant ? merchant.name : 'Visa Infinite'}</div>
             <div class="offer-card__desc">${Format.truncate(o.description, 70)}</div>
             <div class="offer-card__footer">
               <span class="badge badge--info">${Format.categoryLabel(o.category)}</span>
@@ -315,7 +315,7 @@ const CategoryPage = {
     const heroTagline = hero.tagline || 'Exclusive events for cardholders';
     const totalEvents = Store.getUpcomingEvents().length;
     const sectionTitle = hero.sectionTitle || 'Upcoming Events';
-    const sectionDesc = hero.sectionDesc || 'Exclusive events for Demo cardholders';
+    const sectionDesc = hero.sectionDesc || 'Exclusive events for Visa Infinite cardholders';
 
     return `
       <div class="page">

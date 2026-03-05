@@ -231,7 +231,7 @@ const HotelBookingPage = {
 
         ${priceData.offerDiscount > 0 ? `
           <div class="hb-price-row hb-price-row--discount">
-            <span>Demo X offer applied</span>
+            <span>Visa Infinite offer applied</span>
             <span>- AED ${priceData.offerDiscount.toLocaleString()}</span>
           </div>
         ` : ''}
@@ -286,7 +286,7 @@ const HotelBookingPage = {
         <label class="hb-terms__label">
           <input type="checkbox" id="hbAgreeTerms" class="hb-terms__checkbox" />
           <span class="hb-terms__check">${Icons.check ? Icons.check(12) : '✓'}</span>
-          <span>By proceeding, you agree to Demo's <a href="javascript:void(0)" class="hb-terms__link">Privacy Policy</a> and <a href="javascript:void(0)" class="hb-terms__link">Terms & Conditions</a></span>
+          <span>By proceeding, you agree to Visa Infinite's <a href="javascript:void(0)" class="hb-terms__link">Privacy Policy</a> and <a href="javascript:void(0)" class="hb-terms__link">Terms & Conditions</a></span>
         </label>
       </div>
 

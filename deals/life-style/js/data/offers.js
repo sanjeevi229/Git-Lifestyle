@@ -118,7 +118,7 @@ const OFFERS = [
     id: 'OFR-010', title: '3 Months Free Gym Access', merchantId: 'MER-007',
     category: 'wellness', offerType: 'complimentary', discountValue: null, discountUnit: null,
     description: 'Get 3 months complimentary access to Fitness First Platinum.',
-    terms: ['New members only', 'Valid at Dubai Marina branch', 'Must present Demo card'],
+    terms: ['New members only', 'Valid at Dubai Marina branch', 'Must present Visa Infinite Card'],
     minTier: 'gold', validFrom: '2026-02-01', validUntil: '2026-05-31',
     isActive: true, isFeatured: false, isPremium: false,
     image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80',
@@ -336,7 +336,7 @@ const OFFERS = [
   {
     id: 'OFR-034', title: '5% Cashback on Flights', merchantId: 'MER-016',
     category: 'travel', offerType: 'cashback', discountValue: 5, discountUnit: 'percent',
-    description: 'Earn 5% cashback when you book flights through dnata using your Demo card.',
+    description: 'Earn 5% cashback when you book flights through dnata using your Visa Infinite Card.',
     terms: ['Maximum cashback AED 500 per booking', 'Valid on international flights only', 'Cashback credited within 30 days'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: false,
@@ -525,7 +525,7 @@ const OFFERS = [
   {
     id: 'OFR-052', title: '15% Cashback on International Flights', merchantId: 'MER-025',
     category: 'flights', offerType: 'cashback', discountValue: 15, discountUnit: 'percent',
-    description: 'Earn 15% cashback on Etihad international flight bookings with your Demo card.',
+    description: 'Earn 15% cashback on Etihad international flight bookings with your Visa Infinite Card.',
     terms: ['Maximum cashback AED 1,000 per booking', 'Cashback credited within 30 days', 'Valid on international routes only'],
     minTier: 'platinum', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: true,
@@ -535,7 +535,7 @@ const OFFERS = [
   {
     id: 'OFR-053', title: 'Free Lounge Access with Booking', merchantId: 'MER-024',
     category: 'flights', offerType: 'complimentary', discountValue: null, discountUnit: null,
-    description: 'Get complimentary Emirates lounge access when you book any flight with your Demo card.',
+    description: 'Get complimentary Emirates lounge access when you book any flight with your Visa Infinite Card.',
     terms: ['Valid at DXB Terminal 3 lounge', 'One lounge visit per booking', 'Must present boarding pass and card'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: false,
@@ -605,7 +605,7 @@ const OFFERS = [
   {
     id: 'OFR-060', title: 'Double Miles on All Bookings', merchantId: 'MER-028',
     category: 'flights', offerType: 'cashback', discountValue: null, discountUnit: null,
-    description: 'Earn double Qmiles on every Qatar Airways booking made with your Demo card.',
+    description: 'Earn double Qmiles on every Qatar Airways booking made with your Visa Infinite Card.',
     terms: ['Valid on all routes', 'Miles credited within 14 days', 'Must be Privilege Club member'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: false,

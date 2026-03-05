@@ -555,7 +555,7 @@ const FlightBookingPage = {
         <label class="hb-terms__label">
           <input type="checkbox" id="fbAgreeTerms" class="hb-terms__checkbox" />
           <span class="hb-terms__check">${Icons.check ? Icons.check(12) : '✓'}</span>
-          <span>By proceeding, you agree to Demo's <a href="javascript:void(0)" class="hb-terms__link">Privacy Policy</a> and <a href="javascript:void(0)" class="hb-terms__link">Terms & Conditions</a></span>
+          <span>By proceeding, you agree to Visa Infinite's <a href="javascript:void(0)" class="hb-terms__link">Privacy Policy</a> and <a href="javascript:void(0)" class="hb-terms__link">Terms & Conditions</a></span>
         </label>
       </div>
     `;

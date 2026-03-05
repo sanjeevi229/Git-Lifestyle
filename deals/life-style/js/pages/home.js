@@ -50,7 +50,7 @@ const HomePage = {
 
     // Category grid
     const categories = CONFIG.categories.map(c => `
-      <div class="category-tile" onclick="Router.navigate('/category/${c.id}')" style="--tile-color:${c.color}">
+      <div class="category-tile" data-id="${c.id}" onclick="Router.navigate('/category/${c.id}')" style="--tile-color:${c.color}">
         <div class="category-tile__icon">${c.iconImg ? `<img src="${c.iconImg}" alt="${c.label}" />` : c.icon}</div>
         <div class="category-tile__label">${c.label}</div>
       </div>
@@ -317,7 +317,7 @@ const HomePage = {
           <footer class="site-footer">
             <div class="site-footer__inner">
               <div class="site-footer__brand">
-                <p class="site-footer__tagline">Your card. Your lifestyle.<br>Exclusive privileges for Demo cardholders.</p>
+                <p class="site-footer__tagline">Your card. Your lifestyle.<br>Exclusive privileges for Visa Infinite cardholders.</p>
               </div>
               <div class="site-footer__links">
                 <div class="site-footer__col">
@@ -358,7 +358,7 @@ const HomePage = {
               </div>
             </div>
             <div class="site-footer__bottom">
-              <p>&copy; ${new Date().getFullYear()} Demo. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} Visa Infinite. All rights reserved.</p>
             </div>
           </footer>
         </main>

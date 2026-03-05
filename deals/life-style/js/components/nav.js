@@ -44,7 +44,7 @@ const Nav = {
             <div class="avatar avatar--gold">${user.avatar}</div>
             <div>
               <div class="user-menu__name">${user.name}</div>
-              <div class="user-menu__tier" style="color:${tierConfig.color}">${tierConfig.label} Card</div>
+              <div class="user-menu__tier" style="color:${tierConfig.color}">Visa ${tierConfig.label} Card</div>
             </div>
             <span class="user-menu__chevron">▾</span>
             <div class="user-menu__dropdown" id="userDropdown">
@@ -73,7 +73,7 @@ const Nav = {
           <div class="avatar avatar--gold">${user.avatar}</div>
           <div class="mobile-menu__user-info">
             <span class="mobile-menu__user-name">${user.name}</span>
-            <span class="mobile-menu__user-tier" style="color:${tierConfig.color}">${tierConfig.label} Card</span>
+            <span class="mobile-menu__user-tier" style="color:${tierConfig.color}">Visa ${tierConfig.label} Card</span>
           </div>
           <div class="mobile-menu__bell" onclick="event.stopPropagation();Nav._closeMobile();Router.navigate('/my-bookings');" title="My Bookings">
             ${Icons.bell(20)}

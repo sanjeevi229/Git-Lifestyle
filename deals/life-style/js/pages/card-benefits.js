@@ -53,7 +53,7 @@ const CardBenefitsPage = {
           <div class="container">
             <div class="benefits-page__header">
               <h1 class="page-title">Card Benefits Comparison</h1>
-              <p class="text-muted">See what's included with each Demo card tier</p>
+              <p class="text-muted">See what's included with each Visa Infinite Card tier</p>
             </div>
 
             <div class="benefits-table-wrapper">
@@ -72,7 +72,7 @@ const CardBenefitsPage = {
 
             <div class="benefits-cta" style="text-align:center;padding:40px 0">
               <h3>Want to upgrade your card?</h3>
-              <p class="text-muted" style="margin-top:8px">Contact your relationship manager or visit any Demo branch</p>
+              <p class="text-muted" style="margin-top:8px">Contact your relationship manager or visit any Visa Infinite branch</p>
               <button class="btn btn--primary btn--lg" style="margin-top:16px" onclick="">Upgrade Your Card</button>
             </div>
           </div>

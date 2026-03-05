@@ -49,7 +49,7 @@ const CONFIG = {
 
   categoryHeroes: {
     dining:        { image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80', video: 'assets/videos/bon-appetit-hero.mp4', tagline: 'Savour exclusive dining privileges at the finest restaurants', sectionTitle: 'Find Your Perfect Table', sectionDesc: 'Filter by cuisine and location to discover your next favourite restaurant' },
-    entertainment: { image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80', video: 'assets/videos/good-times.mp4', tagline: 'Unforgettable experiences await with your Demo card', sectionTitle: 'What\'s On Tonight', sectionDesc: 'Browse by category and area to find your ideal entertainment' },
+    entertainment: { image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80', video: 'assets/videos/good-times.mp4', tagline: 'Unforgettable experiences await with your Visa Infinite Card', sectionTitle: 'What\'s On Tonight', sectionDesc: 'Browse by category and area to find your ideal entertainment' },
     wellness:      { image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80', tagline: 'Rejuvenate your body and mind with premium wellness offers', sectionTitle: 'Your Wellness Journey', sectionDesc: 'Choose your preferred treatment type and location below' },
     flights:       { image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=1200&q=80', tagline: 'Fly to your dream destinations with exclusive card deals', sectionTitle: 'Compare Flight Offers', sectionDesc: 'Browse exclusive airline deals and cashback offers for cardholders' },
     hotels:        { image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80', tagline: 'Luxury stays at world-class hotels for less', sectionTitle: 'Find Your Stay', sectionDesc: 'Explore hotel deals and resort packages across popular destinations' },
@@ -160,7 +160,7 @@ const CONFIG = {
     {
       id: 1,
       title: '{firstName}, Your Card Unlocks More',
-      subtitle: 'Exclusive experiences tailored to your Demo card.',
+      subtitle: 'Exclusive experiences tailored to your Visa Infinite Card.',
       cta: 'View Benefits',
       route: '/card-benefits',
       image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&q=80',
@@ -182,7 +182,7 @@ const CONFIG = {
     {
       id: 3,
       title: '{firstName}, Travel in Style This Season',
-      subtitle: 'Special flight and hotel deals for Demo cardholders.',
+      subtitle: 'Special flight and hotel deals for Visa Infinite Cardholders.',
       cta: 'Book Now',
       route: '/category/travel',
       image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200&q=80',

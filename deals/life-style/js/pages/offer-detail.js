@@ -101,7 +101,7 @@ const OfferDetailPage = {
             <div class="od-section">
               <h3 class="od-section__title">Highlights</h3>
               <ul class="od-section__list">
-                <li>${discountLabel} exclusive offer for Demo cardholders</li>
+                <li>${discountLabel} exclusive offer for Visa Infinite cardholders</li>
                 ${merchant && merchant.cuisine ? `<li>${merchant.cuisine} dining experience at ${merchant.area}</li>` : ''}
                 ${merchant && merchant.rating >= 4.5 ? `<li>Highly rated (${Number(merchant.rating).toFixed(1)}/5) by diners</li>` : ''}
                 ${offer.minTier !== 'classic' ? `<li>Available for ${Format.tierLabel(offer.minTier)} cardholders and above</li>` : ''}
