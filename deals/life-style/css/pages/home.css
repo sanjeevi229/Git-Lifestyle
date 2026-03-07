@@ -899,7 +899,7 @@
 .story-bubble:active { transform: scale(0.92); }
 
 .story-bubble__ring {
-  width: 74px; height: 74px;
+  width: 85px; height: 85px;
   border-radius: 50%; padding: 2.5px;
   background: linear-gradient(135deg, var(--accent), #5B8CFF, var(--accent-dark));
   transition: all 0.3s ease;
@@ -948,7 +948,7 @@
 .story-bubble__label {
   font-size: 11px; font-weight: 500;
   color: var(--charcoal); text-align: center;
-  max-width: 76px; white-space: nowrap;
+  max-width: 88px; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;
   line-height: 1.2; margin-top: 1px;
 }
@@ -1108,8 +1108,8 @@
     gap: 14px;
     padding-right: 40px; /* partial reveal of next item */
   }
-  .story-bubble__ring { width: 68px; height: 68px; }
-  .story-bubble__label { font-size: 10px; max-width: 70px; }
+  .story-bubble__ring { width: 78px; height: 78px; }
+  .story-bubble__label { font-size: 10px; max-width: 80px; }
   .story-badge { font-size: 7px; padding: 2px 5px; }
 
   .story-viewer__container {
@@ -1119,10 +1119,10 @@
 }
 
 @media (max-width: 600px) {
-  .stories-track { gap: 12px; padding-right: 36px; }
-  .story-bubble { gap: 8px; }
-  .story-bubble__ring { width: 64px; height: 64px; }
-  .story-bubble__label { font-size: 10px; max-width: 66px; }
+  .stories-track { gap: 8px; padding-right: 0; }
+  .story-bubble { gap: 6px; }
+  .story-bubble__ring { width: 72px; height: 72px; }
+  .story-bubble__label { font-size: 10px; max-width: 74px; }
   .story-badge { font-size: 7px; padding: 1.5px 4px; top: -3px; right: -3px; }
   .story-viewer__title { font-size: 18px; }
   .story-viewer__desc { font-size: 13px; }
