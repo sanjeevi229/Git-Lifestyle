@@ -1,0 +1,220 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Concierge Pages
+   ══════════════════════════════════════════════ */
+
+/* ── Landing ── */
+.concierge-page__header { margin-bottom: var(--space-xl); }
+
+/* Eligibility banner */
+.concierge-eligibility {
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.concierge-eligibility--active { background: var(--success-light); border: 1px solid rgba(34,197,94,.2); }
+.concierge-eligibility--locked { background: var(--off-white); border: 1px solid var(--grey-border); }
+.concierge-eligibility__icon { margin-bottom: var(--space-xs); }
+.concierge-eligibility__icon svg { color: var(--success); }
+.concierge-eligibility--locked .concierge-eligibility__icon svg { color: var(--grey); }
+.concierge-eligibility__title { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--charcoal); }
+.concierge-eligibility__text { font-size: 15px; color: var(--grey); line-height: 1.5; }
+.concierge-eligibility__quota {
+  display: inline-block;
+  background: rgba(34,197,94,.12);
+  color: var(--success);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-top: var(--space-xs);
+}
+.concierge-eligibility--locked .concierge-eligibility__quota { background: var(--grey-border); color: var(--grey); }
+.concierge-eligibility__card {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal);
+  background: var(--white);
+  border: 1px solid var(--grey-border);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
+  margin-top: var(--space-xs);
+}
+
+/* Section header */
+.concierge-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+}
+.concierge-section-header__title { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--charcoal); }
+.concierge-section-header__count { font-size: 14px; color: var(--grey); }
+
+/* Card grid */
+.concierge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+}
+
+/* Service card */
+.concierge-card {
+  background: var(--white);
+  border: 1px solid var(--grey-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--ease), box-shadow var(--ease);
+  position: relative;
+}
+.concierge-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.concierge-card--locked { cursor: default; }
+.concierge-card--locked:hover { transform: none; box-shadow: none; }
+
+.concierge-card__image {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+.concierge-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--ease);
+}
+.concierge-card:hover .concierge-card__image img { transform: scale(1.05); }
+
+/* Lock overlay */
+.concierge-card__lock {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.concierge-card__body { padding: var(--space-md) var(--space-lg) var(--space-sm); }
+.concierge-card__name { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--charcoal); margin-bottom: 4px; }
+.concierge-card__desc { font-size: 14px; color: var(--grey); margin-bottom: var(--space-sm); line-height: 1.4; }
+.concierge-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--grey);
+  margin-bottom: var(--space-sm);
+}
+.concierge-card__meta svg { flex-shrink: 0; }
+
+/* Feature chips */
+.concierge-card__features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--space-md); }
+.concierge-card__feature {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: var(--off-white);
+  color: var(--charcoal);
+  border: 1px solid var(--grey-border);
+}
+
+/* Price footer */
+.concierge-card__footer {
+  padding: var(--space-sm) var(--space-lg) var(--space-lg);
+  border-top: 1px solid var(--grey-border);
+}
+.concierge-card__price-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+/* ── How It Works ── */
+.concierge-how-it-works {
+  background: var(--off-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  text-align: center;
+}
+.concierge-how-it-works__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin-bottom: var(--space-xl);
+}
+.concierge-how-it-works__steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+}
+.concierge-how-step {
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.concierge-how-step__num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--charcoal);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.concierge-how-step__label {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--charcoal);
+}
+.concierge-how-step__desc {
+  font-size: 13px;
+  color: var(--grey);
+  line-height: 1.4;
+}
+.concierge-how-step__line {
+  width: 60px;
+  height: 2px;
+  background: var(--grey-border);
+  margin-top: 22px;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .concierge-grid { grid-template-columns: 1fr; }
+  .concierge-card__image { height: 160px; }
+  .concierge-eligibility { padding: var(--space-lg); }
+  .concierge-how-it-works__steps { flex-direction: column; align-items: center; gap: var(--space-md); }
+  .concierge-how-step__line { width: 2px; height: 30px; margin-top: 0; }
+}
+
+@media (max-width: 600px) {
+  .concierge-card__image { height: 140px; }
+  .concierge-eligibility__title { font-size: 18px; }
+}

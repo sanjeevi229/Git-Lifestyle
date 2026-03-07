@@ -58,12 +58,15 @@ const HomePage = {
     `).join('');
 
     // Category grid
-    const categories = CONFIG.categories.map(c => `
-      <div class="category-tile" data-id="${c.id}" onclick="Router.navigate('/category/${c.id}')" style="--tile-color:${c.color}">
+    const categories = CONFIG.categories.map(c => {
+      const route = c.id === 'concierge' ? '/concierge' : '/category/' + c.id;
+      return `
+      <div class="category-tile" data-id="${c.id}" onclick="Router.navigate('${route}')" style="--tile-color:${c.color}">
         <div class="category-tile__icon">${c.iconImg ? `<img src="${c.iconImg}" alt="${c.label}" />` : c.icon}</div>
         <div class="category-tile__label">${c.label}</div>
       </div>
-    `).join('');
+    `;
+    }).join('');
 
     // Premium Rewards carousel
     const featuredOffers = Store.getFeaturedOffers();

@@ -255,6 +255,56 @@ const Store = {
     return { allowed, used, remaining: Math.max(0, allowed - used), benefit };
   },
 
+  // ── Concierge Booking Actions ──
+  createConciergeBooking(data) {
+    const user = this.get('auth.currentUser');
+    const bookings = this.get('bookings') || [];
+    const now = new Date().toISOString();
+    const booking = {
+      id: Format.bookingId(),
+      userId: user.id,
+      offerId: data.serviceId,
+      type: 'concierge',
+      status: 'confirmed',
+      serviceName: data.serviceName,
+      requestDescription: data.requestDescription,
+      bookingDate: data.bookingDate,
+      bookingTime: data.bookingTime,
+      budgetRange: data.budgetRange || '',
+      guests: data.guests || 1,
+      contactMethod: data.contactMethod || '',
+      contactTime: data.contactTime || '',
+      occasion: data.occasion || '',
+      specialRequests: data.specialRequests || '',
+      partySize: data.guests || 1,
+      createdAt: now,
+      confirmationCode: Format.confirmationCode(),
+      statusHistory: [
+        { status: 'pending', at: now, note: 'Concierge request submitted' },
+        { status: 'confirmed', at: now, note: 'Auto-confirmed' },
+      ],
+    };
+    bookings.unshift(booking);
+    this.set('bookings', bookings);
+    AuditLog.log('CONCIERGE_BOOKING_CREATED', `Concierge booking ${booking.id} (${data.serviceId}) by ${user.name}.`);
+    return booking;
+  },
+
+  getConciergeQuota() {
+    const user = this.get('auth.currentUser');
+    if (!user) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    const tier = user.cardTier;
+    const benefit = CARD_BENEFITS[tier]?.concierge;
+    if (!benefit) return { allowed: 0, used: 0, remaining: 0, benefit: null };
+    let allowed = 999;
+    if (benefit.includes('2 complimentary')) allowed = 2;
+    else if (benefit.includes('6 complimentary')) allowed = 6;
+    else if (benefit.toLowerCase().includes('unlimited')) allowed = 999;
+    const used = (this.get('bookings') || [])
+      .filter(b => b.userId === user.id && b.type === 'concierge' && b.status === 'confirmed').length;
+    return { allowed, used, remaining: Math.max(0, allowed - used), benefit };
+  },
+
   // ── Clubhouse Booking Actions ──
   createClubhouseBooking(data) {
     const user = this.get('auth.currentUser');
