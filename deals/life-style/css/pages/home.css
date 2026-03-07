@@ -1119,7 +1119,7 @@
 }
 
 @media (max-width: 600px) {
-  .stories-track { gap: 4px; padding-right: 0; }
+  .stories-track { gap: 9px; padding-right: 0; }
   .story-bubble { gap: 6px; }
   .story-bubble__ring { width: 85px; height: 85px; }
   .story-bubble__label { font-size: 12px; max-width: 85px; }
