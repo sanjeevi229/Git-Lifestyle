@@ -639,7 +639,7 @@
   display: flex; gap: 16px;
   overflow-x: auto; scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  padding: 0 28px 32px;
+  padding: 0 28px 30px;
   scroll-padding-left: 28px;
   -ms-overflow-style: none; scrollbar-width: none;
 }
@@ -708,7 +708,7 @@
 /* ── Mobile adjustments ── */
 @media (max-width: 900px) {
   .lc-banner__header { padding: 24px 24px 16px; }
-  .lc-track { padding: 0 24px 28px; gap: 14px; scroll-padding-left: 24px; }
+  .lc-track { padding: 0 24px 30px; gap: 14px; scroll-padding-left: 24px; }
   .lc-banner__title { font-size: 26px; }
   .lc-slide { width: 200px; }
   .lc-slide__img { height: 125px; }
@@ -717,7 +717,7 @@
 @media (max-width: 600px) {
   .lc-banner { margin: 0 calc(-1 * var(--container-pad)) var(--space-xl); }
   .lc-banner__header { padding: 22px 20px 14px; }
-  .lc-track { padding: 0 20px 24px; gap: 12px; scroll-padding-left: 20px; }
+  .lc-track { padding: 0 20px 30px; gap: 12px; scroll-padding-left: 20px; }
   .lc-banner__title { font-size: 24px; }
   .lc-banner__subtitle { font-size: 13px; }
   .lc-slide { width: 180px; }
