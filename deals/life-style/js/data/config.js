@@ -191,6 +191,113 @@ const CONFIG = {
       limitedTag: 'Exclusive Offer',
     },
   ],
+
+  // ── Stories — Instagram-style story groups ──
+  stories: [
+    {
+      id: 'for-you',
+      label: 'For You',
+      thumbnail: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=200&q=80',
+      route: '/home',
+      color: ['#2765FF', '#7C3AED'],
+      badge: 'TOP PICKS',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80', duration: 5000, title: 'Curated For You', description: 'Handpicked offers based on your lifestyle and spending patterns.', cta: { label: 'Explore All', route: '/home' } },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80', duration: 5000, title: 'This Week\'s Highlights', description: 'Don\'t miss the hottest deals before they expire.', cta: { label: 'View Deals', route: '/home' } },
+      ],
+    },
+    {
+      id: 'dining',
+      label: 'Dining',
+      thumbnail: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=200&q=80',
+      route: '/category/dining',
+      color: ['#F97316', '#EF4444'],
+      badge: 'HOT',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80', duration: 5000, title: 'Exclusive Dining Deals', description: 'Up to 50% off at 200+ premium restaurants across the UAE.', cta: { label: 'View Offers', route: '/category/dining' } },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80', duration: 5000, title: 'Fine Dining Privileges', description: 'Complimentary welcome drinks & chef specials for Visa Infinite cardholders.', cta: { label: 'Explore', route: '/category/dining' } },
+      ],
+    },
+    {
+      id: 'travel',
+      label: 'Travel',
+      thumbnail: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200&q=80',
+      route: '/category/travel',
+      color: ['#0EA5E9', '#2765FF'],
+      badge: 'NEW',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80', duration: 5000, title: 'Travel in Style', description: 'Exclusive flight and hotel packages for cardholders.', cta: { label: 'Book Now', route: '/category/travel' } },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80', duration: 5000, title: 'Beach Getaways', description: 'Save up to 35% on tropical island retreats this season.', cta: { label: 'Explore Deals', route: '/category/travel' } },
+      ],
+    },
+    {
+      id: 'golf',
+      label: 'Golf',
+      thumbnail: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=200&q=80',
+      route: '/golf',
+      color: ['#10B981', '#059669'],
+      badge: 'FREE',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=800&q=80', duration: 5000, title: 'Complimentary Golf Access', description: 'Play at 10+ championship courses across the UAE.', cta: { label: 'View Courses', route: '/golf' } },
+      ],
+    },
+    {
+      id: 'airport',
+      label: 'Airport',
+      thumbnail: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=200&q=80',
+      route: '/airport',
+      color: ['#6366F1', '#4F46E5'],
+      badge: 'VIP',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800&q=80', duration: 5000, title: 'Airport Transfers', description: 'Complimentary luxury pickup and drop-off service.', cta: { label: 'Book Transfer', route: '/airport' } },
+      ],
+    },
+    {
+      id: 'hotels',
+      label: 'Hotels',
+      thumbnail: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200&q=80',
+      route: '/category/hotels',
+      color: ['#EC4899', '#DB2777'],
+      badge: '25% OFF',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80', duration: 5000, title: 'Luxury Hotel Stays', description: 'Save up to 40% at 5-star hotels worldwide.', cta: { label: 'View Hotels', route: '/category/hotels' } },
+        { type: 'image', src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80', duration: 5000, title: 'Weekend Escapes', description: 'Exclusive weekend rates at Four Seasons, Burj Al Arab & more.', cta: { label: 'Book Now', route: '/category/hotels' } },
+      ],
+    },
+    {
+      id: 'cashback',
+      label: 'Cashback',
+      thumbnail: 'https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=200&q=80',
+      route: '/category/promotions',
+      color: ['#F59E0B', '#D97706'],
+      badge: '10% BACK',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?w=800&q=80', duration: 5000, title: 'Cashback Offers', description: 'Earn up to 10% cashback on everyday spending.', cta: { label: 'View Offers', route: '/category/promotions' } },
+      ],
+    },
+    {
+      id: 'events',
+      label: 'Events',
+      thumbnail: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=200&q=80',
+      route: '/category/events',
+      color: ['#EF4444', '#DC2626'],
+      badge: 'NEW',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80', duration: 5000, title: 'Upcoming Events', description: 'Priority access and exclusive discounts on concerts, shows, and more.', cta: { label: 'Explore Events', route: '/category/events' } },
+      ],
+    },
+    {
+      id: 'card-benefits',
+      label: 'Benefits',
+      thumbnail: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=200&q=80',
+      route: '/card-benefits',
+      color: ['#1E293B', '#475569'],
+      badge: 'Infinite',
+      slides: [
+        { type: 'image', src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80', duration: 5000, title: 'Your Card Benefits', description: 'Discover all the exclusive privileges included with your Visa Infinite Card.', cta: { label: 'View Benefits', route: '/card-benefits' } },
+      ],
+    },
+  ],
 };
 
 window.CONFIG = CONFIG;

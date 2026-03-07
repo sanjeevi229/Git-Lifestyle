@@ -7,6 +7,15 @@ const HomePage = {
   _activeSlide: 0,
   _onScroll: null,
   _scrollRAF: null,
+  // Stories state
+  _storyViewerOpen: false,
+  _storyGroupIndex: -1,
+  _storySlideIndex: 0,
+  _storyAnimFrame: null,
+  _storyStartTime: 0,
+  _storyPaused: false,
+  _storyTouchStartX: 0,
+  _storyKeyHandler: null,
 
   render() {
     const user = Auth.getCurrentUser();
@@ -83,27 +92,41 @@ const HomePage = {
       `;
     }).join('');
 
-    // Unravel hotel deals — curated luxury destinations
-    const unravelDeals = [
-      { title: 'Safari Adventure', location: 'Serengeti, Tanzania', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=900&fit=crop', offerId: 'OFR-033' },
-      { title: 'Alpine Escape – Four Seasons', location: 'Swiss Alps, Switzerland', image: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600&h=900&fit=crop', offerId: 'OFR-040' },
-      { title: 'Desert Luxury – Burj Al Arab', location: 'Dubai, UAE', image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&h=900&fit=crop', offerId: 'OFR-041' },
-      { title: 'Tropical Retreat – Anantara', location: 'Maldives', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=600&h=900&fit=crop', offerId: 'OFR-043' },
-      { title: 'Beachfront Bliss – Address Resort', location: 'JBR, Dubai', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=900&fit=crop', offerId: 'OFR-042' },
-      { title: 'Coastal Serenity – The Palm', location: 'Palm Jumeirah, Dubai', image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=900&fit=crop', offerId: 'OFR-022' },
-      { title: 'Riviera Romance', location: 'Amalfi Coast, Italy', image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&h=900&fit=crop', offerId: 'OFR-044' },
-      { title: 'Spicy Seafood – The Atlantis Paradise Island', location: 'Bora Bora, French Polynesia', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=900&fit=crop', offerId: 'OFR-020' },
-    ];
-    const unravelCards = unravelDeals.map(d => `
-      <div class="unravel-card" onclick="Router.navigate('/offer/${d.offerId}')">
-        <img class="unravel-card__img" src="${d.image}" alt="${d.title}" loading="lazy" />
-        <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${d.title.replace(/'/g, "\\'")}','/offer/${d.offerId}')" aria-label="Share">${Icons.share(15)}</button>
-        <div class="unravel-card__info">
-          <div class="unravel-card__title">${d.title}</div>
-          <div class="unravel-card__location">${d.location}</div>
+    // Stories row — circular bubbles with badges + per-category colors
+    const viewedStories = JSON.parse(sessionStorage.getItem('_stories_viewed') || '[]');
+    const storyBubbles = (CONFIG.stories || []).map((story, i) => {
+      const isViewed = viewedStories.includes(story.id);
+      const isForYou = story.id === 'for-you';
+      const ringGradient = story.color ? `linear-gradient(135deg, ${story.color[0]}, ${story.color[1]})` : '';
+      const badgeClass = story.badge === 'Infinite' ? 'story-badge--infinite' : story.badge === 'NEW' ? 'story-badge--new' : story.badge === 'HOT' ? 'story-badge--hot' : story.badge === 'FREE' || story.badge === 'VIP' ? 'story-badge--premium' : 'story-badge--discount';
+      return `
+        <div class="story-bubble ${isViewed ? 'story-bubble--viewed' : ''} ${isForYou ? 'story-bubble--foryou' : ''}" data-story-index="${i}" role="button" tabindex="0" aria-label="View ${story.label} stories">
+          <div class="story-bubble__ring" ${!isViewed && ringGradient ? `style="background:${ringGradient}"` : ''}>
+            <img class="story-bubble__img" src="${story.thumbnail}" alt="${story.label}" loading="lazy" />
+          </div>
+          ${story.badge ? `<span class="story-badge ${badgeClass}">${story.badge}</span>` : ''}
+          <span class="story-bubble__label">${story.label}</span>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
+
+    // Unravel hotel deals — dynamically filtered from hotel offers
+    const hotelOffers = OFFERS.filter(o => o.category === 'hotels' && o.isActive).slice(0, 4);
+    const unravelCards = hotelOffers.map(o => {
+      const merchant = MERCHANTS.find(m => m.id === o.merchantId);
+      const img = o.image || (merchant ? merchant.image : '');
+      const location = merchant ? `${merchant.area || merchant.location}` : '';
+      return `
+        <div class="unravel-card" onclick="Router.navigate('/offer/${o.id}')">
+          <img class="unravel-card__img" src="${img}" alt="${o.title}" loading="lazy" />
+          <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
+          <div class="unravel-card__info">
+            <div class="unravel-card__title">${o.title}</div>
+            <div class="unravel-card__location">${merchant ? merchant.name : ''}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
 
     // Card Benefits icons
     const benefitIcons = CONFIG.cardBenefitIcons.map(b => `
@@ -208,6 +231,32 @@ const HomePage = {
             </section>
           </div>
 
+          <!-- Stories Row -->
+          <div class="stories-row">
+            <div class="stories-track" id="storiesTrack">${storyBubbles}</div>
+          </div>
+
+          <!-- Story Viewer (initially hidden) -->
+          <div class="story-viewer" id="storyViewer">
+            <div class="story-viewer__container" id="storyViewerContainer">
+              <div class="story-viewer__progress" id="storyProgress"></div>
+              <div class="story-viewer__header">
+                <img class="story-viewer__avatar" id="storyAvatar" src="" alt="" />
+                <span class="story-viewer__name" id="storyName"></span>
+                <button class="story-viewer__close" id="storyClose" aria-label="Close">${Icons.close(20)}</button>
+              </div>
+              <div class="story-viewer__media" id="storyMedia"></div>
+              <div class="story-viewer__gradient"></div>
+              <div class="story-viewer__content">
+                <div class="story-viewer__title" id="storyTitle"></div>
+                <div class="story-viewer__desc" id="storyDesc"></div>
+                <button class="story-viewer__cta" id="storyCta"></button>
+              </div>
+              <button class="story-viewer__tap-left" id="storyTapLeft" aria-label="Previous"></button>
+              <button class="story-viewer__tap-right" id="storyTapRight" aria-label="Next"></button>
+            </div>
+          </div>
+
           <!-- Categories inside container -->
           <div class="container">
             <div class="home-section" style="padding-top:var(--space-xl)">
@@ -222,7 +271,7 @@ const HomePage = {
               <div class="unravel-header">
                 <div>
                   <h2 class="unravel-header__title">Deals for you by Unravel</h2>
-                  <p class="unravel-header__subtitle">Indulge in romantic dinners and sweet treats.</p>
+                  <p class="unravel-header__subtitle">Exclusive hotel stays and luxury getaways.</p>
                 </div>
                 <button class="btn btn--ghost btn--sm" onclick="Router.navigate('/category/hotels')">Show all</button>
               </div>
@@ -372,9 +421,14 @@ const HomePage = {
     this._mountUnravelDots();
     this._startHeroAutoplay();
 
-    // Reset Last Chance track scroll (prevent snap from jumping past padding)
+    // Prototype: reset viewed stories on every page load so they always look fresh
+    sessionStorage.removeItem('_stories_viewed');
+
+    // Reset scroll positions (prevent snap from jumping past padding)
     const lcTrack = $('#lc-track');
     if (lcTrack) lcTrack.scrollLeft = 0;
+    const storiesTrack = $('#storiesTrack');
+    if (storiesTrack) storiesTrack.scrollLeft = 0;
 
     // Hero dots
     delegate('#app', 'click', '.hero__dot', (e, el) => {
@@ -438,6 +492,79 @@ const HomePage = {
       }, { threshold: 0.3 });
       $$('.card-hover-zone').forEach(zone => this._cardObserver.observe(zone));
     }
+
+    // ── Stories event bindings ──
+    delegate('#app', 'click', '.story-bubble', (e, el) => {
+      const index = Number(el.dataset.storyIndex);
+      this._openStoryViewer(index);
+    });
+
+    delegate('#app', 'keydown', '.story-bubble', (e, el) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this._openStoryViewer(Number(el.dataset.storyIndex));
+      }
+    });
+
+    const storyClose = $('#storyClose');
+    if (storyClose) storyClose.addEventListener('click', () => this._closeStoryViewer());
+
+    const storyTapLeft = $('#storyTapLeft');
+    if (storyTapLeft) storyTapLeft.addEventListener('click', () => this._storyPrev());
+
+    const storyTapRight = $('#storyTapRight');
+    if (storyTapRight) storyTapRight.addEventListener('click', () => this._storyNext());
+
+    delegate('#storyViewer', 'click', '.story-viewer__progress-seg', (e, el) => {
+      this._goToStorySlide(Number(el.dataset.slideIndex));
+    });
+
+    const storyCta = $('#storyCta');
+    if (storyCta) storyCta.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const story = CONFIG.stories[this._storyGroupIndex];
+      const slide = story && story.slides[this._storySlideIndex];
+      if (slide && slide.cta && slide.cta.route) {
+        this._closeStoryViewer();
+        Router.navigate(slide.cta.route);
+      }
+    });
+
+    // Keyboard navigation
+    this._storyKeyHandler = (e) => {
+      if (!this._storyViewerOpen) return;
+      if (e.key === 'Escape') this._closeStoryViewer();
+      if (e.key === 'ArrowRight') this._storyNext();
+      if (e.key === 'ArrowLeft') this._storyPrev();
+    };
+    document.addEventListener('keydown', this._storyKeyHandler);
+
+    // Touch/swipe on viewer
+    const viewerContainer = $('#storyViewerContainer');
+    if (viewerContainer) {
+      viewerContainer.addEventListener('touchstart', (e) => {
+        this._storyTouchStartX = e.touches[0].clientX;
+        this._pauseStoryTimer();
+      }, { passive: true });
+
+      viewerContainer.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].clientX - this._storyTouchStartX;
+        if (Math.abs(dx) > 50) {
+          if (dx < 0) this._storyNextGroup();
+          else this._storyPrevGroup();
+        } else {
+          this._resumeStoryTimer();
+        }
+      }, { passive: true });
+    }
+
+    // Click overlay background to close
+    const storyViewer = $('#storyViewer');
+    if (storyViewer) {
+      storyViewer.addEventListener('click', (e) => {
+        if (e.target === storyViewer) this._closeStoryViewer();
+      });
+    }
   },
 
   unmount() {
@@ -471,6 +598,13 @@ const HomePage = {
       v.removeAttribute('src');
       v.load();
     });
+
+    // Clean up stories
+    this._closeStoryViewer();
+    if (this._storyKeyHandler) {
+      document.removeEventListener('keydown', this._storyKeyHandler);
+      this._storyKeyHandler = null;
+    }
   },
 
   _mountUnravelDots() {
@@ -571,6 +705,248 @@ const HomePage = {
     const canScroll = grid.scrollWidth > grid.clientWidth;
     const atEnd = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 4;
     arrow.classList.toggle('hidden', !canScroll || atEnd);
+  },
+
+  // ══════════════════════════════════════════════
+  // STORIES — Viewer Logic
+  // ══════════════════════════════════════════════
+
+  _openStoryViewer(groupIndex) {
+    this._storyGroupIndex = groupIndex;
+    this._storySlideIndex = 0;
+    this._storyViewerOpen = true;
+    this._storyPaused = false;
+
+    const viewer = $('#storyViewer');
+    if (viewer) viewer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Pause hero autoplay while viewing stories
+    this._stopHeroAutoplay();
+
+    // Mark story as viewed
+    this._markStoryViewed(CONFIG.stories[groupIndex].id);
+
+    this._buildProgressBar();
+    this._loadStorySlide();
+    this._startStoryTimer();
+  },
+
+  _closeStoryViewer() {
+    this._storyViewerOpen = false;
+    this._storyGroupIndex = -1;
+    this._storySlideIndex = 0;
+
+    const viewer = $('#storyViewer');
+    if (viewer) viewer.classList.remove('active');
+    document.body.style.overflow = '';
+
+    this._stopStoryTimer();
+
+    // Cleanup any playing video
+    const video = $('#storyMedia video');
+    if (video) { video.pause(); video.removeAttribute('src'); video.load(); }
+
+    // Update viewed states in the row
+    this._updateStoryBubbleStates();
+
+    // Resume hero autoplay
+    this._startHeroAutoplay();
+  },
+
+  _buildProgressBar() {
+    const progress = $('#storyProgress');
+    if (!progress) return;
+    const story = CONFIG.stories[this._storyGroupIndex];
+    if (!story) return;
+    progress.innerHTML = story.slides.map((_, i) =>
+      `<div class="story-viewer__progress-seg" data-slide-index="${i}">
+        <div class="story-viewer__progress-fill" id="storyFill-${i}"></div>
+      </div>`
+    ).join('');
+  },
+
+  _loadStorySlide() {
+    const story = CONFIG.stories[this._storyGroupIndex];
+    if (!story) return;
+    const slide = story.slides[this._storySlideIndex];
+    if (!slide) return;
+
+    // Header
+    const avatar = $('#storyAvatar');
+    const name = $('#storyName');
+    if (avatar) { avatar.src = story.thumbnail; avatar.alt = story.label; }
+    if (name) name.textContent = story.label;
+
+    // Media
+    const media = $('#storyMedia');
+    if (media) {
+      if (slide.type === 'video') {
+        media.innerHTML = `<video src="${slide.src}" muted playsinline autoplay></video>`;
+        const vid = media.querySelector('video');
+        vid.play().catch(() => {});
+        vid.addEventListener('error', () => {
+          media.innerHTML = `<img src="${slide.src}" alt="${slide.title || ''}" />`;
+        });
+      } else {
+        media.innerHTML = `<img src="${slide.src}" alt="${slide.title || ''}" />`;
+      }
+    }
+
+    // Content
+    const title = $('#storyTitle');
+    const desc = $('#storyDesc');
+    const cta = $('#storyCta');
+    if (title) title.textContent = slide.title || '';
+    if (desc) desc.textContent = slide.description || '';
+    if (cta) {
+      if (slide.cta) {
+        cta.textContent = slide.cta.label;
+        cta.style.display = 'inline-flex';
+      } else {
+        cta.style.display = 'none';
+      }
+    }
+
+    // Update progress fills
+    story.slides.forEach((_, i) => {
+      const fill = $(`#storyFill-${i}`);
+      if (!fill) return;
+      if (i < this._storySlideIndex) {
+        fill.style.transition = 'none';
+        fill.style.width = '100%';
+      } else {
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+      }
+    });
+
+    this._restartStoryTimer();
+  },
+
+  _startStoryTimer() {
+    this._stopStoryTimer();
+    const story = CONFIG.stories[this._storyGroupIndex];
+    if (!story) return;
+    const slide = story.slides[this._storySlideIndex];
+    const duration = (slide && slide.duration) || 5000;
+
+    this._storyStartTime = performance.now();
+    this._storyPaused = false;
+    this._storyPausedElapsed = 0;
+
+    const fill = $(`#storyFill-${this._storySlideIndex}`);
+    const tick = () => {
+      if (!this._storyViewerOpen) return;
+      if (this._storyPaused) {
+        this._storyAnimFrame = requestAnimationFrame(tick);
+        return;
+      }
+      const elapsed = (performance.now() - this._storyStartTime) + this._storyPausedElapsed;
+      const progress = Math.min(elapsed / duration, 1);
+      if (fill) fill.style.width = `${progress * 100}%`;
+
+      if (progress >= 1) {
+        this._storyNext();
+        return;
+      }
+      this._storyAnimFrame = requestAnimationFrame(tick);
+    };
+    this._storyAnimFrame = requestAnimationFrame(tick);
+  },
+
+  _stopStoryTimer() {
+    if (this._storyAnimFrame) {
+      cancelAnimationFrame(this._storyAnimFrame);
+      this._storyAnimFrame = null;
+    }
+  },
+
+  _restartStoryTimer() {
+    this._stopStoryTimer();
+    if (this._storyViewerOpen) this._startStoryTimer();
+  },
+
+  _pauseStoryTimer() {
+    if (!this._storyPaused) {
+      this._storyPaused = true;
+      // Save elapsed time so we can resume from same position
+      this._storyPausedElapsed = (this._storyPausedElapsed || 0) + (performance.now() - this._storyStartTime);
+    }
+  },
+
+  _resumeStoryTimer() {
+    if (this._storyPaused) {
+      this._storyStartTime = performance.now();
+      this._storyPaused = false;
+    }
+  },
+
+  _storyNext() {
+    const story = CONFIG.stories[this._storyGroupIndex];
+    if (!story) return;
+    if (this._storySlideIndex < story.slides.length - 1) {
+      this._storySlideIndex++;
+      this._loadStorySlide();
+    } else {
+      this._storyNextGroup();
+    }
+  },
+
+  _storyPrev() {
+    if (this._storySlideIndex > 0) {
+      this._storySlideIndex--;
+      this._loadStorySlide();
+    } else {
+      this._storyPrevGroup();
+    }
+  },
+
+  _storyNextGroup() {
+    if (this._storyGroupIndex < CONFIG.stories.length - 1) {
+      this._storyGroupIndex++;
+      this._storySlideIndex = 0;
+      this._markStoryViewed(CONFIG.stories[this._storyGroupIndex].id);
+      this._buildProgressBar();
+      this._loadStorySlide();
+    } else {
+      this._closeStoryViewer();
+    }
+  },
+
+  _storyPrevGroup() {
+    if (this._storyGroupIndex > 0) {
+      this._storyGroupIndex--;
+      this._storySlideIndex = 0;
+      this._buildProgressBar();
+      this._loadStorySlide();
+    }
+  },
+
+  _goToStorySlide(index) {
+    const story = CONFIG.stories[this._storyGroupIndex];
+    if (!story || index < 0 || index >= story.slides.length) return;
+    this._storySlideIndex = index;
+    this._loadStorySlide();
+  },
+
+  _markStoryViewed(storyId) {
+    const viewed = JSON.parse(sessionStorage.getItem('_stories_viewed') || '[]');
+    if (!viewed.includes(storyId)) {
+      viewed.push(storyId);
+      sessionStorage.setItem('_stories_viewed', JSON.stringify(viewed));
+    }
+  },
+
+  _updateStoryBubbleStates() {
+    const viewed = JSON.parse(sessionStorage.getItem('_stories_viewed') || '[]');
+    $$('.story-bubble').forEach(bubble => {
+      const idx = Number(bubble.dataset.storyIndex);
+      const story = CONFIG.stories[idx];
+      if (story && viewed.includes(story.id)) {
+        bubble.classList.add('story-bubble--viewed');
+      }
+    });
   },
 
 };
