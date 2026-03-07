@@ -239,6 +239,7 @@ const HomePage = {
           <!-- Story Viewer (initially hidden) -->
           <div class="story-viewer" id="storyViewer">
             <div class="story-viewer__container" id="storyViewerContainer">
+              <div class="story-viewer__gradient-top"></div>
               <div class="story-viewer__progress" id="storyProgress"></div>
               <div class="story-viewer__header">
                 <img class="story-viewer__avatar" id="storyAvatar" src="" alt="" />

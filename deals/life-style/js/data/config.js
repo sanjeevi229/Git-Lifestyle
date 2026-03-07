@@ -202,8 +202,8 @@ const CONFIG = {
       color: ['#2765FF', '#7C3AED'],
       badge: 'TOP PICKS',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/4800/4800-720.mp4', duration: 8000, title: 'Curated For You', description: 'Handpicked offers based on your lifestyle and spending patterns.', cta: { label: 'Explore All', route: '/home' } },
-        { type: 'video', src: 'https://assets.mixkit.co/videos/236/236-720.mp4', duration: 8000, title: 'This Week\'s Highlights', description: 'Don\'t miss the hottest deals before they expire.', cta: { label: 'View Deals', route: '/home' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/4800/4800-720.mp4', duration: 8000, title: '50% Off at Nobu Dubai', description: 'Exclusive half-price dining at Nobu. Valid on your total food bill — dine-in only.', cta: { label: 'Grab This Deal', route: '/offer/OFR-001' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/236/236-720.mp4', duration: 8000, title: 'Win a BMW i5', description: 'Spend AED 500+ with your Visa Infinite Card and enter to win a brand new BMW i5.', cta: { label: 'Enter Now', route: '/offer/OFR-028' } },
       ],
     },
     {
@@ -214,8 +214,8 @@ const CONFIG = {
       color: ['#F97316', '#EF4444'],
       badge: 'HOT',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/4672/4672-720.mp4', duration: 8000, title: 'Exclusive Dining Deals', description: 'Up to 50% off at 200+ premium restaurants across the UAE.', cta: { label: 'View Offers', route: '/category/dining' } },
-        { type: 'video', src: 'https://assets.mixkit.co/videos/4385/4385-720.mp4', duration: 8000, title: 'Fine Dining Privileges', description: 'Complimentary welcome drinks & chef specials for Visa Infinite cardholders.', cta: { label: 'Explore', route: '/category/dining' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/4672/4672-720.mp4', duration: 8000, title: '35% Off Fine Dining at Nobu', description: 'Exclusive Infinite Card privilege — 35% off your bill at Nobu. Max discount AED 1,000.', cta: { label: 'Claim Offer', route: '/offer/OFR-006' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/4385/4385-720.mp4', duration: 8000, title: 'Buy 1 Get 1 Free — Main Course', description: 'Dine at Al Maya and get your second main course free. Perfect for a date night.', cta: { label: 'View Deal', route: '/offer/OFR-003' } },
       ],
     },
     {
@@ -226,8 +226,8 @@ const CONFIG = {
       color: ['#0EA5E9', '#2765FF'],
       badge: 'NEW',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/44495/44495-720.mp4', duration: 8000, title: 'Travel in Style', description: 'Exclusive flight and hotel packages for cardholders.', cta: { label: 'Book Now', route: '/category/travel' } },
-        { type: 'video', src: 'https://assets.mixkit.co/videos/4999/4999-720.mp4', duration: 8000, title: 'Beach Getaways', description: 'Save up to 35% on tropical island retreats this season.', cta: { label: 'Explore Deals', route: '/category/travel' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/44495/44495-720.mp4', duration: 8000, title: '30% Off Holiday Packages', description: 'Book your next getaway and save 30% on curated holiday packages across 50+ destinations.', cta: { label: 'Book Now', route: '/offer/OFR-031' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/4999/4999-720.mp4', duration: 8000, title: 'Desert Safari — Half Price', description: '50% off the ultimate desert safari experience. Dune bashing, BBQ dinner & stargazing included.', cta: { label: 'Get 50% Off', route: '/offer/OFR-033' } },
       ],
     },
     {
@@ -238,18 +238,7 @@ const CONFIG = {
       color: ['#10B981', '#059669'],
       badge: 'FREE',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/20870/20870-720.mp4', duration: 8000, title: 'Complimentary Golf Access', description: 'Play at 10+ championship courses across the UAE.', cta: { label: 'View Courses', route: '/golf' } },
-      ],
-    },
-    {
-      id: 'airport',
-      label: 'Airport',
-      thumbnail: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=200&q=80',
-      route: '/airport',
-      color: ['#6366F1', '#4F46E5'],
-      badge: 'VIP',
-      slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/28000/28000-720.mp4', duration: 8000, title: 'Airport Transfers', description: 'Complimentary luxury pickup and drop-off service.', cta: { label: 'Book Transfer', route: '/airport' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/20870/20870-720.mp4', duration: 8000, title: 'Free Green Fees — 10+ Courses', description: 'Play complimentary rounds at championship courses across the UAE with your Infinite Card.', cta: { label: 'Book a Tee Time', route: '/golf' } },
       ],
     },
     {
@@ -260,8 +249,8 @@ const CONFIG = {
       color: ['#EC4899', '#DB2777'],
       badge: '25% OFF',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/4046/4046-720.mp4', duration: 8000, title: 'Luxury Hotel Stays', description: 'Save up to 40% at 5-star hotels worldwide.', cta: { label: 'View Hotels', route: '/category/hotels' } },
-        { type: 'video', src: 'https://assets.mixkit.co/videos/9902/9902-720.mp4', duration: 8000, title: 'Weekend Escapes', description: 'Exclusive weekend rates at Four Seasons, Burj Al Arab & more.', cta: { label: 'Book Now', route: '/category/hotels' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/4046/4046-720.mp4', duration: 8000, title: 'Free Suite Upgrade', description: 'Complimentary upgrade to a suite at select 5-star hotels when you book with your Infinite Card.', cta: { label: 'Book & Upgrade', route: '/offer/OFR-041' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/9902/9902-720.mp4', duration: 8000, title: '50% Off Summer Stays', description: 'Half-price luxury stays this summer at Jumeirah, Atlantis & more. Book before June 30.', cta: { label: 'Grab 50% Off', route: '/offer/OFR-046' } },
       ],
     },
     {
@@ -272,7 +261,7 @@ const CONFIG = {
       color: ['#F59E0B', '#D97706'],
       badge: '10% BACK',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/15914/15914-720.mp4', duration: 8000, title: 'Cashback Offers', description: 'Earn up to 10% cashback on everyday spending.', cta: { label: 'View Offers', route: '/category/promotions' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/15914/15914-720.mp4', duration: 8000, title: '10% Cashback on Fashion', description: 'Shop at The Dubai Mall & Mall of the Emirates — earn 10% cashback on all fashion purchases.', cta: { label: 'Shop & Earn', route: '/offer/OFR-023' } },
       ],
     },
     {
@@ -283,7 +272,7 @@ const CONFIG = {
       color: ['#EF4444', '#DC2626'],
       badge: 'NEW',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/14084/14084-720.mp4', duration: 8000, title: 'Upcoming Events', description: 'Priority access and exclusive discounts on concerts, shows, and more.', cta: { label: 'Explore Events', route: '/category/events' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/14084/14084-720.mp4', duration: 8000, title: 'VIP Concert Access', description: 'Skip the queue with VIP entry, backstage passes & front-row seats at Dubai Opera events.', cta: { label: 'Get VIP Access', route: '/offer/OFR-015' } },
       ],
     },
     {
@@ -294,7 +283,7 @@ const CONFIG = {
       color: ['#1E293B', '#475569'],
       badge: 'Infinite',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/35540/35540-720.mp4', duration: 8000, title: 'Your Card Benefits', description: 'Discover all the exclusive privileges included with your Visa Infinite Card.', cta: { label: 'View Benefits', route: '/card-benefits' } },
+        { type: 'video', src: 'https://assets.mixkit.co/videos/35540/35540-720.mp4', duration: 8000, title: 'Your Infinite Privileges', description: 'Golf, airport transfers, valet parking, concierge & more — all complimentary with your card.', cta: { label: 'See All Benefits', route: '/card-benefits' } },
       ],
     },
   ],
