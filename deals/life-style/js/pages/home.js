@@ -772,56 +772,77 @@ const HomePage = {
     const slide = story.slides[this._storySlideIndex];
     if (!slide) return;
 
-    // Header
-    const avatar = $('#storyAvatar');
-    const name = $('#storyName');
-    if (avatar) { avatar.src = story.thumbnail; avatar.alt = story.label; }
-    if (name) name.textContent = story.label;
-
-    // Media
     const media = $('#storyMedia');
-    if (media) {
-      if (slide.type === 'video') {
-        media.innerHTML = `<video src="${slide.src}" muted playsinline autoplay></video>`;
-        const vid = media.querySelector('video');
-        vid.play().catch(() => {});
-        vid.addEventListener('error', () => {
+    const content = $('.story-viewer__content');
+
+    // Fade out media + content, then swap and fade in
+    if (media) media.classList.add('story-fade-out');
+    if (content) content.classList.add('story-fade-out');
+
+    const swapContent = () => {
+      // Header
+      const avatar = $('#storyAvatar');
+      const name = $('#storyName');
+      if (avatar) { avatar.src = story.thumbnail; avatar.alt = story.label; }
+      if (name) name.textContent = story.label;
+
+      // Media
+      if (media) {
+        if (slide.type === 'video') {
+          media.innerHTML = `<video src="${slide.src}" muted playsinline autoplay></video>`;
+          const vid = media.querySelector('video');
+          vid.play().catch(() => {});
+          vid.addEventListener('error', () => {
+            media.innerHTML = `<img src="${slide.src}" alt="${slide.title || ''}" />`;
+          });
+        } else {
           media.innerHTML = `<img src="${slide.src}" alt="${slide.title || ''}" />`;
-        });
-      } else {
-        media.innerHTML = `<img src="${slide.src}" alt="${slide.title || ''}" />`;
+        }
       }
+
+      // Content
+      const title = $('#storyTitle');
+      const desc = $('#storyDesc');
+      const cta = $('#storyCta');
+      if (title) title.textContent = slide.title || '';
+      if (desc) desc.textContent = slide.description || '';
+      if (cta) {
+        if (slide.cta) {
+          cta.textContent = slide.cta.label;
+          cta.style.display = 'inline-flex';
+        } else {
+          cta.style.display = 'none';
+        }
+      }
+
+      // Update progress fills
+      story.slides.forEach((_, i) => {
+        const fill = $(`#storyFill-${i}`);
+        if (!fill) return;
+        if (i < this._storySlideIndex) {
+          fill.style.transition = 'none';
+          fill.style.width = '100%';
+        } else {
+          fill.style.transition = 'none';
+          fill.style.width = '0%';
+        }
+      });
+
+      // Fade in
+      requestAnimationFrame(() => {
+        if (media) media.classList.remove('story-fade-out');
+        if (content) content.classList.remove('story-fade-out');
+      });
+
+      this._restartStoryTimer();
+    };
+
+    // Wait for fade-out to finish, then swap
+    if (media && this._storyViewerOpen) {
+      setTimeout(swapContent, 200);
+    } else {
+      swapContent();
     }
-
-    // Content
-    const title = $('#storyTitle');
-    const desc = $('#storyDesc');
-    const cta = $('#storyCta');
-    if (title) title.textContent = slide.title || '';
-    if (desc) desc.textContent = slide.description || '';
-    if (cta) {
-      if (slide.cta) {
-        cta.textContent = slide.cta.label;
-        cta.style.display = 'inline-flex';
-      } else {
-        cta.style.display = 'none';
-      }
-    }
-
-    // Update progress fills
-    story.slides.forEach((_, i) => {
-      const fill = $(`#storyFill-${i}`);
-      if (!fill) return;
-      if (i < this._storySlideIndex) {
-        fill.style.transition = 'none';
-        fill.style.width = '100%';
-      } else {
-        fill.style.transition = 'none';
-        fill.style.width = '0%';
-      }
-    });
-
-    this._restartStoryTimer();
   },
 
   _startStoryTimer() {
