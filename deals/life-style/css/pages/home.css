@@ -927,7 +927,7 @@
 .story-badge {
   position: absolute;
   top: -4px; right: -4px;
-  font-size: 8px; font-weight: 800;
+  font-size: 9px; font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.3px;
   padding: 2px 6px;
@@ -946,7 +946,7 @@
 .story-badge--infinite { background: linear-gradient(135deg, #1E293B, #475569); font-size: 7px; }
 
 .story-bubble__label {
-  font-size: 11px; font-weight: 500;
+  font-size: 12px; font-weight: 500;
   color: var(--charcoal); text-align: center;
   max-width: 88px; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;
@@ -1122,8 +1122,8 @@
   .stories-track { gap: 4px; padding-right: 0; }
   .story-bubble { gap: 6px; }
   .story-bubble__ring { width: 85px; height: 85px; }
-  .story-bubble__label { font-size: 10px; max-width: 85px; }
-  .story-badge { font-size: 7px; padding: 1.5px 4px; top: -3px; right: -3px; }
+  .story-bubble__label { font-size: 12px; max-width: 85px; }
+  .story-badge { font-size: 9px; padding: 2px 6px; top: -4px; right: -4px; }
   .story-viewer__title { font-size: 18px; }
   .story-viewer__desc { font-size: 13px; }
   .story-viewer__cta { padding: 10px 22px; font-size: 13px; }
