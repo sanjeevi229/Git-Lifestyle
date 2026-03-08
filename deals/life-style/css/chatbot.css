@@ -29,7 +29,7 @@
 
 .chat-fab:active { transform: scale(0.95); }
 
-.chat-fab--pulse { animation: chat-pulse 2s ease-in-out 3; }
+.chat-fab--pulse { animation: chat-pulse 2s ease-in-out infinite; }
 
 @keyframes chat-pulse {
   0%, 100% { box-shadow: 0 4px 20px rgba(7, 36, 71, 0.35); }
