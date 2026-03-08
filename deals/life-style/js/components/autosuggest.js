@@ -78,6 +78,7 @@ const AutoSuggest = {
       if (item) {
         dropdown.classList.remove('open');
         inputEl.value = '';
+        inputEl.blur();
         Router.navigate(item.dataset.route);
       }
     });
@@ -89,6 +90,7 @@ const AutoSuggest = {
         e.preventDefault();
         dropdown.classList.remove('open');
         inputEl.value = '';
+        inputEl.blur();
         Router.navigate(item.dataset.route);
       }
     });

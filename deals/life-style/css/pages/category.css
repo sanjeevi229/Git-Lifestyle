@@ -221,7 +221,7 @@
   .cat-hero__tagline { font-size: 14px; }
   .cat-hero__content { bottom: 110px; padding: 0 20px; }
   .cat-hero__search { bottom: 48px; left: 20px; width: calc(100% - 40px); max-width: 480px; }
-  .cat-hero__search input { padding: 14px 12px; font-size: 14px; }
+  .cat-hero__search input { padding: 14px 12px; font-size: 16px; }
   .cat-hero__search button { width: 36px; height: 36px; }
 
   .cat-filter-section { padding: var(--space-md); margin-top: var(--space-lg); }

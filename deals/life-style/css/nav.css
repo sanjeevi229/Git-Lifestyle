@@ -247,7 +247,7 @@ body.menu-open { overflow: hidden !important; }
 .sticky-search input {
   flex: 1; padding: 11px 10px; border: none;
   background: transparent; color: var(--white);
-  font-size: 14px; font-family: var(--font-body); outline: none;
+  font-size: 16px; font-family: var(--font-body); outline: none;
 }
 .sticky-search input::placeholder { color: rgba(255,255,255,0.35); }
 .sticky-search__go {
