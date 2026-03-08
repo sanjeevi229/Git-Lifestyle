@@ -591,3 +591,101 @@
   }
   .tab__count { display: none; }
 }
+
+/* ══════════════════════════════════════════════
+   AUTO-SUGGEST DROPDOWN
+   ══════════════════════════════════════════════ */
+.autosuggest-dropdown {
+  position: fixed;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.08);
+  max-height: 420px;
+  overflow-y: auto;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  -webkit-overflow-scrolling: touch;
+}
+.autosuggest-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.autosuggest-group { padding: 6px 0; }
+.autosuggest-group + .autosuggest-group { border-top: 1px solid var(--grey-border); }
+
+.autosuggest-group__label {
+  padding: 8px 16px 4px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.autosuggest-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.autosuggest-item:hover { background: var(--light); }
+
+.autosuggest-item__img {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.autosuggest-item__info { flex: 1; min-width: 0; }
+.autosuggest-item__title {
+  font-size: 14px; font-weight: 600; color: var(--charcoal);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.autosuggest-item__sub {
+  font-size: 12px; color: var(--grey); margin-top: 1px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.autosuggest-item__badge {
+  flex-shrink: 0;
+  font-size: 11px; font-weight: 700;
+  color: var(--success);
+  padding: 2px 8px;
+  background: var(--success-bg);
+  border-radius: var(--radius-full);
+}
+
+.autosuggest-viewall {
+  padding: 14px 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  border-top: 1px solid var(--grey-border);
+  transition: background 0.15s;
+}
+.autosuggest-viewall:hover { background: var(--light); }
+
+.autosuggest-empty {
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--grey);
+}
+
+@media (max-width: 600px) {
+  .autosuggest-dropdown { max-height: 340px; }
+  .autosuggest-item__img { width: 38px; height: 38px; }
+  .autosuggest-item { padding: 8px 14px; gap: 10px; }
+  .autosuggest-item__title { font-size: 13px; }
+}

@@ -70,6 +70,7 @@ const Router = {
     if (this._currentPage && this._currentPage.unmount) {
       this._currentPage.unmount();
     }
+    if (typeof AutoSuggest !== 'undefined') AutoSuggest.destroyAll();
     const app = $('#app');
     if (!app) return;
     app.innerHTML = handler.render(params, query);

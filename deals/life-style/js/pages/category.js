@@ -178,6 +178,7 @@ const CategoryPage = {
       catInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') this._doSearch();
       });
+      AutoSuggest.attach(catInput);
     }
 
     // Mobile: reveal overlay when card scrolls into view

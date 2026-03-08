@@ -256,6 +256,7 @@ const Nav = {
       stickyInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') Nav._doStickySearch();
       });
+      AutoSuggest.attach(stickyInput);
     }
   },
 

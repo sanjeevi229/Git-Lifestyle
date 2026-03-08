@@ -445,6 +445,7 @@ const HomePage = {
       heroInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') this._doSearch();
       });
+      AutoSuggest.attach(heroInput);
     }
 
     // Benefits scroll arrow visibility (defer to ensure layout is complete)
