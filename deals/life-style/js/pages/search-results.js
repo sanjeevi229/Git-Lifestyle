@@ -86,6 +86,11 @@ const SearchResultsPage = {
         <main class="page__main page__main--full">
           <div class="container">
             <div class="search-results__header">
+              <div class="breadcrumb">
+                <span class="breadcrumb__item" onclick="Router.navigate('/home')">Home</span>
+                <span class="breadcrumb__sep">›</span>
+                <span class="breadcrumb__current">Search Results</span>
+              </div>
               <h1 class="page-title">Search Results</h1>
               <p class="text-muted">${totalCount} result${totalCount !== 1 ? 's' : ''} for "${q}"</p>
             </div>

@@ -47,7 +47,7 @@
 .benefits-cta { text-align: center; padding: 40px 0; }
 
 /* Search Results */
-.search-results__header { margin-bottom: var(--space-xl); }
+.search-results__header { margin-bottom: var(--space-xl); padding-top: var(--space-sm); }
 .search-results__header h1 { margin-bottom: 4px; }
 .search-results__section { margin-bottom: var(--space-2xl); }
 .search-results__section-title { font-size: 20px; font-weight: 700; margin-bottom: var(--space-lg); }
