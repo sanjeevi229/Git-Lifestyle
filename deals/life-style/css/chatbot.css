@@ -50,11 +50,14 @@
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
   width: 100%;
+  height: 100vh;                        /* fallback */
+  height: 100dvh;                       /* dynamic viewport — respects mobile browser chrome */
+  height: -webkit-fill-available;       /* Safari fallback */
   z-index: 500;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: var(--light);
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -64,6 +67,13 @@
 .chat-overlay.open {
   transform: translateX(0);
   visibility: visible;
+}
+
+/* Lock body scroll when chat is open */
+body.chat-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
 
 @media (min-width: 901px) {

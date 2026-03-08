@@ -121,8 +121,13 @@ const Chatbot = {
   },
 
   /* ── Open / Close ── */
+  _savedScrollY: 0,
+
   open() {
     this._isOpen = true;
+    // Save scroll position before locking body
+    this._savedScrollY = window.scrollY;
+    document.body.style.top = `-${this._savedScrollY}px`;
     document.getElementById('chatOverlay').classList.add('open');
     document.getElementById('chatFab').style.display = 'none';
     document.body.classList.add('chat-open');
@@ -152,7 +157,10 @@ const Chatbot = {
     fab.classList.remove('chat-fab--pulse');
     void fab.offsetWidth; // force reflow
     fab.classList.add('chat-fab--pulse');
+    // Restore scroll position
     document.body.classList.remove('chat-open');
+    document.body.style.top = '';
+    window.scrollTo(0, this._savedScrollY);
   },
 
   /* ── Welcome Screen (Premium) ── */
