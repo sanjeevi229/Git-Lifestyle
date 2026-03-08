@@ -70,7 +70,6 @@
 /* Lock body scroll when chat is open */
 body.chat-open {
   overflow: hidden;
-  touch-action: none;
 }
 
 /* Solid backdrop to hide page content behind keyboard */
