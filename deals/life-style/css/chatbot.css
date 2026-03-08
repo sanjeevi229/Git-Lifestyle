@@ -51,7 +51,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 100%;
+  bottom: 0;
   z-index: 500;
   display: flex;
   flex-direction: column;
@@ -71,6 +71,11 @@
 body.chat-open {
   overflow: hidden;
   touch-action: none;
+}
+
+/* Solid backdrop to hide page content behind keyboard */
+body.chat-open #app {
+  visibility: hidden;
 }
 
 @media (min-width: 901px) {

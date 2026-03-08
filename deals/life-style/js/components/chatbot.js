@@ -119,18 +119,16 @@ const Chatbot = {
       if (e.target.id === 'chatOverlay') this.close();
     });
 
-    // iOS keyboard fix — keep overlay aligned with visual viewport
-    if (window.visualViewport) {
-      const overlay = document.getElementById('chatOverlay');
-      const onViewport = () => {
-        if (!this._isOpen) return;
-        const vv = window.visualViewport;
-        overlay.style.height = `${vv.height}px`;
-        overlay.style.top = `${vv.offsetTop}px`;
-      };
-      window.visualViewport.addEventListener('resize', onViewport);
-      window.visualViewport.addEventListener('scroll', onViewport);
-    }
+    // iOS keyboard fix — prevent page scroll when input is focused
+    const chatInput = document.getElementById('chatInput');
+    chatInput.addEventListener('focus', () => {
+      // Scroll messages to bottom so input stays visible
+      setTimeout(() => {
+        this._scrollToBottom();
+        // Prevent iOS from scrolling the page behind the overlay
+        window.scrollTo(0, 0);
+      }, 300);
+    });
   },
 
   /* ── Open / Close ── */
@@ -175,9 +173,6 @@ const Chatbot = {
     document.getElementById('chatInput').blur();
     const overlay = document.getElementById('chatOverlay');
     overlay.classList.remove('open');
-    // Reset iOS keyboard viewport adjustments
-    overlay.style.height = '';
-    overlay.style.top = '';
     const fab = document.getElementById('chatFab');
     fab.style.display = '';
     // Re-trigger pulse animation
