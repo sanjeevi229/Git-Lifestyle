@@ -147,6 +147,7 @@ body.chat-open #app {
 /* ── Messages Area ── */
 .chat-messages {
   flex: 1;
+  overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 16px;

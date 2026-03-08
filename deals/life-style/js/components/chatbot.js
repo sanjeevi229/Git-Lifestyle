@@ -119,16 +119,23 @@ const Chatbot = {
       if (e.target.id === 'chatOverlay') this.close();
     });
 
-    // iOS keyboard fix — prevent page scroll when input is focused
-    const chatInput = document.getElementById('chatInput');
-    chatInput.addEventListener('focus', () => {
-      // Scroll messages to bottom so input stays visible
-      setTimeout(() => {
+    // iOS keyboard fix — add internal padding to push input above keyboard
+    if (window.visualViewport) {
+      const overlay = document.getElementById('chatOverlay');
+      const onViewport = () => {
+        if (!this._isOpen) return;
+        const keyboardHeight = window.innerHeight - window.visualViewport.height;
+        if (keyboardHeight > 100) {
+          // Keyboard open — add bottom padding inside overlay
+          overlay.style.paddingBottom = `${keyboardHeight}px`;
+        } else {
+          // Keyboard closed — remove padding
+          overlay.style.paddingBottom = '';
+        }
         this._scrollToBottom();
-        // Prevent iOS from scrolling the page behind the overlay
-        window.scrollTo(0, 0);
-      }, 300);
-    });
+      };
+      window.visualViewport.addEventListener('resize', onViewport);
+    }
   },
 
   /* ── Open / Close ── */
@@ -173,6 +180,8 @@ const Chatbot = {
     document.getElementById('chatInput').blur();
     const overlay = document.getElementById('chatOverlay');
     overlay.classList.remove('open');
+    // Reset keyboard padding
+    overlay.style.paddingBottom = '';
     const fab = document.getElementById('chatFab');
     fab.style.display = '';
     // Re-trigger pulse animation
