@@ -134,16 +134,22 @@ const Chatbot = {
   },
 
   /* ── Open / Close ── */
-  _savedScrollY: 0,
+  _scrollBlocker: null,
 
   open() {
     this._isOpen = true;
-    // Save scroll position before locking body
-    this._savedScrollY = window.scrollY;
-    document.body.style.top = `-${this._savedScrollY}px`;
     document.getElementById('chatOverlay').classList.add('open');
     document.getElementById('chatFab').style.display = 'none';
     document.body.classList.add('chat-open');
+
+    // Block background scroll on iOS (touch-action alone isn't enough)
+    this._scrollBlocker = (e) => {
+      // Allow scroll inside chat messages, but block everything else
+      if (!e.target.closest('.chat-messages, .chat-prompts, .chat-welcome__offers-row')) {
+        e.preventDefault();
+      }
+    };
+    document.body.addEventListener('touchmove', this._scrollBlocker, { passive: false });
 
     const container = document.getElementById('chatMessages');
 
@@ -165,7 +171,7 @@ const Chatbot = {
 
   close() {
     this._isOpen = false;
-    // Blur input first to dismiss keyboard before closing
+    // Blur input first to dismiss keyboard
     document.getElementById('chatInput').blur();
     const overlay = document.getElementById('chatOverlay');
     overlay.classList.remove('open');
@@ -178,10 +184,12 @@ const Chatbot = {
     fab.classList.remove('chat-fab--pulse');
     void fab.offsetWidth; // force reflow
     fab.classList.add('chat-fab--pulse');
-    // Restore scroll position
+    // Remove scroll blocker and restore body
     document.body.classList.remove('chat-open');
-    document.body.style.top = '';
-    window.scrollTo(0, this._savedScrollY);
+    if (this._scrollBlocker) {
+      document.body.removeEventListener('touchmove', this._scrollBlocker);
+      this._scrollBlocker = null;
+    }
   },
 
   /* ── Welcome Screen (Premium) ── */
