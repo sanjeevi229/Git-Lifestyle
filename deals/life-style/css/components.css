@@ -311,11 +311,11 @@
   border-radius: var(--radius-full);
   color: #fff;
 }
-.discount-badge--red { background: #ef4444; }
+.discount-badge--red { background: var(--accent); }
 .discount-badge--blue { background: var(--accent); }
-.discount-badge--green { background: #059669; }
-.discount-badge--gold { background: #CA8A04; }
-.discount-badge--purple { background: #7C3AED; }
+.discount-badge--green { background: var(--accent); }
+.discount-badge--gold { background: var(--accent); }
+.discount-badge--purple { background: var(--accent); }
 .discount-badge--lg { font-size: 14px; padding: 6px 16px; }
 
 /* ── OFFER CARD ── */

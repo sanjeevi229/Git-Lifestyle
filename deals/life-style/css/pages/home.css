@@ -942,7 +942,7 @@
 }
 .story-badge--new { background: linear-gradient(135deg, #2765FF, #0EA5E9); }
 .story-badge--hot { background: linear-gradient(135deg, #F97316, #EF4444); }
-.story-badge--discount { background: linear-gradient(135deg, #10B981, #059669); }
+.story-badge--discount { background: var(--accent); }
 .story-badge--premium { background: linear-gradient(135deg, #6366F1, #8B5CF6); }
 .story-badge--infinite { background: linear-gradient(135deg, #1E293B, #475569); font-size: 7px; }
 
