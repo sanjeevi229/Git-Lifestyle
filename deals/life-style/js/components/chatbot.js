@@ -198,7 +198,7 @@ const Chatbot = {
         const badge = Format.discountLabel(offer);
         html += `
           <div class="chat-welcome__offer-card" data-chat-route="/offer/${offer.id}">
-            <img class="chat-welcome__offer-img" src="${offer.image}" alt="${offer.title}" loading="lazy" />
+            <img class="chat-welcome__offer-img" src="${offer.image}" alt="${offer.title}" loading="eager" />
             <div class="chat-welcome__offer-body">
               <div class="chat-welcome__offer-title">${offer.title}</div>
               <div class="chat-welcome__offer-sub">${merchant ? merchant.name : ''}</div>
@@ -219,7 +219,7 @@ const Chatbot = {
         const daysLeft = Format.daysUntil(offer.validUntil);
         html += `
           <div class="chat-welcome__list-item" data-chat-route="/offer/${offer.id}">
-            <img class="chat-welcome__list-img" src="${offer.image}" alt="${offer.title}" loading="lazy" />
+            <img class="chat-welcome__list-img" src="${offer.image}" alt="${offer.title}" loading="eager" />
             <div class="chat-welcome__list-info">
               <div class="chat-welcome__list-title">${offer.title}</div>
               <div class="chat-welcome__list-sub">${merchant ? merchant.name : ''}</div>
