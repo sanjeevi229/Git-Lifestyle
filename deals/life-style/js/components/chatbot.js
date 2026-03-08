@@ -144,8 +144,10 @@ const Chatbot = {
       this._scrollToBottom();
     }
 
-    // Focus input after animation
-    setTimeout(() => document.getElementById('chatInput').focus(), 400);
+    // Focus input after animation (desktop only — avoids keyboard popup on mobile)
+    if (window.innerWidth > 900) {
+      setTimeout(() => document.getElementById('chatInput').focus(), 400);
+    }
   },
 
   close() {
