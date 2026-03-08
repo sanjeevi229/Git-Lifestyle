@@ -122,13 +122,26 @@ const Chatbot = {
     // iOS keyboard fix — resize overlay to match visible viewport
     if (window.visualViewport) {
       const overlay = document.getElementById('chatOverlay');
+      let rafId = null;
+      let lastH = 0;
+      let lastT = 0;
       const onViewport = () => {
         if (!this._isOpen) return;
-        const vv = window.visualViewport;
-        // Set overlay to exactly fill the visible viewport (above keyboard)
-        overlay.style.height = `${vv.height}px`;
-        overlay.style.top = `${vv.offsetTop}px`;
-        this._scrollToBottom();
+        if (rafId) return; // already scheduled
+        rafId = requestAnimationFrame(() => {
+          rafId = null;
+          const vv = window.visualViewport;
+          const h = Math.round(vv.height);
+          const t = Math.round(vv.offsetTop);
+          // Only update if changed by more than 1px
+          if (Math.abs(h - lastH) > 1 || Math.abs(t - lastT) > 1) {
+            overlay.style.height = `${h}px`;
+            overlay.style.top = `${t}px`;
+            lastH = h;
+            lastT = t;
+            this._scrollToBottom();
+          }
+        });
       };
       window.visualViewport.addEventListener('resize', onViewport);
       window.visualViewport.addEventListener('scroll', onViewport);
