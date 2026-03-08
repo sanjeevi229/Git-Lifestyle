@@ -55,4 +55,8 @@
   Router.register('/club/register',     ClubRegistrationPage);
 
   Router.init();
+
+  // Chatbot — global concierge assistant (clear history on refresh for prototype)
+  Store.set('chatHistory', null);
+  Chatbot.init();
 })();

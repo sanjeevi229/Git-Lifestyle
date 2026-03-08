@@ -35,12 +35,12 @@ const USERS = [
   },
   {
     id: 'USR-004',
-    name: 'Layla Al Ketbi',
-    email: 'layla.ketbi@email.com',
+    name: 'Sophia Ahmed',
+    email: 'sophia.ahmed@email.com',
     cardTier: 'infinite',
     cardNumber: '****1199',
     phone: '+971 56 456 7890',
-    avatar: 'L',
+    avatar: 'S',
     location: 'Palm Jumeirah',
   },
   {

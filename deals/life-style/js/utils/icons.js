@@ -112,6 +112,10 @@ const Icons = {
   // ── Event Subcategories ──
   mic(s=20)        { return this._svg('<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/>', s); },
 
+  // ── Chat ──
+  chat(s=20)       { return this._svg('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', s); },
+  send(s=20)       { return this._svg('<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>', s); },
+
   // ── Shopping Subcategories ──
   shirt(s=20)      { return this._svg('<path d="M20.38 3.46L16 2l-4 4-4-4-4.38 1.46A2 2 0 0 0 2.26 5.35v3.15l3.74 1V22h12V9.5l3.74-1V5.35a2 2 0 0 0-1.36-1.89z"/>', s); },
   smartphone(s=20) { return this._svg('<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>', s); },

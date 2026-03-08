@@ -592,7 +592,7 @@ const FlightBookingPage = {
 
     // Demo defaults for smooth prototype flow
     const demoNames = [
-      { first: user.name.split(' ')[0] || 'Layla', last: user.name.split(' ').slice(1).join(' ') || 'Al Rashid' },
+      { first: user.name.split(' ')[0] || 'Sophia', last: user.name.split(' ').slice(1).join(' ') || 'Ahmed' },
       { first: 'Omar', last: 'Hassan' },
       { first: 'Sara', last: 'Ahmed' },
       { first: 'Khalid', last: 'Ibrahim' },
