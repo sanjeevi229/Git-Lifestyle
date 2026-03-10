@@ -226,12 +226,17 @@
 }
 
 .rd-faq__answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .rd-faq.open .rd-faq__answer {
-  max-height: 300px;
+  grid-template-rows: 1fr;
+}
+.rd-faq__answer-inner {
+  overflow: hidden;
+}
+.rd-faq.open .rd-faq__answer-inner {
   padding-bottom: 16px;
 }
 .rd-faq__answer p {

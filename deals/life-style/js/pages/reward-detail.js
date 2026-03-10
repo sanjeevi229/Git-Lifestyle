@@ -28,7 +28,9 @@ const RewardDetailPage = {
           </span>
         </button>
         <div class="rd-faq__answer">
-          <p>${faq.a}</p>
+          <div class="rd-faq__answer-inner">
+            <p>${faq.a}</p>
+          </div>
         </div>
       </div>
     `).join('');
