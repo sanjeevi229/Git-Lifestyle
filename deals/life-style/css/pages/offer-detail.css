@@ -6,6 +6,7 @@
 .od-hero {
   position: relative; width: 100%; overflow: hidden;
   max-height: 400px;
+  border-radius: 0 0 24px 24px;
 }
 .od-hero__track {
   display: flex;

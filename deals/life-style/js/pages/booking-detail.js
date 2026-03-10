@@ -70,6 +70,13 @@ const BookingDetailPage = {
       merchantName = clubVenue ? clubVenue.name : booking.venueName || '';
       location = clubVenue ? clubVenue.area : booking.venueArea || '';
       offerDetail = `${booking.bookingTime || ''} · ${booking.partySize} ${booking.partySize === 1 ? 'Guest' : 'Guests'}`;
+    } else if (booking.type === 'reward') {
+      const rewardPartner = (CONFIG.rewardPartners || []).find(p => p.id === booking.offerId);
+      title = rewardPartner ? `${rewardPartner.brand} Subscription` : 'Reward Subscription';
+      image = rewardPartner ? rewardPartner.image : '';
+      merchantName = rewardPartner ? rewardPartner.brand : '';
+      location = 'Digital Subscription';
+      offerDetail = booking.rewardCode ? `Redemption Code: ${booking.rewardCode}` : '';
     } else {
       const offer = (Store.get('offers') || []).find(o => o.id === booking.offerId);
       if (offer) {
@@ -96,6 +103,8 @@ const BookingDetailPage = {
       ? `${booking.partySize} ${booking.partySize === 1 ? 'Passenger' : 'Passengers'}`
       : booking.type === 'courier'
       ? '1 Delivery'
+      : booking.type === 'reward'
+      ? '1 Subscription'
       : `${booking.partySize} ${booking.partySize === 1 ? 'Guest' : 'Guests'}`;
 
     return `
@@ -157,15 +166,17 @@ const BookingDetailPage = {
                   ${booking.type === 'clubhouse' && booking.guestName ? `<div class="booking-detail__row"><span class="text-muted">Guest Name</span><span>${booking.guestName}</span></div>` : ''}
                   ${booking.type === 'clubhouse' && booking.guestPhone ? `<div class="booking-detail__row"><span class="text-muted">Guest Phone</span><span>${booking.guestPhone}</span></div>` : ''}
                   ${booking.type === 'clubhouse' && booking.preferences ? `<div class="booking-detail__row"><span class="text-muted">Preferences</span><span>${booking.preferences}</span></div>` : ''}
+                  ${booking.type === 'reward' && booking.rewardCode ? `<div class="booking-detail__row"><span class="text-muted">Redemption Code</span><span style="font-family:monospace;font-weight:700;letter-spacing:0.05em">${booking.rewardCode}</span></div>` : ''}
+                  ${booking.type === 'reward' && booking.rewardBrand ? `<div class="booking-detail__row"><span class="text-muted">Service</span><span>${booking.rewardBrand}</span></div>` : ''}
                   ${booking.specialRequests ? `<div class="booking-detail__row"><span class="text-muted">Special Requests</span><span>${booking.specialRequests}</span></div>` : ''}
                   <div class="booking-detail__row"><span class="text-muted">Booked On</span><span>${Format.dateTime(booking.createdAt)}</span></div>
-                  ${offerDetail ? `<div class="booking-detail__row"><span class="text-muted">Offer</span><span>${offerDetail}</span></div>` : ''}
+                  ${offerDetail ? `<div class="booking-detail__row"><span class="text-muted">${booking.type === 'reward' ? 'Details' : 'Offer'}</span><span>${offerDetail}</span></div>` : ''}
                 </div>
 
                 <div class="booking-detail-reminder">
                   ${Icons.info(14)}
                   <div>
-                    <span>Please arrive 10 minutes before your reservation time.</span><br/>
+                    <span>${booking.type === 'reward' ? 'Use your redemption code on the partner app or website to activate your subscription.' : 'Please arrive 10 minutes before your reservation time.'}</span><br/>
                     <span>Cancellation allowed up to 24 hours in advance.</span>
                   </div>
                 </div>

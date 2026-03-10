@@ -127,6 +127,11 @@ const CategoryPage = {
       this._location = this._location === val ? null : val;
       $$('.cat-location-pill').forEach(p => p.classList.toggle('active', p.dataset.location === this._location));
       this._refreshGrid();
+      // Scroll to curated collections section so user sees results
+      if (this._location) {
+        const target = $('.curated-section') || $('.offers-grid');
+        if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+      }
     });
 
     // Advanced filter selects
@@ -430,7 +435,7 @@ const CategoryPage = {
       <div class="cat-subcat-grid">
         ${subcats.map(s => `
           <div class="cat-subcat-card ${this._subcategory === s.id ? 'active' : ''}" data-subcat="${s.id}">
-            <span class="cat-subcat-icon">${Icons[s.icon] ? Icons[s.icon](28) : Icons.package(28)}</span>
+            <span class="cat-subcat-icon ${s.emoji ? 'cat-subcat-icon--3d' : ''}">${s.emoji || (Icons[s.icon] ? Icons[s.icon](28) : Icons.package(28))}</span>
             <span class="cat-subcat-label">${s.label}</span>
           </div>
         `).join('')}
@@ -486,7 +491,7 @@ const CategoryPage = {
       <div class="cat-subcat-grid">
         ${subcats.map(s => `
           <div class="cat-subcat-card ${this._subcategory === s.id ? 'active' : ''}" data-subcat="${s.id}">
-            <span class="cat-subcat-icon">${Icons[s.icon] ? Icons[s.icon](28) : Icons.package(28)}</span>
+            <span class="cat-subcat-icon ${s.emoji ? 'cat-subcat-icon--3d' : ''}">${s.emoji || (Icons[s.icon] ? Icons[s.icon](28) : Icons.package(28))}</span>
             <span class="cat-subcat-label">${s.label}</span>
           </div>
         `).join('')}

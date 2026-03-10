@@ -19,7 +19,7 @@ const AutoSuggest = {
     let debounceTimer = null;
 
     const getContainerRect = () => {
-      const container = inputEl.closest('.hero-search, .cat-hero__search, .sticky-search__inner');
+      const container = inputEl.closest('.hero-search, .cat-hero__search, .rw-hero__search, .sticky-search__inner');
       return (container || inputEl).getBoundingClientRect();
     };
 
@@ -116,7 +116,16 @@ const AutoSuggest = {
 
   _renderResults(query, dropdown) {
     const results = Store.searchAll(query);
-    const total = results.offers.length + results.events.length + results.merchants.length;
+    const q = query.toLowerCase();
+
+    // Search rewardPartners from CONFIG
+    const rewardMatches = (CONFIG.rewardPartners || []).filter(p =>
+      p.brand.toLowerCase().includes(q) ||
+      p.tagline.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q)
+    );
+
+    const total = results.offers.length + results.events.length + results.merchants.length + rewardMatches.length;
 
     if (total === 0) {
       const safe = query.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -126,6 +135,23 @@ const AutoSuggest = {
     }
 
     let html = '';
+
+    // Rewards (max 5)
+    if (rewardMatches.length) {
+      html += '<div class="autosuggest-group"><div class="autosuggest-group__label">Rewards & Benefits</div>';
+      rewardMatches.slice(0, 5).forEach(p => {
+        html += `
+          <div class="autosuggest-item" data-route="/rewards/${p.id}">
+            <div class="autosuggest-item__icon" style="background: linear-gradient(135deg, ${p.gradient[0]}, ${p.gradient[1]}); width:40px; height:40px; border-radius:8px; flex-shrink:0;"></div>
+            <div class="autosuggest-item__info">
+              <div class="autosuggest-item__title">${p.brand}</div>
+              <div class="autosuggest-item__sub">${p.description}</div>
+            </div>
+            <span class="autosuggest-item__badge">${p.cta}</span>
+          </div>`;
+      });
+      html += '</div>';
+    }
 
     // Offers (max 4)
     if (results.offers.length) {

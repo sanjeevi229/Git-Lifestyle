@@ -94,6 +94,36 @@ const Store = {
     return booking;
   },
 
+  createRewardBooking(data) {
+    const user = this.get('auth.currentUser');
+    const bookings = this.get('bookings') || [];
+    const now = new Date().toISOString();
+    const booking = {
+      id: Format.bookingId(),
+      userId: user.id,
+      offerId: data.rewardId,
+      type: 'reward',
+      status: 'confirmed',
+      bookingDate: new Date().toISOString().split('T')[0],
+      partySize: 1,
+      rewardBrand: data.brand,
+      rewardDescription: data.description,
+      rewardCode: data.code,
+      rewardImage: data.image,
+      rewardGradient: data.gradient,
+      createdAt: now,
+      confirmationCode: Format.confirmationCode(),
+      statusHistory: [
+        { status: 'pending', at: now, note: 'SmartPass verification submitted' },
+        { status: 'confirmed', at: now, note: 'Subscription activated' },
+      ],
+    };
+    bookings.unshift(booking);
+    this.set('bookings', bookings);
+    AuditLog.log('REWARD_SUBSCRIBED', `${user.name} subscribed to ${data.brand}. Code: ${data.code}.`);
+    return booking;
+  },
+
   cancelBooking(bookingId) {
     const bookings = this.get('bookings') || [];
     const booking = bookings.find(b => b.id === bookingId);

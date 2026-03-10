@@ -358,6 +358,47 @@ const HomePage = {
             </div>
           ` : ''}
 
+          <!-- Exclusive Rewards -->
+          ${(CONFIG.rewardPartners || []).length ? `
+            <div class="container">
+              <div class="rewards-section">
+                <div class="rewards-section__header">
+                  <div>
+                    <h2 class="rewards-section__title">Exclusive Rewards</h2>
+                    <p class="rewards-section__subtitle">Complimentary subscriptions with your Visa Infinite card</p>
+                  </div>
+                  <button class="btn btn--ghost btn--sm" onclick="Router.navigate('/rewards')">Show All</button>
+                </div>
+                <div class="rewards-track">
+                  ${CONFIG.rewardPartners.map(p => p.bannerImage ? `
+                    <div class="reward-card reward-card--banner" onclick="Router.navigate('/rewards/${p.id}')" style="cursor:pointer;">
+                      <img class="reward-card__banner-img" src="${p.bannerImage}" alt="${p.brand}" loading="eager" />
+                      <div class="reward-card__content reward-card__content--overlay">
+                        <span class="reward-card__brand">${p.brand}</span>
+                        <p class="reward-card__tagline">${p.tagline}</p>
+                        <p class="reward-card__desc">${p.description}</p>
+                        <button class="reward-card__cta">${p.cta}</button>
+                      </div>
+                    </div>
+                  ` : `
+                    <div class="reward-card" onclick="Router.navigate('/rewards/${p.id}')" style="cursor:pointer; background: linear-gradient(135deg, ${p.gradient[0]}, ${p.gradient[1]}); --rc-grad-start: ${p.gradient[0]};">
+                      <div class="reward-card__glow" style="background: radial-gradient(circle at 90% 80%, ${p.accentColor}33 0%, transparent 60%);"></div>
+                      <div class="reward-card__content">
+                        <span class="reward-card__brand">${p.brand}</span>
+                        <p class="reward-card__tagline">${p.tagline}</p>
+                        <p class="reward-card__desc">${p.description}</p>
+                        <button class="reward-card__cta">${p.cta}</button>
+                      </div>
+                      <div class="reward-card__visual">
+                        <img src="${p.image}" alt="${p.brand}" loading="lazy" />
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          ` : ''}
+
           <!-- Restaurants Near You carousel — with dining background -->
           ${diningMerchants.length ? `
             <div class="rest-bg-wrap">

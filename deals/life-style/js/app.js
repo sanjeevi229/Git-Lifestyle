@@ -51,6 +51,8 @@
   Router.register('/courier/book',      CourierBookingPage);
   Router.register('/concierge',         ConciergePage);
   Router.register('/concierge/book',    ConciergeBookingPage);
+  Router.register('/rewards',            RewardsPage);
+  Router.register('/rewards/:id',       RewardDetailPage);
   Router.register('/club',              ClubPage);
   Router.register('/club/register',     ClubRegistrationPage);
 

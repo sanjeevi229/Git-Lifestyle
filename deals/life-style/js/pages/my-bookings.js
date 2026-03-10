@@ -104,6 +104,11 @@ const MyBookingsPage = {
         title = clubCat ? `Club — ${clubCat.name}` : 'Club House';
         image = clubCat ? clubCat.image : '';
         detail = `${b.venueName || ''}${b.bookingTime ? ' · ' + b.bookingTime : ''}`;
+      } else if (b.type === 'reward') {
+        const partner = (CONFIG.rewardPartners || []).find(p => p.id === b.offerId);
+        title = partner ? `${partner.brand} Subscription` : 'Reward Subscription';
+        image = partner ? partner.image : '';
+        detail = b.rewardDescription || (partner ? partner.description : '');
       } else {
         const offer = (Store.get('offers') || []).find(o => o.id === b.offerId);
         title = offer ? offer.title : 'Offer';
@@ -124,7 +129,7 @@ const MyBookingsPage = {
             </div>
             ${detail ? `<div class="booking-card__detail">${detail}</div>` : ''}
             <div class="booking-card__meta">
-              ${Icons.calendar(13)} ${Format.date(b.bookingDate)} · ${b.type === 'courier' ? '1 delivery' : `${b.partySize} ${b.type === 'event' ? 'ticket' : b.type === 'golf' ? 'player' : b.type === 'airport' ? 'passenger' : 'guest'}${b.partySize > 1 ? 's' : ''}`}
+              ${Icons.calendar(13)} ${Format.date(b.bookingDate)} · ${b.type === 'reward' ? '1 subscription' : b.type === 'courier' ? '1 delivery' : `${b.partySize} ${b.type === 'event' ? 'ticket' : b.type === 'golf' ? 'player' : b.type === 'airport' ? 'passenger' : 'guest'}${b.partySize > 1 ? 's' : ''}`}
             </div>
             <div class="booking-card__code">${b.confirmationCode}</div>
           </div>

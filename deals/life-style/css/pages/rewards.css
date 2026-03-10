@@ -1,0 +1,278 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Rewards Landing Page
+   ══════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.rw-hero {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+}
+.rw-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.rw-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(7,36,71,0.78) 0%, rgba(7,36,71,0.35) 100%);
+}
+.rw-hero__content {
+  position: absolute;
+  bottom: 120px;
+  z-index: 2;
+  width: 100%;
+  padding: 0 max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad)));
+}
+.rw-hero__title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+.rw-hero__subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.8);
+  max-width: 480px;
+  line-height: 1.5;
+  margin: 0 0 10px;
+}
+.rw-hero__count {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+
+/* Search box */
+.rw-hero__search {
+  position: absolute;
+  bottom: 56px;
+  z-index: 10;
+  left: max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad)));
+  width: min(600px, 55%);
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+.rw-hero__search > .icon {
+  flex-shrink: 0;
+  margin-left: 20px;
+  color: var(--grey);
+}
+.rw-hero__search input {
+  flex: 1;
+  padding: 16px 14px;
+  border: none;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: transparent;
+  outline: none;
+}
+.rw-hero__search input::placeholder { color: #9ca3af; }
+.rw-hero__search button {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin: 4px 8px 4px 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.rw-hero__search button:hover { background: transparent; }
+.rw-hero__search button svg { stroke: var(--grey); width: 18px; height: 18px; transition: stroke 0.25s ease; }
+.rw-hero__search button:hover svg { stroke: var(--charcoal); }
+
+/* ── Section ── */
+.rw-section {
+  padding: var(--space-lg) 0 var(--space-xl);
+}
+.rw-section__intro {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin: 0 0 var(--space-lg);
+}
+
+/* ── Card list (vertical stack) ── */
+.rw-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Individual card ── */
+.rw-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.rw-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Banner (image area) */
+.rw-card__banner {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+.rw-card__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.rw-card__banner-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+}
+.rw-card__brand-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+.rw-card__tagline {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Banner visual — right-side background image */
+.rw-card__banner-visual {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  z-index: 0;
+  overflow: hidden;
+}
+.rw-card__banner-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rw-card__banner-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--rc-grad-start, #1B4D3E) 0%, transparent 70%);
+}
+
+/* Card body — below banner */
+.rw-card__body {
+  padding: 16px 20px 20px;
+}
+.rw-card__name {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--charcoal);
+  margin: 0 0 6px;
+}
+.rw-card__desc {
+  font-size: 13px;
+  color: var(--grey);
+  line-height: 1.4;
+  margin: 0 0 16px;
+}
+.rw-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 24px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.rw-card__cta:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+.rw-card__cta:active {
+  transform: scale(0.97);
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .rw-hero {
+    height: 400px;
+  }
+  .rw-hero__content {
+    bottom: 110px;
+    padding: 0 20px;
+  }
+  .rw-hero__title {
+    font-size: 24px;
+  }
+  .rw-hero__search {
+    bottom: 48px;
+    left: 20px;
+    width: calc(100% - 40px);
+    max-width: 480px;
+  }
+  .rw-hero__search input {
+    padding: 14px 12px;
+    font-size: 16px;
+  }
+  .rw-hero__search button {
+    width: 36px;
+    height: 36px;
+  }
+  .rw-card__banner {
+    height: 180px;
+    padding: 16px;
+  }
+  .rw-card__tagline {
+    font-size: 22px;
+  }
+  .rw-card__banner-visual {
+    width: 50%;
+  }
+  .rw-list {
+    gap: 20px;
+  }
+}
