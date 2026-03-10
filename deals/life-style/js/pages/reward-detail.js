@@ -100,11 +100,6 @@ const RewardDetailPage = {
 
           </div>
 
-          <!-- Sticky CTA -->
-          <div class="rd-sticky-cta">
-            <button class="rd-sticky-cta__btn" onclick="RewardDetailPage._openSmartPass()">
-              ${partner.ctaLabel || partner.cta}
-            </button>
           </div>
 
         </main>
@@ -116,6 +111,37 @@ const RewardDetailPage = {
     Nav.mount();
     // Open first FAQ by default
     this._toggleFaq(0);
+
+    // Inject floating CTA outside .page so it isn't clipped by overflow
+    this._injectFloatingCta();
+  },
+
+  _injectFloatingCta() {
+    // Remove any previous floating CTA
+    const old = document.getElementById('rd-floating-cta');
+    if (old) old.remove();
+
+    const partner = this._partner;
+    if (!partner) return;
+
+    const cta = document.createElement('div');
+    cta.id = 'rd-floating-cta';
+    cta.className = 'rd-sticky-cta';
+    cta.innerHTML = `
+      <button class="rd-sticky-cta__btn" onclick="RewardDetailPage._openSmartPass()">
+        ${partner.ctaLabel || partner.cta}
+      </button>
+    `;
+    document.body.appendChild(cta);
+  },
+
+  _removeFloatingCta() {
+    const el = document.getElementById('rd-floating-cta');
+    if (el) el.remove();
+  },
+
+  unmount() {
+    this._removeFloatingCta();
   },
 
   _toggleFaq(index) {
