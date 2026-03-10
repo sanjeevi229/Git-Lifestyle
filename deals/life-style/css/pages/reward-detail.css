@@ -383,8 +383,8 @@
     height: 84px;
   }
   /* Add bottom spacing so content isn't hidden behind fixed CTA */
-  .rd-page main {
-    padding-bottom: 80px;
+  .page__main:has(.rd-hero) {
+    padding-bottom: 100px;
   }
 }
 
