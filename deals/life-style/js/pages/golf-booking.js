@@ -313,7 +313,7 @@ const GolfBookingPage = {
 
         <div class="flex gap-md">
           <button class="btn btn--ghost btn--lg" id="golfBackToStep2" style="flex:1">Back</button>
-          <button class="btn btn--primary btn--lg" id="golfConfirmBtn" style="flex:2">Confirm Tee Time</button>
+          <button class="btn btn--primary btn--lg" id="golfConfirmBtn" style="flex:2">Confirm Booking</button>
         </div>
       </div>
     `;
@@ -424,7 +424,7 @@ const GolfBookingPage = {
     if (!stickyBtn) return;
     if (this._step === 1) stickyBtn.textContent = 'Continue';
     else if (this._step === 2) stickyBtn.textContent = 'Continue to Review';
-    else if (this._step === 3) stickyBtn.textContent = 'Confirm Tee Time';
+    else if (this._step === 3) stickyBtn.textContent = 'Confirm Booking';
   },
 
   _setupStickyObserver() {
@@ -471,8 +471,8 @@ const GolfBookingPage = {
       form.innerHTML = `
         <div class="booking-success">
           <div class="booking-success__icon">${Icons.checkCircle(48)}</div>
-          <h2 class="booking-success__title page-title">Tee Time Confirmed!</h2>
-          <p class="booking-success__text">Your tee time at ${this._course.name} has been booked.</p>
+          <h2 class="booking-success__title page-title">Booking Confirmed!</h2>
+          <p class="booking-success__text">Your slot at ${this._course.name} has been booked successfully.</p>
 
           <div class="booking-confirm-details" style="text-align:left;margin:24px 0">
             <div class="booking-confirm-row">

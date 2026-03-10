@@ -385,7 +385,7 @@ const CONFIG = {
       color: ['#10B981', '#059669'],
       badge: 'FREE',
       slides: [
-        { type: 'video', src: 'https://assets.mixkit.co/videos/20870/20870-720.mp4', duration: 8000, title: 'Free Green Fees — 10+ Courses', description: 'Play complimentary rounds at championship courses across the UAE with your Infinite Card.', cta: { label: 'Book a Tee Time', route: '/golf' } },
+        { type: 'video', src: 'https://videos.pexels.com/video-files/33024010/14075661_720_1280_30fps.mp4', duration: 8000, title: 'Free Green Fees — 10+ Courses', description: 'Play complimentary rounds at championship courses across the UAE with your Infinite Card.', cta: { label: 'Book a Tee Time', route: '/golf' } },
       ],
     },
     {

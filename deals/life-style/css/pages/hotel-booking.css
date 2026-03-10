@@ -111,7 +111,12 @@
 }
 .hb-dates__input {
   font-size: 14px; font-weight: 700; color: var(--charcoal);
-  padding: 8px 10px;
+  padding: 12px 14px;
+  text-align: left;
+  min-height: 48px;
+}
+.hb-dates__input::-webkit-date-and-time-value {
+  text-align: left;
 }
 
 /* Divider */
