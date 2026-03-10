@@ -510,20 +510,30 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
-.sp-cancel-btn {
-  display: inline-block;
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--grey);
-  background: none;
+/* Close icon (top-right of modal) */
+.sp-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   border: none;
-  cursor: pointer;
-  padding: 8px 16px;
-  transition: color 0.15s ease;
-}
-.sp-cancel-btn:hover {
+  background: var(--grey-bg, #f0f2f5);
   color: var(--charcoal);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+  z-index: 2;
+}
+.sp-close-btn:hover {
+  background: var(--grey-border, #dde1e7);
+  transform: scale(1.05);
+}
+.sp-close-btn:active {
+  transform: scale(0.95);
 }
 
 /* Screen transitions */

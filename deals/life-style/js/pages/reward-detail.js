@@ -185,6 +185,10 @@ const RewardDetailPage = {
     overlay.id = 'spOverlay';
     overlay.innerHTML = `
       <div class="sp-modal">
+        <!-- Close button -->
+        <button class="sp-close-btn" id="spCancelBtn" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
         <!-- PIN Screen -->
         <div class="sp-screen" id="spPinScreen">
           <div class="sp-header__icon">${lockIcon}</div>
@@ -197,7 +201,6 @@ const RewardDetailPage = {
             <input class="sp-pin-box" type="tel" maxlength="1" data-index="3" inputmode="numeric" autocomplete="off" />
           </div>
           <button class="sp-verify-btn" id="spVerifyBtn" disabled>Verify &amp; ${partner.cta || 'Subscribe'}</button>
-          <button class="sp-cancel-btn" id="spCancelBtn">Cancel</button>
         </div>
 
         <!-- Loading Screen -->
