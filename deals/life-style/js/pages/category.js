@@ -45,7 +45,7 @@ const CategoryPage = {
         <main class="page__main page__main--full">
           <!-- Category Hero Banner -->
           <section class="cat-hero${heroVideo ? ' cat-hero--video' : ''}" style="background-image:url('${heroImage}')">
-            ${heroVideo ? `<video class="cat-hero__video" autoplay muted loop playsinline poster="${heroImage}"><source src="${heroVideo}" type="video/mp4"></video>` : ''}
+            ${heroVideo ? `<video class="cat-hero__video" autoplay muted loop playsinline preload="auto"><source src="${heroVideo}" type="video/mp4"></video>` : ''}
             <div class="cat-hero__overlay"></div>
             <div class="cat-hero__content">
               <div class="cat-hero__title-row">

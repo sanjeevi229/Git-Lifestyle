@@ -33,7 +33,6 @@ const HomePage = {
           ${videoSrc ? `
             <video class="hero__video"
               src="${videoSrc}"
-              poster="${s.image}"
               muted loop playsinline
               preload="auto"
               aria-hidden="true"></video>
