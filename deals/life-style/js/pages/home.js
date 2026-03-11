@@ -35,7 +35,7 @@ const HomePage = {
               src="${videoSrc}"
               poster="${s.image}"
               muted loop playsinline
-              preload="${i === 0 ? 'auto' : 'none'}"
+              preload="auto"
               aria-hidden="true"></video>
           ` : ''}
           ${!videoSrc ? `<img class="hero__bg-img" src="${s.image}" alt="" aria-hidden="true" />` : ''}
@@ -497,8 +497,9 @@ const HomePage = {
       benefitsGrid.addEventListener('scroll', this._onBenefitsScroll, { passive: true });
     }
 
-    // Play first slide video
+    // Play first slide video & preload the rest so they're instant
     this._playActiveVideo();
+    this._preloadHeroVideos();
 
     // Video error handling
     $$('.hero__video').forEach(video => {
@@ -615,6 +616,7 @@ const HomePage = {
 
   unmount() {
     this._stopHeroAutoplay();
+    if (this._preloadTimer) { clearTimeout(this._preloadTimer); this._preloadTimer = null; }
 
     // Clean up parallax
     if (this._onScroll) {
@@ -715,11 +717,6 @@ const HomePage = {
   _playActiveVideo() {
     $$('.hero__video').forEach((video, i) => {
       if (i === this._activeSlide) {
-        // Lazy-load: switch preload to auto and attempt play
-        if (video.preload === 'none') {
-          video.preload = 'auto';
-          video.load();
-        }
         video.currentTime = 0;
         video.play().catch(() => {
           // Autoplay blocked — video poster will show
@@ -729,6 +726,35 @@ const HomePage = {
         video.currentTime = 0;
       }
     });
+  },
+
+  /* Pre-buffer all hero videos so they play instantly when the carousel
+     reaches them. We stagger the loads so slide 1 always wins the
+     bandwidth race, then slides 2 & 3 follow quickly after. */
+  _preloadHeroVideos() {
+    const videos = $$('.hero__video');
+    if (videos.length <= 1) return;
+
+    const first = videos[0];
+    const rest  = Array.from(videos).slice(1);
+
+    const bufferRest = () => {
+      rest.forEach(v => {
+        if (v.readyState < 3) {           // HAVE_FUTURE_DATA
+          v.load();                        // kick the download
+        }
+      });
+    };
+
+    // Once the first video has enough data to play, start loading the rest
+    if (first && first.readyState >= 3) {
+      bufferRest();
+    } else if (first) {
+      first.addEventListener('canplay', bufferRest, { once: true });
+      // Safety: if canplay doesn't fire within 2s (e.g. slow network),
+      // start preloading anyway so later slides aren't totally cold
+      this._preloadTimer = setTimeout(bufferRest, 2000);
+    }
   },
 
   _doSearch() {
