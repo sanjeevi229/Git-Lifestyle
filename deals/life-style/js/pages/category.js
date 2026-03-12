@@ -8,6 +8,8 @@ const CategoryPage = {
   _filterType: 'all',
   _subcategory: null,
   _location: null,
+  _checkIn: null,
+  _checkOut: null,
 
   render(params) {
     this._categoryId = params.id;
@@ -15,6 +17,8 @@ const CategoryPage = {
     this._filterType = 'all';
     this._subcategory = null;
     this._location = null;
+    this._checkIn = null;
+    this._checkOut = null;
 
     const catConfig = CONFIG.categories.find(c => c.id === this._categoryId);
     const catLabel = catConfig ? catConfig.label : this._categoryId;
@@ -134,6 +138,25 @@ const CategoryPage = {
       }
     });
 
+    // Date range filters (hotels)
+    delegate('#app', 'change', '#checkInDate', (e) => {
+      this._checkIn = e.target.value || null;
+      const checkOut = $('#checkOutDate');
+      if (checkOut) {
+        checkOut.min = this._checkIn || new Date().toISOString().split('T')[0];
+        if (this._checkOut && this._checkIn && this._checkOut < this._checkIn) {
+          this._checkOut = null;
+          checkOut.value = '';
+        }
+      }
+      this._refreshGrid();
+    });
+
+    delegate('#app', 'change', '#checkOutDate', (e) => {
+      this._checkOut = e.target.value || null;
+      this._refreshGrid();
+    });
+
     // Advanced filter selects
     delegate('#app', 'change', '#filterType', (e) => {
       this._filterType = e.target.value;
@@ -166,12 +189,18 @@ const CategoryPage = {
       this._location = null;
       this._filterType = 'all';
       this._sort = 'recommended';
+      this._checkIn = null;
+      this._checkOut = null;
       $$('.cat-subcat-card').forEach(c => c.classList.remove('active'));
       $$('.cat-location-pill').forEach(p => p.classList.remove('active'));
       const sortSel = $('#sortSelect');
       if (sortSel) sortSel.value = 'recommended';
       const typeSel = $('#filterType');
       if (typeSel) typeSel.value = 'all';
+      const checkInEl = $('#checkInDate');
+      if (checkInEl) checkInEl.value = '';
+      const checkOutEl = $('#checkOutDate');
+      if (checkOutEl) checkOutEl.value = '';
       this._refreshGrid();
       const grid = $('#offersGrid');
       if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -524,6 +553,19 @@ const CategoryPage = {
 
         <!-- Advanced filters (sort + type + expiring) — toggled by Filters btn -->
         <div class="cat-advanced-panel" id="catAdvancedPanel">
+          ${this._categoryId === 'hotels' ? `
+          <div class="cat-date-range">
+            <div class="cat-date-field">
+              <label for="checkInDate">Check-in</label>
+              <input type="date" id="checkInDate" class="form-input" min="${new Date().toISOString().split('T')[0]}" ${this._checkIn ? `value="${this._checkIn}"` : ''} />
+            </div>
+            <div class="cat-date-separator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            <div class="cat-date-field">
+              <label for="checkOutDate">Check-out</label>
+              <input type="date" id="checkOutDate" class="form-input" min="${this._checkIn || new Date().toISOString().split('T')[0]}" ${this._checkOut ? `value="${this._checkOut}"` : ''} />
+            </div>
+          </div>
+          ` : ''}
           <div class="cat-advanced-row">
             <label>Sort by</label>
             <select id="sortSelect" class="form-select">

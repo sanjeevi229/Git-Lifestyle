@@ -9,11 +9,10 @@ const CONFIG = {
     { id: 'dining',        label: 'Bon Appetit',   icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>', iconImg: 'assets/png_1024/bon_appetit.png', color: '#E85D3A' },
     { id: 'entertainment', label: 'Good Times',    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><path d="m10 15 5-3-5-3z"/></svg>', iconImg: 'assets/png_1024/good_times.png?v=2', color: '#7C3AED' },
     { id: 'wellness',      label: 'Live Well',     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>', iconImg: 'assets/png_1024/live_well.png', color: '#059669' },
-    { id: 'flights',       label: 'Book Flights',  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>', iconImg: 'assets/png_1024/book_flights.png?v=2', color: '#2563EB' },
     { id: 'hotels',        label: 'Book Hotels',   icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v14"/><path d="M1 21h22"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/><path d="M14 9h1"/><path d="M14 13h1"/><path d="M14 17h1"/></svg>', iconImg: 'assets/png_1024/book_hotels.png', color: '#0891B2' },
     { id: 'shopping',      label: 'Shop Online',   icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>', iconImg: 'assets/png_1024/shop_online.png', color: '#DB2777' },
     { id: 'concierge',     label: 'Concierge',     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h20"/><path d="M12 4v2"/><path d="M12 6a8 8 0 0 1 8 8v4H4v-4a8 8 0 0 1 8-8z"/><circle cx="12" cy="4" r="1"/></svg>', iconImg: 'assets/png_1024/concierge.png', color: '#6366F1' },
-    { id: 'travel',        label: 'Travel Deals',  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>', iconImg: 'assets/png_1024/travel_deals.png', color: '#0D9488' },
+    { id: 'travel',        label: 'Travel Deals',  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>', iconImg: 'assets/png_1024/travel_deals.png', color: '#2563EB' },
     { id: 'events',        label: 'Events',        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>', iconImg: 'assets/png_1024/events.png', color: '#DC2626' },
     { id: 'promotions',    label: 'Promotions',    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1"/></svg>', iconImg: 'assets/png_1024/promotions.png', color: '#EA580C' },
     { id: 'your-card',     label: 'Your Card',     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>', iconImg: 'assets/png_1024/your_card.png', color: '#475569' },
@@ -150,7 +149,7 @@ const CONFIG = {
 
   curatedCollections: {
     dining: [
-      { id: 'nightlife',   label: 'Nightlife',   dealCount: 12, image: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=600&q=80' },
+      { id: 'family-dining', label: 'Family Dining', dealCount: 12, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80' },
       { id: 'fine-dining', label: 'Fine Dining',  dealCount: 14, image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80' },
       { id: 'restro-bar',  label: 'Restro bar',   dealCount: 18, image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=600&q=80' },
       { id: 'iftar',       label: 'Iftar',        dealCount: 28, image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80' },
@@ -192,6 +191,17 @@ const CONFIG = {
       video: 'https://videos.pexels.com/video-files/4068182/4068182-hd_1920_1080_30fps.mp4',
       videoSD: 'https://videos.pexels.com/video-files/4068182/4068182-hd_1280_720_30fps.mp4',
       limitedTag: 'Exclusive Offer',
+    },
+    {
+      id: 4,
+      title: '{firstName}, Book Flights & Fly for Less',
+      subtitle: 'Exclusive fares and complimentary upgrades on top airlines worldwide.',
+      cta: 'Search Flights',
+      route: '/category/flights',
+      image: 'https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=1200&q=80',
+      video: 'https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4',
+      videoSD: 'https://videos.pexels.com/video-files/2169880/2169880-hd_1280_720_30fps.mp4',
+      limitedTag: 'New',
     },
   ],
 

@@ -140,7 +140,7 @@ const Nav = {
       <div class="sticky-search" id="stickySearch">
         <div class="sticky-search__inner">
           <svg class="sticky-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="stickySearchInput" type="text" placeholder="Search offers, restaurants, events..." />
+          <input id="stickySearchInput" type="text" placeholder="Search offers, flights, restaurants..." />
           <button class="sticky-search__go" onclick="Nav._doStickySearch()" aria-label="Search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>

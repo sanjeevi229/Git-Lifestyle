@@ -15,6 +15,9 @@ const CARD_BENEFITS = {
     courier: null,
     concierge: null,
     club: null,
+    car: null,
+    registration: null,
+    valet: null,
     points: '1 point per AED 5 spent',
   },
   gold: {
@@ -29,6 +32,9 @@ const CARD_BENEFITS = {
     courier: null,
     concierge: null,
     club: null,
+    car: null,
+    registration: null,
+    valet: null,
     points: '1 point per AED 3 spent',
   },
   platinum: {
@@ -43,6 +49,9 @@ const CARD_BENEFITS = {
     courier: '2 complimentary deliveries per month',
     concierge: '2 complimentary requests per month',
     club: '2 complimentary visits per month',
+    car: '1 complimentary car service per year',
+    registration: null,
+    valet: '2 complimentary valet parking per month',
     points: '1 point per AED 2 spent',
   },
   infinite: {
@@ -57,6 +66,9 @@ const CARD_BENEFITS = {
     courier: '6 complimentary deliveries per month',
     concierge: '6 complimentary requests per month',
     club: '6 complimentary visits per month',
+    car: '2 complimentary car services per year',
+    registration: 'Complimentary car registration renewal',
+    valet: '4 complimentary valet parking per month',
     points: '1 point per AED 1 spent',
   },
   private: {
@@ -71,8 +83,43 @@ const CARD_BENEFITS = {
     courier: 'Unlimited courier service',
     concierge: 'Unlimited concierge requests',
     club: 'Unlimited club access',
+    car: 'Unlimited car servicing',
+    registration: 'Complimentary car registration & renewal',
+    valet: 'Unlimited valet parking',
     points: '2 points per AED 1 spent',
   },
 };
 
+const CARD_BENEFIT_CATEGORIES = [
+  { id: 'all', label: 'All' },
+  { id: 'golf', label: 'Golf' },
+  { id: 'club', label: 'Club' },
+  { id: 'airport', label: 'Airport' },
+  { id: 'courier', label: 'Courier' },
+  { id: 'car', label: 'Car' },
+  { id: 'registration', label: 'Registration' },
+  { id: 'valet', label: 'Valet' },
+];
+
+const CARD_BENEFIT_CARDS = [
+  { id: 'golf',         category: 'golf',         title: 'Golf Access',         badge: 'Sports & Leisure',       route: '/golf',    image: 'assets/card benifts/photos/golf_access.jpg' },
+  { id: 'club',         category: 'club',         title: 'Club Access',         badge: 'Lifestyle & Leisure',    route: '/club',    image: 'assets/card benifts/photos/club_access.jpg' },
+  { id: 'airport',      category: 'airport',      title: 'Airport Pickup/Drop', badge: 'Travel & Transport',     route: '/airport', image: 'assets/card benifts/photos/airport_pickup.jpg' },
+  { id: 'courier',      category: 'courier',      title: 'Local Courier',       badge: 'Convenience & Services', route: '/courier', image: 'assets/card benifts/photos/local_courier.jpg' },
+  { id: 'car',          category: 'car',          title: 'Car Servicing',       badge: 'Auto & Maintenance',     route: null,       image: 'assets/card benifts/photos/car_servicing.jpg' },
+  { id: 'registration', category: 'registration', title: 'Car Registration',    badge: 'Auto & Maintenance',     route: null,       image: 'assets/card benifts/photos/car_registration.jpg' },
+  { id: 'valet',        category: 'valet',        title: 'Valet Parking',       badge: 'Convenience & Services', route: null,       image: 'assets/card benifts/photos/valet_parking.jpg' },
+];
+
+const CARD_DISPLAY_NAMES = {
+  classic: 'Visa Classic',
+  gold: 'Visa Gold',
+  platinum: 'Visa Platinum',
+  infinite: 'Visa Infinite',
+  private: 'Visa Private',
+};
+
 window.CARD_BENEFITS = CARD_BENEFITS;
+window.CARD_BENEFIT_CATEGORIES = CARD_BENEFIT_CATEGORIES;
+window.CARD_BENEFIT_CARDS = CARD_BENEFIT_CARDS;
+window.CARD_DISPLAY_NAMES = CARD_DISPLAY_NAMES;
