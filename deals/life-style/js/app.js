@@ -38,6 +38,7 @@
   Router.register('/book-entertainment/:offerId', EntertainmentBookingPage);
   Router.register('/book-hotel/:offerId',         HotelBookingPage);
   Router.register('/book-flight/:offerId',       FlightBookingPage);
+  Router.register('/book-shopping/:offerId',     ShoppingBookingPage);
   Router.register('/my-bookings',       MyBookingsPage);
   Router.register('/my-bookings/:id',   BookingDetailPage);
   Router.register('/card-benefits',     CardBenefitsPage);

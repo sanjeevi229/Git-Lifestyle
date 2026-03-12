@@ -326,7 +326,7 @@ const CategoryPage = {
             <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${o.title.replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
             <div class="card-hover-zone__overlay">
               ${merchant && merchant.area ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${merchant.area}</span>` : ''}
-              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); Router.navigate('/offer/${o.id}')">Book Now</button>
+              <button class="card-hover-zone__cta" onclick="event.stopPropagation(); Router.navigate('/offer/${o.id}')">${o.category === 'shopping' ? 'Buy Now' : 'Book Now'}</button>
             </div>
           </div>
           <div class="offer-card__content">

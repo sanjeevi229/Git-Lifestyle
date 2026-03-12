@@ -90,7 +90,7 @@ const OfferDetailPage = {
             <!-- Desktop CTA -->
             <div class="od-cta-desktop">
               <button class="btn btn--primary btn--lg od-cta-desktop__book" onclick="Router.navigate('${this._bookingRoute(offer.category, offer.id)}')">
-                ${offer.category === 'dining' ? 'Reserve Now' : 'Book Now'}
+                ${offer.category === 'dining' ? 'Reserve Now' : offer.category === 'shopping' ? 'Buy Now' : 'Book Now'}
               </button>
               <button class="btn btn--ghost od-cta-desktop__save${savedClass}" onclick="OfferDetailPage._toggleSave('${offer.id}')">
                 ${Icons.heart(18)}
@@ -102,8 +102,10 @@ const OfferDetailPage = {
               <h3 class="od-section__title">Highlights</h3>
               <ul class="od-section__list">
                 <li>${discountLabel} exclusive offer for Visa Infinite cardholders</li>
-                ${merchant && merchant.cuisine ? `<li>${merchant.cuisine} dining experience at ${merchant.area}</li>` : ''}
-                ${merchant && merchant.rating >= 4.5 ? `<li>Highly rated (${Number(merchant.rating).toFixed(1)}/5) by diners</li>` : ''}
+                ${merchant && merchant.cuisine && offer.category === 'dining' ? `<li>${merchant.cuisine} dining experience at ${merchant.area}</li>` : ''}
+                ${merchant && merchant.cuisine && offer.category !== 'dining' ? `<li>${merchant.cuisine} at ${merchant.area}</li>` : ''}
+                ${merchant && merchant.rating >= 4.5 && offer.category === 'dining' ? `<li>Highly rated (${Number(merchant.rating).toFixed(1)}/5) by diners</li>` : ''}
+                ${merchant && merchant.rating >= 4.5 && offer.category !== 'dining' ? `<li>Highly rated (${Number(merchant.rating).toFixed(1)}/5) by customers</li>` : ''}
                 ${offer.minTier !== 'classic' ? `<li>Available for ${Format.tierLabel(offer.minTier)} cardholders and above</li>` : ''}
               </ul>
             </div>
@@ -187,7 +189,7 @@ const OfferDetailPage = {
             <section class="od-similar">
               <div class="carousel-header">
                 <div>
-                  <h3 class="carousel-header__title">Similar places for you</h3>
+                  <h3 class="carousel-header__title">${offer.category === 'shopping' ? 'Similar offers for you' : 'Similar places for you'}</h3>
                   <p class="carousel-header__subtitle">Steal these deals</p>
                 </div>
               </div>
@@ -204,7 +206,7 @@ const OfferDetailPage = {
                           <button class="card-share-btn" onclick="event.stopPropagation();cardShare('${(m ? m.name : o.title).replace(/'/g, "\\'")}','/offer/${o.id}')" aria-label="Share">${Icons.share(15)}</button>
                           <div class="card-hover-zone__overlay">
                             ${m && m.area ? `<span class="card-hover-zone__location">${Icons.mapPin(14)} ${m.area}</span>` : ''}
-                            <button class="card-hover-zone__cta" onclick="event.stopPropagation();Router.navigate('${this._bookingRoute(o.category, o.id)}')">Book Now</button>
+                            <button class="card-hover-zone__cta" onclick="event.stopPropagation();Router.navigate('${this._bookingRoute(o.category, o.id)}')">${o.category === 'shopping' ? 'Buy Now' : 'Book Now'}</button>
                           </div>
                         </div>
                         <div class="od-similar__body">
@@ -226,7 +228,7 @@ const OfferDetailPage = {
         <!-- Sticky Mobile CTA -->
         <div class="od-sticky-cta" id="od-sticky-cta">
           <button class="btn btn--primary btn--lg od-sticky-cta__book" onclick="Router.navigate('${this._bookingRoute(offer.category, offer.id)}')">
-            ${offer.category === 'dining' ? 'Reserve Now' : 'Book Now'}
+            ${offer.category === 'dining' ? 'Reserve Now' : offer.category === 'shopping' ? 'Buy Now' : 'Book Now'}
           </button>
           <button class="btn btn--ghost od-sticky-cta__save${savedClass}" onclick="OfferDetailPage._toggleSave('${offer.id}')">
             ${Icons.heart(18)}
@@ -534,6 +536,7 @@ const OfferDetailPage = {
       travel: '/book-flight/',
       hotels: '/book-hotel/',
       flights: '/book-flight/',
+      shopping: '/book-shopping/',
     };
     return (routeMap[category] || '/book-dining/') + offerId;
   },
