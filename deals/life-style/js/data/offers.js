@@ -423,7 +423,7 @@ const OFFERS = [
   {
     id: 'OFR-040', title: '30% off Weekend Stays', merchantId: 'MER-020',
     category: 'hotels', offerType: 'discount', discountValue: 30, discountUnit: 'percent',
-    description: 'Enjoy 30% off weekend rates at Four Seasons Resort Dubai with complimentary breakfast.',
+    description: 'Enjoy 30% off weekend rates at Four Seasons Resort Bali with complimentary breakfast.',
     terms: ['Friday–Saturday stays only', 'Advance booking required', 'Includes breakfast for 2', 'Subject to availability'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-09-30',
     isActive: true, isFeatured: true, isPremium: false,
@@ -443,7 +443,7 @@ const OFFERS = [
   {
     id: 'OFR-042', title: 'Buy 2 Get 1 Free Night', merchantId: 'MER-022',
     category: 'hotels', offerType: 'bogo', discountValue: null, discountUnit: null,
-    description: 'Book 2 nights at Address Beach Resort and get the 3rd night free with full board.',
+    description: 'Book 2 nights at Marina Bay Sands and get the 3rd night free with full board.',
     terms: ['Advance booking 7 days', 'Non-refundable', 'Includes full board on free night'],
     minTier: 'platinum', validFrom: '2026-03-01', validUntil: '2026-07-31',
     isActive: true, isFeatured: false, isPremium: true,
@@ -453,7 +453,7 @@ const OFFERS = [
   {
     id: 'OFR-043', title: '10% Cashback on Bookings', merchantId: 'MER-023',
     category: 'hotels', offerType: 'cashback', discountValue: 10, discountUnit: 'percent',
-    description: 'Earn 10% cashback on all room bookings at Anantara The Palm Dubai Resort.',
+    description: 'Earn 10% cashback on all room bookings at Belmond Hotel Caruso on the Amalfi Coast.',
     terms: ['Cashback credited within 30 days', 'Maximum AED 500 per stay', 'Direct bookings only'],
     minTier: 'classic', validFrom: '2026-01-01', validUntil: '2026-12-31',
     isActive: true, isFeatured: false, isPremium: false,
@@ -463,7 +463,7 @@ const OFFERS = [
   {
     id: 'OFR-044', title: '25% off Spa & Stay Package', merchantId: 'MER-020',
     category: 'hotels', offerType: 'discount', discountValue: 25, discountUnit: 'percent',
-    description: 'Save 25% on the Spa & Stay package at Four Seasons, including a 60-min treatment.',
+    description: 'Save 25% on the Spa & Stay package at Four Seasons Bali, including a 60-min treatment.',
     terms: ['Valid for 1-night minimum', 'Spa treatment per room per stay', 'Subject to availability'],
     minTier: 'gold', validFrom: '2026-04-01', validUntil: '2026-10-31',
     isActive: true, isFeatured: false, isPremium: false,
@@ -483,7 +483,7 @@ const OFFERS = [
   {
     id: 'OFR-046', title: '50% off Summer Stays', merchantId: 'MER-022',
     category: 'hotels', offerType: 'discount', discountValue: 50, discountUnit: 'percent',
-    description: 'Half price on all room categories at Address Beach Resort during summer months.',
+    description: 'Half price on all room categories at Marina Bay Sands during summer months.',
     terms: ['Valid June–August 2026', 'Minimum 1-night stay', 'Subject to availability', 'Includes pool access'],
     minTier: 'classic', validFrom: '2026-06-01', validUntil: '2026-08-31',
     isActive: true, isFeatured: true, isPremium: false,
@@ -493,7 +493,7 @@ const OFFERS = [
   {
     id: 'OFR-047', title: 'AED 500 Dining Credit', merchantId: 'MER-023',
     category: 'hotels', offerType: 'complimentary', discountValue: 500, discountUnit: 'aed',
-    description: 'Receive AED 500 dining credit per stay at Anantara The Palm when booking 3+ nights.',
+    description: 'Receive €500 dining credit per stay at Belmond Hotel Caruso when booking 3+ nights.',
     terms: ['Minimum 3-night stay', 'Credit valid at all on-site restaurants', 'Non-transferable'],
     minTier: 'gold', validFrom: '2026-03-01', validUntil: '2026-11-30',
     isActive: true, isFeatured: false, isPremium: false,

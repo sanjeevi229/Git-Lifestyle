@@ -444,8 +444,9 @@ const CategoryPage = {
             </div>
           </div>
           <div class="offer-card__content">
-            <div class="offer-card__title">${o.title}</div>
             <div class="offer-card__merchant">${merchant ? merchant.name : 'Visa Infinite'}</div>
+            ${merchant && merchant.country ? `<div class="offer-card__country">${merchant.country}</div>` : ''}
+            <div class="offer-card__title">${o.title}</div>
             <div class="offer-card__desc">${Format.truncate(o.description, 70)}</div>
             <div class="offer-card__footer">
               <span class="badge badge--info">${Format.categoryLabel(o.category)}</span>
@@ -642,7 +643,7 @@ const CategoryPage = {
     ` : '';
 
     const hotelCountries = [
-      { code: 'UAE', flag: '\u{1F1E6}\u{1F1EA}', label: 'UAE' },
+      { code: 'United Arab Emirates', flag: '\u{1F1E6}\u{1F1EA}', label: 'UAE' },
       { code: 'Maldives', flag: '\u{1F1F2}\u{1F1FB}', label: 'Maldives' },
       { code: 'United Kingdom', flag: '\u{1F1EC}\u{1F1E7}', label: 'UK' },
       { code: 'Japan', flag: '\u{1F1EF}\u{1F1F5}', label: 'Japan' },
@@ -652,6 +653,9 @@ const CategoryPage = {
       { code: 'United States', flag: '\u{1F1FA}\u{1F1F8}', label: 'USA' },
       { code: 'France', flag: '\u{1F1EB}\u{1F1F7}', label: 'France' },
       { code: 'India', flag: '\u{1F1EE}\u{1F1F3}', label: 'India' },
+      { code: 'Indonesia', flag: '\u{1F1EE}\u{1F1E9}', label: 'Indonesia' },
+      { code: 'Singapore', flag: '\u{1F1F8}\u{1F1EC}', label: 'Singapore' },
+      { code: 'Italy', flag: '\u{1F1EE}\u{1F1F9}', label: 'Italy' },
     ];
 
     return `
