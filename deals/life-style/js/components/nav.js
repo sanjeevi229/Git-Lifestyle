@@ -85,53 +85,17 @@ const Nav = {
             <span class="mobile-menu__item-icon">${Icons.home(24)}</span>
             <span class="mobile-menu__item-label">Home</span>
           </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/dining'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.utensils(24)}</span>
-            <span class="mobile-menu__item-label">Dining</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/entertainment'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.theater(24)}</span>
-            <span class="mobile-menu__item-label">Entertainment</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/wellness'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.heart(24)}</span>
-            <span class="mobile-menu__item-label">Wellness</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/travel'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.plane(24)}</span>
-            <span class="mobile-menu__item-label">Travel</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/hotels'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.home(24)}</span>
-            <span class="mobile-menu__item-label">Book Hotels</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/shopping'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.shoppingBag(24)}</span>
-            <span class="mobile-menu__item-label">Shopping</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/events'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.ticket(24)}</span>
-            <span class="mobile-menu__item-label">Events</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/category/promotions'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.tag(24)}</span>
-            <span class="mobile-menu__item-label">Promotions</span>
-          </div>
           <div class="mobile-menu__item" onclick="Router.navigate('/my-bookings'); Nav._closeMobile();">
             <span class="mobile-menu__item-icon">${Icons.clipboard(24)}</span>
             <span class="mobile-menu__item-label">Bookings</span>
           </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/card-benefits'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.creditCard(24)}</span>
-            <span class="mobile-menu__item-label">Card Benefits</span>
+          <div class="mobile-menu__item" onclick="Router.navigate('/gift-cards'); Nav._closeMobile();">
+            <span class="mobile-menu__item-icon">${Icons.gift(24)}</span>
+            <span class="mobile-menu__item-label">Gift Cards</span>
           </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/home'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.user(24)}</span>
-            <span class="mobile-menu__item-label">Profile</span>
-          </div>
-          <div class="mobile-menu__item mobile-menu__item--logout" onclick="Auth.logout()">
-            <span class="mobile-menu__item-icon">${Icons.logout(24)}</span>
-            <span class="mobile-menu__item-label">Logout</span>
+          <div class="mobile-menu__item" onclick="Router.navigate('/plus-points'); Nav._closeMobile();">
+            <span class="mobile-menu__item-icon">${Icons.star(24)}</span>
+            <span class="mobile-menu__item-label">Plus Points</span>
           </div>
         </div>
       </div>

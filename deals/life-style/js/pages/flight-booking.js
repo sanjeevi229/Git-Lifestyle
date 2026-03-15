@@ -1092,6 +1092,27 @@ const FlightBookingPage = {
     });
 
     this._setupStickyObserver();
+
+    // Auto-search: if landing page passed search params, skip step 1 & loading
+    const storedSearch = sessionStorage.getItem('_flight_search');
+    if (storedSearch) {
+      sessionStorage.removeItem('_flight_search');
+      try {
+        const params = JSON.parse(storedSearch);
+        this._searchParams = params;
+
+        // Generate results and go straight to step 2 (loading already shown on landing page)
+        this._flightResults = this._generateFlightResults();
+        this._step = 2;
+        const form = $('#flightBookingForm');
+        if (form) form.innerHTML = this._renderStep2();
+        window.scrollTo(0, 0);
+        this._updateStickyCta();
+        this._setupStickyObserver();
+      } catch (e) {
+        // ignore parse errors
+      }
+    }
   },
 
   // ── Search action ──

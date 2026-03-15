@@ -46,17 +46,26 @@ const ConciergePage = {
       `;
     }
 
+    // Route map for services with dedicated booking pages
+    const dedicatedRoutes = {
+      golf: '/golf',
+      club: '/club',
+      airport: '/airport',
+      courier: '/courier',
+    };
+
     // Build service cards
     const serviceCards = CONCIERGE_SERVICE_TYPES.map(service => {
       const serviceMinLevel = CONFIG.cardTiers[service.minTier]?.level || 1;
       const isAccessible = tierLevel >= serviceMinLevel;
+      const route = dedicatedRoutes[service.id] || `/concierge/book?service=${service.id}`;
 
       const featureChips = service.features.map(f =>
         `<span class="concierge-card__feature">${f}</span>`
       ).join('');
 
       return `
-        <div class="concierge-card ${isAccessible ? '' : 'concierge-card--locked'}" onclick="${isAccessible ? `Router.navigate('/concierge/book?service=${service.id}')` : ''}">
+        <div class="concierge-card ${isAccessible ? '' : 'concierge-card--locked'}" onclick="${isAccessible ? `Router.navigate('${route}')` : ''}">
           <div class="concierge-card__image">
             <img src="${service.image}" alt="${service.name}" loading="lazy" />
             ${!isAccessible ? `

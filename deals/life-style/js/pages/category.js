@@ -29,6 +29,11 @@ const CategoryPage = {
       return this._renderEvents(catLabel, catIcon);
     }
 
+    // For flights category, show booking form directly
+    if (this._categoryId === 'flights') {
+      return this._renderFlights(catLabel, catIcon);
+    }
+
     // Handle 'your-card' redirect
     if (this._categoryId === 'your-card') {
       setTimeout(() => Router.navigate('/card-benefits'), 0);
@@ -215,6 +220,46 @@ const CategoryPage = {
       AutoSuggest.attach(catInput);
     }
 
+    // Flight search form handlers
+    delegate('#app', 'click', '#swapAirports', () => {
+      const fromEl = $('#fbFrom');
+      const toEl = $('#fbTo');
+      if (fromEl && toEl) {
+        const tmp = fromEl.value;
+        fromEl.value = toEl.value;
+        toEl.value = tmp;
+      }
+    });
+
+    delegate('#app', 'click', '#flightSearchForm .fb-quick-filters .request-chip', (e) => {
+      e.target.classList.toggle('request-chip--selected');
+    });
+
+    delegate('#app', 'click', '#flightSearchBtn', () => {
+      this._doFlightSearch();
+    });
+
+    // Trip type toggle (One Way / Round Trip)
+    delegate('#app', 'click', '.fb-trip-btn', (e, el) => {
+      const tripType = el.dataset.trip;
+      const toggle = $('#fbTripToggle');
+      if (!toggle) return;
+      // Update active button
+      toggle.querySelectorAll('.fb-trip-btn').forEach(btn => {
+        btn.classList.toggle('fb-trip-btn--active', btn.dataset.trip === tripType);
+      });
+      // Show/hide return date
+      const returnGroup = $('#fbReturnGroup');
+      const datesRow = $('#fbDatesRow');
+      if (tripType === 'one-way') {
+        if (returnGroup) returnGroup.classList.add('fb-return-hidden');
+        if (datesRow) datesRow.classList.add('fb-dates-row--one-way');
+      } else {
+        if (returnGroup) returnGroup.classList.remove('fb-return-hidden');
+        if (datesRow) datesRow.classList.remove('fb-dates-row--one-way');
+      }
+    });
+
     // Mobile: reveal overlay when card scrolls into view
     this._setupScrollReveal();
   },
@@ -235,6 +280,72 @@ const CategoryPage = {
       this._cardObserver.disconnect();
       this._cardObserver = null;
     }
+  },
+
+  _doFlightSearch() {
+    const from = $('#fbFrom')?.value;
+    const to = $('#fbTo')?.value;
+    const depart = $('#fbDepart')?.value;
+    const ret = $('#fbReturn')?.value;
+    const pax = $('#fbPassengers')?.value || '1';
+    const cabin = $('#fbCabin')?.value || 'economy';
+
+    if (!to) {
+      const toEl = $('#fbTo');
+      if (toEl) { toEl.style.borderColor = '#DC2626'; toEl.focus(); }
+      return;
+    }
+    if (from === to) {
+      const toEl = $('#fbTo');
+      if (toEl) { toEl.style.borderColor = '#DC2626'; toEl.focus(); }
+      return;
+    }
+
+    // Pick appropriate offer based on cabin class
+    const flightOffers = (Store.get('offers') || []).filter(o => o.category === 'flights');
+    let bestOffer = flightOffers[0];
+    if (cabin === 'business') {
+      bestOffer = flightOffers.find(o => o.title.toLowerCase().includes('business')) || bestOffer;
+    } else if (cabin === 'first') {
+      bestOffer = flightOffers.find(o => o.title.toLowerCase().includes('first')) || bestOffer;
+    }
+    if (!bestOffer) return;
+
+    // Get airport names for the loading screen
+    const fromCity = FLIGHT_AIRPORTS.find(a => a.code === from)?.city || from;
+    const toCity   = FLIGHT_AIRPORTS.find(a => a.code === to)?.city || to;
+
+    // Show loading animation
+    const formEl = $('#flightSearchForm');
+    if (formEl) {
+      formEl.innerHTML = `
+        <div class="fb-loading">
+          <div class="fb-loading__clouds">
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+            <span class="fb-loading__cloud">☁️</span>
+          </div>
+          <div class="fb-loading__plane">✈️</div>
+          <div class="fb-loading__text">Searching flights<span class="fb-loading__dots"></span></div>
+          <div class="fb-loading__sub">Finding the best deals for you</div>
+          <div class="fb-loading__progress"><div class="fb-loading__progress-bar"></div></div>
+          <div class="fb-loading__route">${from} → ${to} · ${fromCity} to ${toCity}</div>
+        </div>
+      `;
+    }
+    window.scrollTo(0, 0);
+
+    // Store search params so FlightBookingPage can auto-search
+    sessionStorage.setItem('_flight_search', JSON.stringify({
+      from, to, departureDate: depart, returnDate: ret || null, passengers: pax, cabin
+    }));
+
+    // After loading animation, navigate to flight booking page
+    setTimeout(() => {
+      Router.navigate('/book-flight/' + bestOffer.id);
+    }, 5000);
   },
 
   _doSearch() {
@@ -610,6 +721,116 @@ const CategoryPage = {
           `).join('')}
         </div>
       </section>
+    `;
+  },
+
+  _renderFlights(catLabel, catIcon) {
+    const hero = CONFIG.categoryHeroes['flights'] || {};
+    const heroImage = hero.image || 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=1200&q=80';
+    const heroTagline = hero.tagline || 'Fly to your dream destinations with exclusive card deals';
+    const today = new Date().toISOString().split('T')[0];
+    const nextWeek = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
+
+    return `
+      <div class="page">
+        ${Nav.render()}
+        <main class="page__main page__main--full">
+          <!-- Hero Banner (no search box) -->
+          <section class="cat-hero" style="background-image:url('${heroImage}')">
+            <div class="cat-hero__overlay"></div>
+            <div class="cat-hero__content">
+              <div class="cat-hero__title-row">
+                <span class="cat-hero__icon">${catIcon}</span>
+                <h1 class="cat-hero__title">${catLabel}</h1>
+              </div>
+              <p class="cat-hero__tagline">${heroTagline}</p>
+            </div>
+          </section>
+
+          <div class="container">
+            <div class="cat-section-header">
+              <h2 class="page-title">Search & Book Flights</h2>
+              <p class="page-subtitle">Find the best deals on flights with your Visa Infinite card</p>
+            </div>
+
+            <!-- Flight Search Form -->
+            <div class="fb-layout" id="flightSearchForm">
+              <div class="hb-card fb-search-card">
+                <h2 class="hb-card__title"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg> Search Flights</h2>
+
+                <!-- Trip Type Toggle -->
+                <div class="fb-trip-toggle" id="fbTripToggle">
+                  <button type="button" class="fb-trip-btn fb-trip-btn--active" data-trip="round-trip">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                    Round Trip
+                  </button>
+                  <button type="button" class="fb-trip-btn" data-trip="one-way">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    One Way
+                  </button>
+                </div>
+
+                <!-- From / To -->
+                <div class="fb-route-row">
+                  <div class="form-group fb-route-col">
+                    <label class="form-label">From</label>
+                    <select id="fbFrom" class="form-input form-select">
+                      ${FLIGHT_AIRPORTS.map(a => `<option value="${a.code}" ${a.code === 'DXB' ? 'selected' : ''}>${a.code} — ${a.city}</option>`).join('')}
+                    </select>
+                  </div>
+                  <button type="button" class="fb-swap-btn" id="swapAirports" title="Swap">⇄</button>
+                  <div class="form-group fb-route-col">
+                    <label class="form-label">To</label>
+                    <select id="fbTo" class="form-input form-select">
+                      <option value="">Select destination</option>
+                      ${FLIGHT_AIRPORTS.filter(a => a.code !== 'DXB').map(a => `<option value="${a.code}" ${a.code === 'LHR' ? 'selected' : ''}>${a.code} — ${a.city}</option>`).join('')}
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Dates -->
+                <div class="fb-dates-row" id="fbDatesRow">
+                  <div class="form-group" style="flex:1">
+                    <label class="form-label">Departure</label>
+                    <input type="date" id="fbDepart" class="form-input" min="${today}" value="${today}" />
+                  </div>
+                  <div class="form-group" id="fbReturnGroup" style="flex:1">
+                    <label class="form-label">Return</label>
+                    <input type="date" id="fbReturn" class="form-input" min="${today}" value="${nextWeek}" />
+                  </div>
+                </div>
+
+                <!-- Passengers + Cabin -->
+                <div class="fb-dates-row">
+                  <div class="form-group" style="flex:1">
+                    <label class="form-label">Passengers</label>
+                    <select id="fbPassengers" class="form-input form-select">
+                      ${[1,2,3,4,5,6,7,8,9].map(n => `<option value="${n}" ${n === 1 ? 'selected' : ''}>${n} Passenger${n > 1 ? 's' : ''}</option>`).join('')}
+                    </select>
+                  </div>
+                  <div class="form-group" style="flex:1">
+                    <label class="form-label">Cabin Class</label>
+                    <select id="fbCabin" class="form-input form-select">
+                      <option value="economy" selected>Economy</option>
+                      <option value="business">Business</option>
+                      <option value="first">First Class</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Quick filters -->
+                <div class="fb-quick-filters">
+                  <button type="button" class="request-chip" data-value="direct">✈ Direct flights only</button>
+                  <button type="button" class="request-chip" data-value="flexible">📅 Flexible dates</button>
+                  <button type="button" class="request-chip" data-value="nearby">📍 Nearby airports</button>
+                </div>
+
+                <button class="btn btn--primary btn--lg btn--full" id="flightSearchBtn" style="margin-top:var(--space-md)">Search Flights</button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     `;
   },
 

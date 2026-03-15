@@ -1,0 +1,340 @@
+/* ══════════════════════════════════════════════
+   DEMO LIFESTYLE — Gift Cards Landing Page
+   ══════════════════════════════════════════════ */
+
+/* ── Hero ── */
+.gc-hero {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+  background: linear-gradient(160deg, #0A0A0A 0%, #1A1A2E 60%, #16213E 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 20px 30px;
+}
+
+/* CSS confetti dots */
+.gc-hero__confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.gc-hero__confetti::before,
+.gc-hero__confetti::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.gc-hero__confetti::before {
+  background:
+    radial-gradient(circle 3px, #FFD700 100%, transparent 100%) 10% 15%,
+    radial-gradient(circle 2px, #FF6B6B 100%, transparent 100%) 25% 20%,
+    radial-gradient(circle 3px, #4ECDC4 100%, transparent 100%) 85% 12%,
+    radial-gradient(circle 2px, #A855F7 100%, transparent 100%) 70% 25%,
+    radial-gradient(circle 2px, #FFD700 100%, transparent 100%) 55% 8%,
+    radial-gradient(circle 3px, #FF6B6B 100%, transparent 100%) 92% 30%,
+    radial-gradient(circle 2px, #4ECDC4 100%, transparent 100%) 15% 85%,
+    radial-gradient(circle 3px, #A855F7 100%, transparent 100%) 40% 90%,
+    radial-gradient(circle 2px, #FFD700 100%, transparent 100%) 78% 88%,
+    radial-gradient(circle 3px, #FF6B6B 100%, transparent 100%) 60% 80%,
+    radial-gradient(circle 2px, #4ECDC4 100%, transparent 100%) 30% 70%,
+    radial-gradient(circle 2px, #A855F7 100%, transparent 100%) 88% 75%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+}
+.gc-hero__confetti::after {
+  background:
+    radial-gradient(circle 2px, #FFD700 100%, transparent 100%) 5% 50%,
+    radial-gradient(circle 3px, #FF6B6B 100%, transparent 100%) 48% 35%,
+    radial-gradient(circle 2px, #4ECDC4 100%, transparent 100%) 65% 55%,
+    radial-gradient(circle 3px, #A855F7 100%, transparent 100%) 20% 42%,
+    radial-gradient(circle 2px, #FFD700 100%, transparent 100%) 95% 48%,
+    radial-gradient(circle 2px, #FF6B6B 100%, transparent 100%) 35% 60%,
+    radial-gradient(circle 3px, #4ECDC4 100%, transparent 100%) 75% 65%,
+    radial-gradient(circle 2px, #A855F7 100%, transparent 100%) 50% 18%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+}
+
+/* Gift card visual */
+.gc-hero__card-visual {
+  position: relative;
+  z-index: 1;
+  width: 200px;
+  height: 126px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #C0C0C0 0%, #E8E8E8 30%, #A8A8A8 60%, #D0D0D0 100%);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.gc-hero__card-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+}
+/* Gold bow */
+.gc-hero__bow {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 64px;
+  height: 64px;
+  z-index: 2;
+}
+.gc-hero__bow::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFD700 0%, #DAA520 60%, #B8860B 100%);
+  box-shadow: 0 2px 8px rgba(218,165,32,0.5);
+}
+.gc-hero__bow::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  right: 8px;
+  width: 44px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #FFD700, #DAA520, #FFD700, transparent);
+  transform: rotate(-35deg);
+  transform-origin: center;
+}
+/* Card chip */
+.gc-hero__chip {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 28px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #DAA520 0%, #FFD700 50%, #B8860B 100%);
+  opacity: 0.7;
+}
+/* Card text lines */
+.gc-hero__card-lines {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}
+.gc-hero__card-lines span {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.25);
+  margin-bottom: 6px;
+}
+.gc-hero__card-lines span:first-child {
+  width: 60%;
+}
+.gc-hero__card-lines span:last-child {
+  width: 40%;
+  margin-bottom: 0;
+}
+
+/* Hero text */
+.gc-hero__title {
+  position: relative;
+  z-index: 1;
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+.gc-hero__subtitle {
+  position: relative;
+  z-index: 1;
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  max-width: 360px;
+  line-height: 1.5;
+  margin: 0 auto 0;
+}
+
+/* Search box inside hero */
+.gc-hero__search {
+  position: relative;
+  z-index: 10;
+  width: min(520px, calc(100% - 40px));
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+.gc-hero__search > .icon {
+  flex-shrink: 0;
+  margin-left: 20px;
+  color: var(--grey);
+}
+.gc-hero__search input {
+  flex: 1;
+  padding: 16px 14px;
+  border: none;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: transparent;
+  outline: none;
+}
+.gc-hero__search input::placeholder {
+  color: #9ca3af;
+}
+
+/* ── Category Chips ── */
+.gc-chips {
+  display: flex;
+  gap: 8px;
+  padding: 16px max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad)));
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.gc-chips::-webkit-scrollbar {
+  display: none;
+}
+.gc-chip {
+  flex-shrink: 0;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid #E5E7EB;
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.gc-chip:hover {
+  border-color: var(--charcoal);
+}
+.gc-chip--active {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--white);
+}
+
+/* ── Brand Grid ── */
+.gc-grid-wrap {
+  padding: 8px max(var(--container-pad), calc((100vw - var(--container-max)) / 2 + var(--container-pad))) 40px;
+}
+.gc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.gc-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 12px 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gc-brand:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+.gc-brand__logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: 0.02em;
+}
+.gc-brand__name {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--charcoal);
+  text-align: center;
+  line-height: 1.3;
+}
+.gc-brand__points {
+  font-size: 12px;
+  color: var(--grey);
+  margin-top: 4px;
+}
+
+/* Empty state */
+.gc-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--grey);
+  font-size: 15px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .gc-hero {
+    height: 430px;
+    padding: 45px 16px 24px;
+  }
+  .gc-hero__search {
+    width: calc(100% - 32px);
+    border-radius: 14px;
+  }
+  .gc-hero__search input {
+    padding: 14px 12px;
+    font-size: 16px;
+  }
+  .gc-hero__card-visual {
+    width: 170px;
+    height: 108px;
+    margin-bottom: 20px;
+  }
+  .gc-hero__title {
+    font-size: 24px;
+  }
+  .gc-hero__subtitle {
+    font-size: 14px;
+  }
+  .gc-grid {
+    gap: 12px;
+  }
+  .gc-brand {
+    padding: 20px 10px 16px;
+  }
+  .gc-brand__logo {
+    width: 56px;
+    height: 56px;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+  .gc-brand__name {
+    font-size: 13px;
+  }
+}

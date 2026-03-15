@@ -4,6 +4,42 @@
 
 const CONCIERGE_SERVICE_TYPES = [
   {
+    id: 'golf',
+    name: 'Golf Access',
+    description: 'Tee off at prestigious golf courses across the UAE with complimentary green fees',
+    image: 'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=600&h=400&fit=crop',
+    turnaround: '24 hours',
+    minTier: 'platinum',
+    features: ['Premium Courses', 'Green Fees Included', 'Buggy & Equipment'],
+  },
+  {
+    id: 'club',
+    name: 'Club Access',
+    description: 'Exclusive entry to luxury lounges and private members clubs',
+    image: 'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=600&h=400&fit=crop',
+    turnaround: '4 hours',
+    minTier: 'platinum',
+    features: ['Private Lounges', 'Guest Passes', 'Priority Entry'],
+  },
+  {
+    id: 'airport',
+    name: 'Airport Pickup & Drop',
+    description: 'Complimentary luxury airport transfers with meet & greet service',
+    image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&h=400&fit=crop',
+    turnaround: '4 hours',
+    minTier: 'platinum',
+    features: ['Luxury Vehicles', 'Meet & Greet', 'Flight Tracking'],
+  },
+  {
+    id: 'courier',
+    name: 'Local Courier',
+    description: 'Same-day courier service for documents and parcels across the UAE',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop',
+    turnaround: '2 hours',
+    minTier: 'platinum',
+    features: ['Same-Day Delivery', 'Tracked Service', 'Insured Parcels'],
+  },
+  {
     id: 'restaurant',
     name: 'Restaurant Reservations',
     description: 'Priority seating at the UAE\'s most exclusive restaurants',

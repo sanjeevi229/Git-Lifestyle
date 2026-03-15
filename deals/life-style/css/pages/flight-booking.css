@@ -38,6 +38,28 @@
   display: flex; align-items: center; gap: 8px;
 }
 
+/* ── Trip Type Toggle ── */
+.fb-trip-toggle {
+  display: flex; gap: 0;
+  background: var(--light); border-radius: var(--radius-full);
+  padding: 4px; margin-bottom: 18px;
+  width: fit-content;
+}
+.fb-trip-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 18px; border-radius: var(--radius-full);
+  border: none; background: transparent;
+  font-family: var(--font-body); font-size: 13px; font-weight: 600;
+  color: var(--grey); cursor: pointer;
+  transition: all var(--ease); white-space: nowrap;
+}
+.fb-trip-btn:hover { color: var(--charcoal); }
+.fb-trip-btn--active {
+  background: var(--white); color: var(--charcoal);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.fb-trip-btn svg { flex-shrink: 0; }
+
 /* ── From / To Route Row ── */
 .fb-route-row {
   display: flex; align-items: flex-end; gap: 8px;
@@ -553,11 +575,61 @@
   .fb-form-row .form-group { margin-bottom: 12px; }
 }
 
-/* ── iOS Safari date input fix ── */
+/* ── Date input fix (iOS + cross-browser) ── */
 input[type="date"].fb-pax-field,
 input[type="date"]#fbDepart,
 input[type="date"]#fbReturn {
   -webkit-appearance: none;
+  appearance: none;
   min-height: 44px;
   line-height: 1.2;
+  position: relative;
+  background: var(--white);
+  color: var(--charcoal);
 }
+
+/* Ensure date inputs show consistent height & alignment */
+.fb-dates-row input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 44px;
+  padding: 10px 36px 10px 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--charcoal);
+  background: var(--white);
+  border: 1.5px solid var(--grey-border);
+  border-radius: var(--radius-md, 10px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Position calendar icon on the right, no overlap */
+.fb-dates-row input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  opacity: 0.5;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+/* Firefox — hide default icon and use custom positioning */
+.fb-dates-row input[type="date"]::-moz-calendar-picker-indicator {
+  opacity: 0.5;
+}
+
+/* Hidden return group (one-way) */
+.fb-return-hidden {
+  display: none !important;
+}
+
+/* Full-width departure when return is hidden */
+.fb-dates-row--one-way {
+  /* departure takes full width */
+}
+.fb-dates-row--one-way .form-group { flex: 1; }
