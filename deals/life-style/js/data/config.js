@@ -16,6 +16,7 @@ const CONFIG = {
     { id: 'travel',        label: 'Travel Deals',  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>', iconImg: 'assets/png_1024/travel_deals.png', color: '#2563EB' },
     { id: 'events',        label: 'Events',        icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/></svg>', iconImg: 'assets/png_1024/events.png', color: '#DC2626' },
     { id: 'promotions',    label: 'Promotions',    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1"/></svg>', iconImg: 'assets/png_1024/promotions.png', color: '#EA580C' },
+    { id: 'gift-cards',    label: 'Gift Cards',    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13"/><path d="M3 12h18"/><path d="M12 8c-2-3-6-3-6 0s4 4 6 0"/><path d="M12 8c2-3 6-3 6 0s-4 4-6 0"/></svg>', color: '#3B82F6' },
     { id: 'your-card',     label: 'Card Benefits', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>', iconImg: 'assets/png_1024/your_card.png', color: '#475569' },
   ],
 
@@ -160,7 +161,7 @@ const CONFIG = {
       { id: 'beach-resorts',    label: 'Beach Resorts',      dealCount: 8,  image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80' },
       { id: 'luxury-stays',     label: 'Luxury Stays',       dealCount: 15, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80' },
       { id: 'city-hotels',      label: 'City Hotels',        dealCount: 12, image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80' },
-      { id: 'spa-wellness',     label: 'Spa & Wellness',     dealCount: 6,  image: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=600&q=80' },
+      { id: 'spa-wellness',     label: 'Spa & Wellness',     dealCount: 6,  image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80' },
       { id: 'family-friendly',  label: 'Family Friendly',    dealCount: 10, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80' },
       { id: 'romantic-getaways', label: 'Romantic Getaways', dealCount: 7,  image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80' },
     ],

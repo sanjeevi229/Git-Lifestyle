@@ -89,13 +89,13 @@ const Nav = {
             <span class="mobile-menu__item-icon">${Icons.clipboard(24)}</span>
             <span class="mobile-menu__item-label">Bookings</span>
           </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/gift-cards'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.gift(24)}</span>
-            <span class="mobile-menu__item-label">Gift Cards</span>
-          </div>
           <div class="mobile-menu__item" onclick="Router.navigate('/plus-points'); Nav._closeMobile();">
             <span class="mobile-menu__item-icon">${Icons.star(24)}</span>
             <span class="mobile-menu__item-label">Plus Points</span>
+          </div>
+          <div class="mobile-menu__item" onclick="Router.navigate('/profile'); Nav._closeMobile();">
+            <span class="mobile-menu__item-icon">${Icons.user(24)}</span>
+            <span class="mobile-menu__item-label">Profile</span>
           </div>
         </div>
       </div>

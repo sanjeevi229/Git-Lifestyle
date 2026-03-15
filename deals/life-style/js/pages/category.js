@@ -8,6 +8,7 @@ const CategoryPage = {
   _filterType: 'all',
   _subcategory: null,
   _location: null,
+  _country: null,
   _checkIn: null,
   _checkOut: null,
 
@@ -17,6 +18,7 @@ const CategoryPage = {
     this._filterType = 'all';
     this._subcategory = null;
     this._location = null;
+    this._country = null;
     this._checkIn = null;
     this._checkOut = null;
 
@@ -130,17 +132,10 @@ const CategoryPage = {
       }
     });
 
-    // Location pill click
-    delegate('#app', 'click', '.cat-location-pill', (e, el) => {
-      const val = el.dataset.location;
-      this._location = this._location === val ? null : val;
-      $$('.cat-location-pill').forEach(p => p.classList.toggle('active', p.dataset.location === this._location));
+    // Country dropdown (hotels)
+    delegate('#app', 'change', '#filterCountry', (e) => {
+      this._country = e.target.value || null;
       this._refreshGrid();
-      // Scroll to curated collections section so user sees results
-      if (this._location) {
-        const target = $('.curated-section') || $('.offers-grid');
-        if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
-      }
     });
 
     // Date range filters (hotels)
@@ -192,16 +187,18 @@ const CategoryPage = {
     delegate('#app', 'click', '#showAllOffers', () => {
       this._subcategory = null;
       this._location = null;
+      this._country = null;
       this._filterType = 'all';
       this._sort = 'recommended';
       this._checkIn = null;
       this._checkOut = null;
       $$('.cat-subcat-card').forEach(c => c.classList.remove('active'));
-      $$('.cat-location-pill').forEach(p => p.classList.remove('active'));
       const sortSel = $('#sortSelect');
       if (sortSel) sortSel.value = 'recommended';
       const typeSel = $('#filterType');
       if (typeSel) typeSel.value = 'all';
+      const countrySel = $('#filterCountry');
+      if (countrySel) countrySel.value = '';
       const checkInEl = $('#checkInDate');
       if (checkInEl) checkInEl.value = '';
       const checkOutEl = $('#checkOutDate');
@@ -379,9 +376,15 @@ const CategoryPage = {
         return merchant && merchant.area === this._location;
       });
     }
+    if (this._country) {
+      filtered = filtered.filter(o => {
+        const merchant = Store.getMerchant(o.merchantId);
+        return merchant && merchant.country === this._country;
+      });
+    }
 
     // Guarantee at least 3 results: supplement with related offers
-    if (filtered.length < 3 && (this._subcategory || this._location)) {
+    if (filtered.length < 3 && (this._subcategory || this._location || this._country)) {
       const shownIds = new Set(filtered.map(o => o.id));
 
       // Pool of supplementary offers from the same category (not already shown)
@@ -638,17 +641,18 @@ const CategoryPage = {
       </div>
     ` : '';
 
-    const locationHTML = locations.length ? `
-      <div class="cat-location-section">
-        <div class="cat-location-header">By location</div>
-        <div class="cat-location-pills">
-          <button class="cat-location-pill cat-location-pill--near ${this._location === 'near-me' ? 'active' : ''}" data-location="near-me">${Icons.mapPin(14)} Near Me</button>
-          ${locations.map(loc => `
-            <button class="cat-location-pill ${this._location === loc ? 'active' : ''}" data-location="${loc}">${loc}</button>
-          `).join('')}
-        </div>
-      </div>
-    ` : '';
+    const hotelCountries = [
+      { code: 'UAE', flag: '\u{1F1E6}\u{1F1EA}', label: 'UAE' },
+      { code: 'Maldives', flag: '\u{1F1F2}\u{1F1FB}', label: 'Maldives' },
+      { code: 'United Kingdom', flag: '\u{1F1EC}\u{1F1E7}', label: 'UK' },
+      { code: 'Japan', flag: '\u{1F1EF}\u{1F1F5}', label: 'Japan' },
+      { code: 'Switzerland', flag: '\u{1F1E8}\u{1F1ED}', label: 'Switzerland' },
+      { code: 'Turkey', flag: '\u{1F1F9}\u{1F1F7}', label: 'Turkey' },
+      { code: 'Thailand', flag: '\u{1F1F9}\u{1F1ED}', label: 'Thailand' },
+      { code: 'United States', flag: '\u{1F1FA}\u{1F1F8}', label: 'USA' },
+      { code: 'France', flag: '\u{1F1EB}\u{1F1F7}', label: 'France' },
+      { code: 'India', flag: '\u{1F1EE}\u{1F1F3}', label: 'India' },
+    ];
 
     return `
       <div class="cat-filter-section">
@@ -691,10 +695,18 @@ const CategoryPage = {
               ${CONFIG.offerTypes.map(t => `<option value="${t}" ${t === this._filterType ? 'selected' : ''}>${t.charAt(0).toUpperCase() + t.slice(1)}</option>`).join('')}
             </select>
           </div>
+          ${this._categoryId === 'hotels' ? `
+          <div class="cat-advanced-row">
+            <label>Country</label>
+            <select id="filterCountry" class="form-select">
+              <option value="">All Countries</option>
+              ${hotelCountries.map(c => `<option value="${c.code}" ${c.code === this._country ? 'selected' : ''}>${c.flag}  ${c.label}</option>`).join('')}
+            </select>
+          </div>
+          ` : ''}
         </div>
 
         ${subcatHTML}
-        ${locationHTML}
       </div>
     `;
   },

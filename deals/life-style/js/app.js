@@ -58,6 +58,7 @@
   Router.register('/rewards/:id',       RewardDetailPage);
   Router.register('/club',              ClubPage);
   Router.register('/club/register',     ClubRegistrationPage);
+  Router.register('/profile',           ProfilePage);
 
   Router.init();
 

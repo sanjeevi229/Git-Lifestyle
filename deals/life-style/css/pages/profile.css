@@ -1,0 +1,240 @@
+/* ══════════════════════════════════════════════
+   Profile Page
+   ══════════════════════════════════════════════ */
+
+/* ── Header ── */
+.prof-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+
+.prof-header__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.prof-header__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+}
+
+.prof-header__name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 4px 0 0;
+}
+
+.prof-header__tier {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ── Body ── */
+.prof-body {
+  padding-top: 24px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Accordion Section ── */
+.prof-section {
+  background: #fff;
+  border: 1px solid var(--grey, #e2e8f0);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.prof-section__trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--charcoal, #1e293b);
+  transition: background 0.15s ease;
+}
+
+.prof-section__trigger:hover {
+  background: #f8fafc;
+}
+
+.prof-section__trigger::-webkit-details-marker {
+  display: none;
+}
+
+.prof-section__icon {
+  display: flex;
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.prof-section__label {
+  flex: 1;
+}
+
+.prof-section__chevron {
+  font-size: 14px;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.prof-section[open] .prof-section__chevron {
+  transform: rotate(180deg);
+}
+
+.prof-section__content {
+  padding: 0 20px 20px;
+  border-top: 1px solid var(--grey, #e2e8f0);
+  padding-top: 16px;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.prof-section__content p {
+  margin: 0 0 12px;
+}
+
+.prof-section__content p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── FAQ nested accordion ── */
+.prof-faq {
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: #f8fafc;
+}
+
+.prof-faq:last-child {
+  margin-bottom: 0;
+}
+
+.prof-faq summary {
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--charcoal, #1e293b);
+  list-style: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prof-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.prof-faq summary::before {
+  content: '▸';
+  font-size: 12px;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.prof-faq[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.prof-faq p {
+  padding: 0 16px 14px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #64748b;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+/* ── Contact grid ── */
+.prof-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.prof-contact__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.prof-contact__item strong {
+  font-size: 13px;
+  color: var(--charcoal, #1e293b);
+  font-weight: 600;
+}
+
+.prof-contact__item span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* ── Logout button ── */
+.prof-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  background: #fff;
+  border: 1px solid #fca5a5;
+  border-radius: 14px;
+  color: #dc2626;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.prof-logout:hover {
+  background: #fef2f2;
+}
+
+/* ── Desktop ── */
+@media (min-width: 700px) {
+  .prof-body {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .prof-header {
+    padding: 56px 24px 48px;
+  }
+
+  .prof-header__avatar {
+    width: 84px;
+    height: 84px;
+    font-size: 32px;
+  }
+
+  .prof-header__name {
+    font-size: 26px;
+  }
+}

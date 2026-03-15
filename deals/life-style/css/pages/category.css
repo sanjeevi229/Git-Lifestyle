@@ -96,8 +96,8 @@
 
 .cat-filter-header {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: var(--space-lg);
 }
+.cat-advanced-panel.open { margin-top: var(--space-lg); }
 .cat-filter-title {
   font-size: 18px; font-weight: 700; color: var(--charcoal);
 }
@@ -204,6 +204,10 @@
 }
 .cat-location-pill--near { display: inline-flex; align-items: center; gap: 5px; }
 .cat-location-pill--near .icon { width: 14px; height: 14px; }
+
+/* ── Country filter ── */
+.cat-country-pill { display: inline-flex; align-items: center; gap: 6px; }
+.cat-country-flag { font-size: 18px; line-height: 1; }
 
 /* ── Section Header (title + description above filters) ── */
 .cat-section-header { padding-top: var(--space-xl); margin-bottom: var(--space-md); }
