@@ -6,35 +6,85 @@
 .pp-hero {
   position: relative;
   width: 100%;
-  height: 340px;
+  height: 420px;
   overflow: hidden;
   border-radius: 0 0 24px 24px;
   background: linear-gradient(160deg, #DBEAFE 0%, #C7D9F5 40%, #B8CCF0 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+}
+.pp-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.pp-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(160deg, rgba(30,40,70,0.45) 0%, rgba(20,30,60,0.40) 40%, rgba(15,25,50,0.35) 100%);
+}
+.pp-hero__content {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-65%);
   text-align: center;
-  padding: 50px 24px 40px;
+  padding: 0 24px;
 }
 .pp-hero__title {
-  position: relative;
-  z-index: 1;
   font-size: 32px;
   font-weight: 800;
-  color: var(--charcoal);
+  color: #fff;
   letter-spacing: -0.01em;
   margin: 0 0 12px;
   line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 .pp-hero__subtitle {
-  position: relative;
-  z-index: 1;
   font-size: 15px;
-  color: rgba(7,36,71,0.6);
+  color: rgba(255,255,255,0.85);
   max-width: 340px;
   line-height: 1.55;
   margin: 0 auto;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.25);
+}
+
+/* Search box inside hero */
+.pp-hero__search {
+  position: absolute;
+  bottom: 32px;
+  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, calc(100% - 48px));
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  overflow: hidden;
+}
+.pp-hero__search > .icon {
+  flex-shrink: 0;
+  margin-left: 20px;
+  color: var(--grey);
+}
+.pp-hero__search input {
+  flex: 1;
+  padding: 16px 14px;
+  border: none;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--charcoal);
+  background: transparent;
+  outline: none;
+}
+.pp-hero__search input::placeholder {
+  color: #9ca3af;
 }
 
 /* ── Section ── */
@@ -177,14 +227,25 @@
 /* ── Mobile ── */
 @media (max-width: 600px) {
   .pp-hero {
-    height: 300px;
-    padding: 45px 20px 32px;
+    height: 400px;
+  }
+  .pp-hero__content {
+    padding: 0 20px;
   }
   .pp-hero__title {
     font-size: 26px;
   }
   .pp-hero__subtitle {
     font-size: 14px;
+  }
+  .pp-hero__search {
+    bottom: 28px;
+    width: calc(100% - 40px);
+    border-radius: 14px;
+  }
+  .pp-hero__search input {
+    padding: 14px 12px;
+    font-size: 16px;
   }
   .pp-card {
     padding: 14px;

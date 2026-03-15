@@ -30,8 +30,16 @@ const PlusPointsPage = {
 
           <!-- Hero -->
           <section class="pp-hero">
-            <h1 class="pp-hero__title">Transfer Plus<br/>Points with Ease</h1>
-            <p class="pp-hero__subtitle">Get started by linking your first loyalty program account. It takes less than a minute to set up.</p>
+            <img class="pp-hero__bg" src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=1200&q=80" alt="" />
+            <div class="pp-hero__overlay"></div>
+            <div class="pp-hero__content">
+              <h1 class="pp-hero__title">Transfer Plus<br/>Points with Ease</h1>
+              <p class="pp-hero__subtitle">Get started by linking your first loyalty program account. It takes less than a minute to set up.</p>
+            </div>
+            <div class="pp-hero__search">
+              ${Icons.search(20)}
+              <input id="ppSearchInput" type="text" placeholder="Search loyalty programs..." />
+            </div>
           </section>
 
           <!-- Section title -->
@@ -56,6 +64,25 @@ const PlusPointsPage = {
 
   mount() {
     Nav.mount();
+
+    const input = document.getElementById('ppSearchInput');
+    if (input) {
+      input.addEventListener('input', () => this._filterCards());
+    }
+  },
+
+  _filterCards() {
+    const input = document.getElementById('ppSearchInput');
+    const searchText = (input ? input.value : '').toLowerCase().trim();
+
+    const cards = document.querySelectorAll('.pp-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const match = !searchText || card.dataset.name.includes(searchText);
+      card.style.display = match ? '' : 'none';
+      if (match) visibleCount++;
+    });
   },
 };
 
