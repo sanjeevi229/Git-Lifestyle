@@ -48,8 +48,9 @@ const Nav = {
             </div>
             <span class="user-menu__chevron">▾</span>
             <div class="user-menu__dropdown" id="userDropdown">
-              <span class="user-menu__dropdown-item" onclick="Router.navigate('/home')">${Icons.users(16)} Profile</span>
-              <span class="user-menu__dropdown-item user-menu__dropdown-item--logout" onclick="Auth.logout()">${Icons.logout(16)} Logout</span>
+              <span class="user-menu__dropdown-item" onclick="Router.navigate('/profile')">${Icons.users(16)} Profile</span>
+              <span class="user-menu__dropdown-item" onclick="Router.navigate('/faq')">${Icons.helpCircle(16)} FAQ</span>
+              <span class="user-menu__dropdown-item" onclick="Router.navigate('/policy')">${Icons.shield(16)} Policy</span>
             </div>
           </div>
         </div>
@@ -96,6 +97,14 @@ const Nav = {
           <div class="mobile-menu__item" onclick="Router.navigate('/profile'); Nav._closeMobile();">
             <span class="mobile-menu__item-icon">${Icons.user(24)}</span>
             <span class="mobile-menu__item-label">Profile</span>
+          </div>
+          <div class="mobile-menu__item" onclick="Router.navigate('/faq'); Nav._closeMobile();">
+            <span class="mobile-menu__item-icon">${Icons.helpCircle(24)}</span>
+            <span class="mobile-menu__item-label">FAQ</span>
+          </div>
+          <div class="mobile-menu__item" onclick="Router.navigate('/policy'); Nav._closeMobile();">
+            <span class="mobile-menu__item-icon">${Icons.shield(24)}</span>
+            <span class="mobile-menu__item-label">Policy</span>
           </div>
         </div>
       </div>

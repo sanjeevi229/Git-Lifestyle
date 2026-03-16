@@ -507,6 +507,13 @@ const HomePage = {
       });
     });
 
+    // Pause hero autoplay on hover so banner doesn't juggle
+    const heroEl = $('#heroCarousel');
+    if (heroEl) {
+      heroEl.addEventListener('mouseenter', () => this._stopHeroAutoplay());
+      heroEl.addEventListener('mouseleave', () => this._startHeroAutoplay());
+    }
+
     // Parallax scroll effect (desktop only)
     if (window.innerWidth > 600) {
       this._scrollRAF = null;
@@ -689,6 +696,7 @@ const HomePage = {
   },
 
   _startHeroAutoplay() {
+    if (this._heroInterval) return;          // prevent duplicate timers
     this._heroInterval = setInterval(() => {
       this._activeSlide = (this._activeSlide + 1) % CONFIG.heroSlides.length;
       this._goToSlide(this._activeSlide);

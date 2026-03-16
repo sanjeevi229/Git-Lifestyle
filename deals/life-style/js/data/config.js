@@ -161,7 +161,7 @@ const CONFIG = {
       { id: 'beach-resorts',    label: 'Beach Resorts',      dealCount: 8,  image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80' },
       { id: 'luxury-stays',     label: 'Luxury Stays',       dealCount: 15, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80' },
       { id: 'city-hotels',      label: 'City Hotels',        dealCount: 12, image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80' },
-      { id: 'spa-wellness',     label: 'Spa & Wellness',     dealCount: 6,  image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=80' },
+      { id: 'spa-wellness',     label: 'Spa & Wellness',     dealCount: 6,  image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80' },
       { id: 'family-friendly',  label: 'Family Friendly',    dealCount: 10, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80' },
       { id: 'romantic-getaways', label: 'Romantic Getaways', dealCount: 7,  image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80' },
     ],
