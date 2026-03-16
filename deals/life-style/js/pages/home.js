@@ -104,7 +104,7 @@ const HomePage = {
       return `
         <div class="story-bubble ${isViewed ? 'story-bubble--viewed' : ''} ${isForYou ? 'story-bubble--foryou' : ''}" data-story-index="${i}" role="button" tabindex="0" aria-label="View ${story.label} stories">
           <div class="story-bubble__ring" ${!isViewed && ringGradient ? `style="background:${ringGradient}"` : ''}>
-            <img class="story-bubble__img" src="${story.thumbnail}" alt="${story.label}" loading="lazy" />
+            <img class="story-bubble__img" src="${story.thumbnail}" alt="${story.label}" loading="eager" fetchpriority="high" />
           </div>
           ${story.badge ? `<span class="story-badge ${badgeClass}">${story.badge}</span>` : ''}
           <span class="story-bubble__label">${story.label}</span>
