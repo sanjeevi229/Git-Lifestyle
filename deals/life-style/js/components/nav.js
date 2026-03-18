@@ -98,14 +98,6 @@ const Nav = {
             <span class="mobile-menu__item-icon">${Icons.user(24)}</span>
             <span class="mobile-menu__item-label">Profile</span>
           </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/faq'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.helpCircle(24)}</span>
-            <span class="mobile-menu__item-label">FAQ</span>
-          </div>
-          <div class="mobile-menu__item" onclick="Router.navigate('/policy'); Nav._closeMobile();">
-            <span class="mobile-menu__item-icon">${Icons.shield(24)}</span>
-            <span class="mobile-menu__item-label">Policy</span>
-          </div>
         </div>
       </div>
 
