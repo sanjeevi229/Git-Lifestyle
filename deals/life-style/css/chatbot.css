@@ -45,7 +45,7 @@
 @media (max-width: 900px) {
   .chat-fab {
     bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-    right: 16px;
+    right: var(--container-pad);
     width: 52px;
     height: 52px;
   }
