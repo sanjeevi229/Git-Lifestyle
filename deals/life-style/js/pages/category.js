@@ -22,6 +22,12 @@ const CategoryPage = {
     this._checkIn = null;
     this._checkOut = null;
 
+    // Redirect shopping category to the new item-first shop page
+    if (this._categoryId === 'shopping') {
+      setTimeout(() => Router.navigate('/shop-online'), 0);
+      return '<div class="page"></div>';
+    }
+
     const catConfig = CONFIG.categories.find(c => c.id === this._categoryId);
     const catLabel = catConfig ? catConfig.label : this._categoryId;
     const catIcon = catConfig ? catConfig.icon : Icons.package(20);

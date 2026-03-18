@@ -58,7 +58,7 @@ const HomePage = {
 
     // Category grid
     const categories = CONFIG.categories.map(c => {
-      const route = c.id === 'concierge' ? '/concierge' : c.id === 'gift-cards' ? '/gift-cards' : '/category/' + c.id;
+      const route = c.id === 'concierge' ? '/concierge' : c.id === 'gift-cards' ? '/gift-cards' : c.id === 'shopping' ? '/shop-online' : '/category/' + c.id;
       return `
       <div class="category-tile" data-id="${c.id}" onclick="Router.navigate('${route}')" style="--tile-color:${c.color}">
         <div class="category-tile__icon">${c.iconImg ? `<img src="${c.iconImg}" alt="${c.label}" />` : c.icon}</div>

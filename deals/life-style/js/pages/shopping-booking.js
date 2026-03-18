@@ -1,26 +1,36 @@
 // ══════════════════════════════════════════════
-// DEMO LIFESTYLE — Shopping Booking Page
+// DEMO LIFESTYLE — Shopping Booking Page (Item-First Flow)
 // ══════════════════════════════════════════════
 
 const ShoppingBookingPage = {
-  _offerId: null,
+  _step: 1,
+  _selectedCategory: null,
+  _selectedItem: null,
   _offer: null,
   _merchant: null,
-  _step: 1,
   _formData: null,
   _stickyObserver: null,
 
   render(params) {
-    const rawId = params.offerId;
-    this._offer = (Store.get('offers') || []).find(o => o.id === rawId);
-    if (!this._offer) return this._notFound();
-    this._offerId = rawId;
-    this._merchant = Store.getMerchant(this._offer.merchantId);
     this._step = 1;
+    this._selectedCategory = null;
+    this._selectedItem = null;
+    this._offer = null;
+    this._merchant = null;
     this._formData = null;
 
-    const title = this._offer.title;
-    const image = this._offer.image;
+    // If accessed via /book-shopping/:offerId, pre-select the linked item
+    if (params && params.offerId) {
+      const offerId = params.offerId;
+      const item = (CONFIG.shoppingItems || []).find(i => i.offerId === offerId);
+      if (item) {
+        this._selectedItem = item;
+        this._selectedCategory = item.subcategory;
+        this._offer = (Store.get('offers') || []).find(o => o.id === item.offerId);
+        this._merchant = Store.getMerchant(item.merchantId);
+        this._step = 2;
+      }
+    }
 
     return `
       <div class="page">
@@ -32,27 +42,11 @@ const ShoppingBookingPage = {
               <span class="breadcrumb__sep">›</span>
               <span class="breadcrumb__item" onclick="Router.navigate('/category/shopping')">Shop Online</span>
               <span class="breadcrumb__sep">›</span>
-              <span class="breadcrumb__current">${this._merchant ? this._merchant.name : title}</span>
+              <span class="breadcrumb__current">${this._step === 1 ? 'Browse Items' : (this._selectedItem ? this._selectedItem.name : 'Order')}</span>
             </div>
 
-            <div class="booking-layout">
-              <!-- Summary Panel -->
-              <div class="booking-summary">
-                <div class="booking-summary__image">
-                  <img src="${image}" alt="${title}" />
-                </div>
-                <h3 class="booking-summary__title">${title}</h3>
-                <div class="booking-summary__detail">${this._merchant ? this._merchant.name : ''}</div>
-                ${this._merchant ? `<div class="booking-summary__detail">${Icons.mapPin(14)} ${this._merchant.location || this._merchant.area || ''}</div>` : ''}
-                <div class="booking-summary__badge">
-                  <span class="discount-badge ${Format.discountBadgeClass(this._offer)}">${Format.discountLabel(this._offer)}</span>
-                </div>
-              </div>
-
-              <!-- Booking Form -->
-              <div class="booking-form" id="bookingForm">
-                ${this._renderStep1()}
-              </div>
+            <div class="booking-form" id="bookingForm">
+              ${this._step === 1 ? this._renderStep1() : this._renderStep2()}
             </div>
           </div>
         </main>
@@ -60,95 +54,89 @@ const ShoppingBookingPage = {
         <!-- Sticky Mobile CTA -->
         <div class="booking-sticky-cta" id="booking-sticky-cta">
           <button class="btn btn--primary btn--lg booking-sticky-cta__btn" id="stickyContinueBtn">
-            Continue to Confirmation
+            ${this._step === 1 ? 'Select an Item' : (this._step === 2 ? 'Continue to Confirmation' : 'Confirm Order')}
           </button>
         </div>
       </div>
     `;
   },
 
-  _renderReminder() {
-    const title = this._offer.title;
-    const image = this._offer.image;
-    let meta = '';
-    if (this._merchant) {
-      meta = `${this._merchant.name} · ${Format.discountLabel(this._offer)}`;
-    } else {
-      meta = Format.discountLabel(this._offer);
-    }
-    return `
-      <div class="booking-reminder">
-        <img src="${image}" alt="" class="booking-reminder__img" />
-        <div class="booking-reminder__info">
-          <div class="booking-reminder__title">${title}</div>
-          <div class="booking-reminder__meta">${meta}</div>
-        </div>
-      </div>
-    `;
-  },
-
-  _renderProgressStep1() {
-    return `
-      <div class="steps">
-        <div class="step active">
-          <span class="step__circle">1</span>
-          <span class="step__label">Details</span>
-        </div>
-        <div class="step__line"></div>
-        <div class="step">
-          <span class="step__circle">2</span>
-          <span class="step__label">Confirmation</span>
-        </div>
-      </div>
-    `;
-  },
-
-  _renderProgressStep2() {
-    return `
-      <div class="steps">
-        <div class="step completed">
-          <span class="step__circle">${Icons.check(14)}</span>
-          <span class="step__label">Details</span>
-        </div>
-        <div class="step__line completed"></div>
-        <div class="step active">
-          <span class="step__circle">2</span>
-          <span class="step__label">Confirmation</span>
-        </div>
-      </div>
-    `;
-  },
-
-  _renderChips() {
-    return `
-      <div class="request-chips" id="requestChips">
-        <button type="button" class="request-chip" data-value="Gift wrapping">Gift Wrapping</button>
-        <button type="button" class="request-chip" data-value="Express delivery">Express Delivery</button>
-        <button type="button" class="request-chip" data-value="Price match guarantee">Price Match</button>
-        <button type="button" class="request-chip" data-value="Gift receipt included">Gift Receipt</button>
-        <button type="button" class="request-chip" data-value="Fragile items">Fragile Items</button>
-      </div>
-    `;
-  },
-
-  _renderReassurance() {
-    return `
-      <div class="booking-reassurance">
-        ${Icons.shield(14)}
-        <span>Your card will only be validated. No charge will be made now.</span>
-      </div>
-    `;
-  },
-
+  // ── Step 1: Browse & Select Item ──
   _renderStep1() {
-    const user = Auth.getCurrentUser();
+    const categories = CONFIG.categorySubcategories.shopping || [];
+    const allItems = CONFIG.shoppingItems || [];
+    const filtered = this._selectedCategory
+      ? allItems.filter(i => i.subcategory === this._selectedCategory)
+      : allItems;
+
+    const catPills = `
+      <div class="booking-cat-pills">
+        <button class="booking-cat-pill ${!this._selectedCategory ? 'active' : ''}" data-cat="">All</button>
+        ${categories.map(c => `
+          <button class="booking-cat-pill ${this._selectedCategory === c.id ? 'active' : ''}" data-cat="${c.id}">${c.label}</button>
+        `).join('')}
+      </div>
+    `;
+
+    const itemGrid = `
+      <div class="booking-items-grid">
+        ${filtered.map(item => `
+          <div class="booking-item-card" data-item-id="${item.id}">
+            <img class="booking-item-card__img" src="${item.image}" alt="${item.name}" loading="lazy" />
+            <div class="booking-item-card__info">
+              <div class="booking-item-card__name">${item.name}</div>
+              <div class="booking-item-card__price">${item.price}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
 
     return `
       <div class="booking-step">
-        ${this._renderReminder()}
-        ${this._renderProgressStep1()}
+        ${this._renderProgress()}
+        <h2 class="booking-form__title page-title">What would you like to buy?</h2>
+        <p class="text-muted" style="margin-bottom:16px">Browse items by category — select one to proceed</p>
+        ${catPills}
+        ${itemGrid}
+      </div>
+    `;
+  },
 
+  // ── Step 2: Order Details (Merchant Revealed) ──
+  _renderStep2() {
+    const user = Auth.getCurrentUser();
+    const item = this._selectedItem;
+    const merchant = this._merchant;
+    const offer = this._offer;
+
+    return `
+      <div class="booking-step">
+        ${this._renderProgress()}
         <h2 class="booking-form__title page-title">Order Details</h2>
+
+        <!-- Selected Item -->
+        <div class="booking-item-selected">
+          <img class="booking-item-selected__img" src="${item.image}" alt="${item.name}" />
+          <div class="booking-item-selected__info">
+            <div class="booking-item-selected__name">${item.name}</div>
+            <div class="booking-item-selected__price">${item.price}</div>
+            <div class="booking-item-selected__cat">${item.subcategory}</div>
+          </div>
+          <button class="booking-item-selected__change" id="changeItemBtn">Change</button>
+        </div>
+
+        <!-- Merchant Revealed -->
+        ${merchant ? `
+        <div class="booking-merchant-reveal">
+          <img class="booking-merchant-reveal__img" src="${merchant.image}" alt="${merchant.name}" />
+          <div class="booking-merchant-reveal__info">
+            <div class="booking-merchant-reveal__name">${merchant.name}</div>
+            <div class="booking-merchant-reveal__loc">${Icons.mapPin(13)} ${merchant.location || merchant.area || ''}</div>
+            ${offer ? `<span class="discount-badge ${Format.discountBadgeClass(offer)}" style="margin-top:6px;display:inline-block">${Format.discountLabel(offer)}</span>` : ''}
+          </div>
+        </div>
+        ` : ''}
 
         <div class="form-group">
           <label class="form-label">Delivery Method</label>
@@ -186,19 +174,17 @@ const ShoppingBookingPage = {
         </div>
 
         ${this._renderReassurance()}
-        <button class="btn btn--primary btn--lg btn--full" id="toStep2Btn">Continue to Confirmation</button>
+        <button class="btn btn--primary btn--lg btn--full" id="toStep3Btn">Continue to Confirmation</button>
       </div>
     `;
   },
 
-  _renderStep2() {
+  // ── Step 3: Confirmation ──
+  _renderStep3() {
     const user = Auth.getCurrentUser();
-    const deliveryMethod = this._formData?.deliveryMethod || 'online';
-    const quantity = this._formData?.quantity || 1;
-    const promoCode = this._formData?.promoCode || '';
-    const specialReqs = this._formData?.specialReqs || '';
-
-    const title = this._offer.title;
+    const item = this._selectedItem;
+    const merchant = this._merchant;
+    const d = this._formData || {};
 
     const deliveryLabels = {
       'online': 'Online / Digital Delivery',
@@ -208,34 +194,40 @@ const ShoppingBookingPage = {
 
     return `
       <div class="booking-step">
-        ${this._renderReminder()}
-        ${this._renderProgressStep2()}
-
+        ${this._renderProgress()}
         <h2 class="booking-form__title page-title">Confirm Your Order</h2>
 
         <div class="booking-confirm-details">
           <div class="booking-confirm-row">
-            <span class="text-muted">Offer</span>
-            <span class="text-semibold">${title}</span>
+            <span class="text-muted">Item</span>
+            <span class="text-semibold">${item.name}</span>
+          </div>
+          <div class="booking-confirm-row">
+            <span class="text-muted">Price</span>
+            <span>${item.price}</span>
+          </div>
+          <div class="booking-confirm-row">
+            <span class="text-muted">Merchant</span>
+            <span>${merchant ? merchant.name : '—'}</span>
           </div>
           <div class="booking-confirm-row">
             <span class="text-muted">Delivery</span>
-            <span>${deliveryLabels[deliveryMethod] || deliveryMethod}</span>
+            <span>${deliveryLabels[d.deliveryMethod] || d.deliveryMethod}</span>
           </div>
           <div class="booking-confirm-row">
             <span class="text-muted">Quantity</span>
-            <span>${quantity} ${quantity == 1 ? 'item' : 'items'}</span>
+            <span>${d.quantity} ${d.quantity == 1 ? 'item' : 'items'}</span>
           </div>
-          ${promoCode ? `
+          ${d.promoCode ? `
             <div class="booking-confirm-row">
               <span class="text-muted">Promo Code</span>
-              <span>${promoCode}</span>
+              <span>${d.promoCode}</span>
             </div>
           ` : ''}
-          ${specialReqs ? `
+          ${d.specialReqs ? `
             <div class="booking-confirm-row">
               <span class="text-muted">Special Requests</span>
-              <span>${specialReqs}</span>
+              <span>${d.specialReqs}</span>
             </div>
           ` : ''}
           <div class="booking-confirm-row">
@@ -246,9 +238,52 @@ const ShoppingBookingPage = {
 
         ${this._renderReassurance()}
         <div class="flex gap-md">
-          <button class="btn btn--ghost btn--lg" id="backToStep1" style="flex:1">Back</button>
+          <button class="btn btn--ghost btn--lg" id="backToStep2" style="flex:1">Back</button>
           <button class="btn btn--primary btn--lg" id="confirmBookingBtn" style="flex:2">Confirm Order</button>
         </div>
+      </div>
+    `;
+  },
+
+  _renderProgress() {
+    const s = this._step;
+    return `
+      <div class="steps">
+        <div class="step ${s === 1 ? 'active' : (s > 1 ? 'completed' : '')}">
+          <span class="step__circle">${s > 1 ? Icons.check(14) : '1'}</span>
+          <span class="step__label">Select Item</span>
+        </div>
+        <div class="step__line ${s > 1 ? 'completed' : ''}"></div>
+        <div class="step ${s === 2 ? 'active' : (s > 2 ? 'completed' : '')}">
+          <span class="step__circle">${s > 2 ? Icons.check(14) : '2'}</span>
+          <span class="step__label">Details</span>
+        </div>
+        <div class="step__line ${s > 2 ? 'completed' : ''}"></div>
+        <div class="step ${s === 3 ? 'active' : ''}">
+          <span class="step__circle">3</span>
+          <span class="step__label">Confirmation</span>
+        </div>
+      </div>
+    `;
+  },
+
+  _renderChips() {
+    return `
+      <div class="request-chips" id="requestChips">
+        <button type="button" class="request-chip" data-value="Gift wrapping">Gift Wrapping</button>
+        <button type="button" class="request-chip" data-value="Express delivery">Express Delivery</button>
+        <button type="button" class="request-chip" data-value="Price match guarantee">Price Match</button>
+        <button type="button" class="request-chip" data-value="Gift receipt included">Gift Receipt</button>
+        <button type="button" class="request-chip" data-value="Fragile items">Fragile Items</button>
+      </div>
+    `;
+  },
+
+  _renderReassurance() {
+    return `
+      <div class="booking-reassurance">
+        ${Icons.shield(14)}
+        <span>Your card will only be validated. No charge will be made now.</span>
       </div>
     `;
   },
@@ -261,8 +296,47 @@ const ShoppingBookingPage = {
   mount() {
     Nav.mount();
 
-    delegate('#app', 'click', '#toStep2Btn', () => {
+    // Category pill click
+    delegate('#app', 'click', '.booking-cat-pill', (e, el) => {
+      this._selectedCategory = el.dataset.cat || null;
+      const form = $('#bookingForm');
+      if (form) form.innerHTML = this._renderStep1();
+    });
+
+    // Item card click → go to step 2
+    delegate('#app', 'click', '.booking-item-card', (e, el) => {
+      const itemId = el.dataset.itemId;
+      const item = (CONFIG.shoppingItems || []).find(i => i.id === itemId);
+      if (!item) return;
+
+      this._selectedItem = item;
+      this._offer = (Store.get('offers') || []).find(o => o.id === item.offerId);
+      this._merchant = Store.getMerchant(item.merchantId);
       this._step = 2;
+
+      const form = $('#bookingForm');
+      if (form) form.innerHTML = this._renderStep2();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const stickyBtn = $('#stickyContinueBtn');
+      if (stickyBtn) stickyBtn.textContent = 'Continue to Confirmation';
+      this._setupStickyObserver();
+    });
+
+    // Change item → back to step 1
+    delegate('#app', 'click', '#changeItemBtn', () => {
+      this._step = 1;
+      const form = $('#bookingForm');
+      if (form) form.innerHTML = this._renderStep1();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const stickyBtn = $('#stickyContinueBtn');
+      if (stickyBtn) stickyBtn.textContent = 'Select an Item';
+    });
+
+    // Step 2 → Step 3
+    delegate('#app', 'click', '#toStep3Btn', () => {
+      this._step = 3;
       const chipValues = this._getSelectedChips();
       const textareaVal = ($('#specialRequests')?.value || '').trim();
       const allRequests = [...chipValues, textareaVal].filter(Boolean).join(', ');
@@ -275,25 +349,27 @@ const ShoppingBookingPage = {
       };
 
       const form = $('#bookingForm');
-      if (form) form.innerHTML = this._renderStep2();
+      if (form) form.innerHTML = this._renderStep3();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       const stickyBtn = $('#stickyContinueBtn');
       if (stickyBtn) stickyBtn.textContent = 'Confirm Order';
-
       this._setupStickyObserver();
     });
 
-    delegate('#app', 'click', '#backToStep1', () => {
-      this._step = 1;
+    // Step 3 → back to Step 2
+    delegate('#app', 'click', '#backToStep2', () => {
+      this._step = 2;
       const form = $('#bookingForm');
-      if (form) form.innerHTML = this._renderStep1();
+      if (form) form.innerHTML = this._renderStep2();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       const stickyBtn = $('#stickyContinueBtn');
       if (stickyBtn) stickyBtn.textContent = 'Continue to Confirmation';
-
       this._setupStickyObserver();
     });
 
+    // Confirm order
     delegate('#app', 'click', '#confirmBookingBtn', () => {
       this._confirmBooking();
     });
@@ -305,10 +381,13 @@ const ShoppingBookingPage = {
 
     // Sticky CTA delegates to inline button
     delegate('#app', 'click', '#stickyContinueBtn', () => {
-      const step1Btn = $('#toStep2Btn');
-      const step2Btn = $('#confirmBookingBtn');
-      if (step1Btn) step1Btn.click();
-      else if (step2Btn) step2Btn.click();
+      if (this._step === 2) {
+        const btn = $('#toStep3Btn');
+        if (btn) btn.click();
+      } else if (this._step === 3) {
+        const btn = $('#confirmBookingBtn');
+        if (btn) btn.click();
+      }
     });
 
     this._setupStickyObserver();
@@ -344,8 +423,9 @@ const ShoppingBookingPage = {
 
   _confirmBooking() {
     const data = this._formData || {};
+    const item = this._selectedItem;
     const booking = Store.createBooking({
-      offerId: this._offer.id,
+      offerId: this._offer ? this._offer.id : (item ? item.offerId : ''),
       type: 'shopping',
       bookingDate: new Date().toISOString().split('T')[0],
       partySize: parseInt(data.quantity) || 1,
@@ -368,7 +448,7 @@ const ShoppingBookingPage = {
         <div class="booking-success">
           <div class="booking-success__icon">${Icons.checkCircle(48)}</div>
           <h2 class="booking-success__title page-title">Order Confirmed!</h2>
-          <p class="booking-success__text">Your shopping offer has been activated successfully.</p>
+          <p class="booking-success__text">Your order for <strong>${item ? item.name : 'your item'}</strong> has been placed successfully.</p>
           <div class="confirmation-code">${booking.confirmationCode}</div>
           <p class="text-sm text-muted" style="margin-top:8px">Save this confirmation code</p>
           <div class="flex gap-md" style="margin-top:24px">
@@ -378,24 +458,6 @@ const ShoppingBookingPage = {
         </div>
       `;
     }
-  },
-
-  _notFound() {
-    return `
-      <div class="page">
-        ${Nav.render()}
-        <main class="page__main page__main--full">
-          <div class="container">
-            <div class="empty-state" style="padding-top:80px">
-              <div class="empty-state__icon">${Icons.search(48)}</div>
-              <h2 class="empty-state__title">Offer Not Found</h2>
-              <p class="empty-state__text">This offer may have expired or been removed.</p>
-              <button class="btn btn--primary" onclick="Router.navigate('/home')">Back to Home</button>
-            </div>
-          </div>
-        </main>
-      </div>
-    `;
   },
 };
 

@@ -52,7 +52,7 @@ const CONFIG = {
   categoryHeroes: {
     dining:        { image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80', video: 'assets/videos/bon-appetit-hero.mp4', tagline: 'Savour exclusive dining privileges at the finest restaurants', sectionTitle: 'Find Your Perfect Table', sectionDesc: 'Filter by cuisine and location to discover your next favourite restaurant' },
     entertainment: { image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80', video: 'assets/videos/good-times.mp4', tagline: 'Unforgettable experiences await with your Visa Infinite Card', sectionTitle: 'What\'s On Tonight', sectionDesc: 'Browse by category and area to find your ideal entertainment' },
-    wellness:      { image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80', tagline: 'Rejuvenate your body and mind with premium wellness offers', sectionTitle: 'Your Wellness Journey', sectionDesc: 'Choose your preferred treatment type and location below' },
+    wellness:      { image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&q=80', tagline: 'Rejuvenate your body and mind with premium wellness offers', sectionTitle: 'Your Wellness Journey', sectionDesc: 'Choose your preferred treatment type and location below' },
     flights:       { image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=1200&q=80', tagline: 'Fly to your dream destinations with exclusive card deals', sectionTitle: 'Compare Flight Offers', sectionDesc: 'Browse exclusive airline deals and cashback offers for cardholders' },
     hotels:        { image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80', video: 'assets/videos/hotel.mp4', tagline: 'Luxury stays at world-class hotels for less', sectionTitle: 'Find Your Stay', sectionDesc: 'Explore hotel deals and resort packages across popular destinations' },
     shopping:      { image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=80', video: 'assets/videos/shop-online.mp4', tagline: 'Shop the best brands with exclusive cashback and discounts', sectionTitle: 'Deals Worth Clicking', sectionDesc: 'Browse by brand category to find the best shopping offers' },
@@ -161,7 +161,7 @@ const CONFIG = {
       { id: 'beach-resorts',    label: 'Beach Resorts',      dealCount: 8,  image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80' },
       { id: 'luxury-stays',     label: 'Luxury Stays',       dealCount: 15, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80' },
       { id: 'city-hotels',      label: 'City Hotels',        dealCount: 12, image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80' },
-      { id: 'spa-wellness',     label: 'Spa & Wellness',     dealCount: 6,  image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80' },
+      { id: 'spa-wellness',     label: 'Spa & Wellness',     dealCount: 6,  image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80' },
       { id: 'family-friendly',  label: 'Family Friendly',    dealCount: 10, image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80' },
       { id: 'romantic-getaways', label: 'Romantic Getaways', dealCount: 7,  image: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80' },
     ],
@@ -452,6 +452,40 @@ const CONFIG = {
         { type: 'video', src: 'https://assets.mixkit.co/videos/35540/35540-720.mp4', duration: 8000, title: 'Your Infinite Privileges', description: 'Golf, airport transfers, valet parking, concierge & more — all complimentary with your card.', cta: { label: 'See All Benefits', route: '/card-benefits' } },
       ],
     },
+  ],
+
+  // ── Shopping Items (item-first flow) ──
+  shoppingItems: [
+    // Fashion
+    { id: 'ITEM-001', name: 'Designer Handbag', subcategory: 'Fashion', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80', price: 'AED 2,500', offerId: 'OFR-023', merchantId: 'MER-010' },
+    { id: 'ITEM-002', name: 'Luxury Watch', subcategory: 'Fashion', image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&q=80', price: 'AED 8,200', offerId: 'OFR-024', merchantId: 'MER-011' },
+    { id: 'ITEM-003', name: 'Silk Scarf', subcategory: 'Fashion', image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80', price: 'AED 1,200', offerId: 'OFR-023', merchantId: 'MER-010' },
+    { id: 'ITEM-004', name: 'Leather Jacket', subcategory: 'Fashion', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400&q=80', price: 'AED 3,800', offerId: 'OFR-024', merchantId: 'MER-011' },
+    // Electronics
+    { id: 'ITEM-005', name: 'Wireless Headphones', subcategory: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80', price: 'AED 1,499', offerId: 'OFR-025', merchantId: 'MER-010' },
+    { id: 'ITEM-006', name: 'Smart Watch', subcategory: 'Electronics', image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400&q=80', price: 'AED 2,199', offerId: 'OFR-025', merchantId: 'MER-010' },
+    { id: 'ITEM-007', name: 'Bluetooth Speaker', subcategory: 'Electronics', image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80', price: 'AED 899', offerId: 'OFR-025', merchantId: 'MER-010' },
+    { id: 'ITEM-008', name: 'Tablet', subcategory: 'Electronics', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&q=80', price: 'AED 3,299', offerId: 'OFR-025', merchantId: 'MER-010' },
+    // Luxury
+    { id: 'ITEM-009', name: 'Crystal Vase', subcategory: 'Luxury', image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=400&q=80', price: 'AED 3,500', offerId: 'OFR-024', merchantId: 'MER-011' },
+    { id: 'ITEM-010', name: 'Cashmere Throw', subcategory: 'Luxury', image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80', price: 'AED 2,800', offerId: 'OFR-024', merchantId: 'MER-011' },
+    { id: 'ITEM-011', name: 'Gold Pen Set', subcategory: 'Luxury', image: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=400&q=80', price: 'AED 4,500', offerId: 'OFR-026', merchantId: 'MER-011' },
+    // Beauty
+    { id: 'ITEM-012', name: 'Skincare Gift Set', subcategory: 'Beauty', image: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80', price: 'AED 890', offerId: 'OFR-023', merchantId: 'MER-010' },
+    { id: 'ITEM-013', name: 'Premium Perfume', subcategory: 'Beauty', image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400&q=80', price: 'AED 1,650', offerId: 'OFR-024', merchantId: 'MER-011' },
+    { id: 'ITEM-014', name: 'Makeup Palette', subcategory: 'Beauty', image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&q=80', price: 'AED 450', offerId: 'OFR-023', merchantId: 'MER-010' },
+    // Jewellery
+    { id: 'ITEM-015', name: 'Diamond Pendant', subcategory: 'Jewellery', image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80', price: 'AED 12,000', offerId: 'OFR-024', merchantId: 'MER-011' },
+    { id: 'ITEM-016', name: 'Gold Bracelet', subcategory: 'Jewellery', image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400&q=80', price: 'AED 5,500', offerId: 'OFR-024', merchantId: 'MER-011' },
+    // Home & Living
+    { id: 'ITEM-017', name: 'Scented Candle Set', subcategory: 'Home', image: 'https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=400&q=80', price: 'AED 320', offerId: 'OFR-025', merchantId: 'MER-010' },
+    { id: 'ITEM-018', name: 'Espresso Machine', subcategory: 'Home', image: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=400&q=80', price: 'AED 2,400', offerId: 'OFR-025', merchantId: 'MER-010' },
+    // Sports
+    { id: 'ITEM-019', name: 'Running Shoes', subcategory: 'Sports', image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80', price: 'AED 750', offerId: 'OFR-023', merchantId: 'MER-010' },
+    { id: 'ITEM-020', name: 'Yoga Mat Set', subcategory: 'Sports', image: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=400&q=80', price: 'AED 280', offerId: 'OFR-023', merchantId: 'MER-010' },
+    // Kids
+    { id: 'ITEM-021', name: 'LEGO Creator Set', subcategory: 'Kids', image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=400&q=80', price: 'AED 450', offerId: 'OFR-025', merchantId: 'MER-010' },
+    { id: 'ITEM-022', name: 'Kids Smart Watch', subcategory: 'Kids', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&q=80', price: 'AED 599', offerId: 'OFR-025', merchantId: 'MER-010' },
   ],
 };
 
